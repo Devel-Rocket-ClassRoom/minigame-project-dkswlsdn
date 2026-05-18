@@ -20,10 +20,22 @@ public class SkillActionTest : MonoBehaviour
     {
         action = PlayerMovement.Action;
         PlayerMovement.action.Player.SkillL.performed += LSkill;
+        PlayerMovement.action.Player.SkillR.performed += RSkill;
+        PlayerMovement.action.Player.SkillLR.performed += LRSkill;
     }
 
     public void LSkill(CallbackContext context)
     {
         caster.Cast(skill1);
+    }
+
+    public void RSkill(CallbackContext context)
+    {
+        caster.Cast(skill2);
+    }
+
+    public void LRSkill(CallbackContext context)
+    {
+        caster.Cast(skill3);
     }
 }

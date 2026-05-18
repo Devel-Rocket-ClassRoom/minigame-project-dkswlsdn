@@ -51,3 +51,10 @@ public enum StatType
 {
     HP, MP,
 }
+
+public enum ForceDirectionType
+{
+    Fixed,
+    Spread,
+    Random,
+}

@@ -37,11 +37,14 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack:
   - info:
+      origin: {x: 17.797281, y: 1.0000005, z: -0.4797611}
+      forward: {x: 0.62661594, y: 0, z: 0.7793282}
       damage: 3
       reaction: 1
-      stunDuration: 0
-      stunForce: {x: 0, y: 0, z: 4}
-      airborneForce: {x: 0, y: 0, z: 0}
+      stunDuration: 0.5
+      stunForce: 4
+      airborneForce: {x: 4, y: 2}
+      forceDirectionType: 0
       activateTime: 0.2
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
@@ -49,14 +52,17 @@ MonoBehaviour:
     preDelay: 0.1
     isGrab: 0
     useAim: 0
-    positionOffset: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   - info:
+      origin: {x: 17.797281, y: 1.0000005, z: -0.4797611}
+      forward: {x: 0.62661594, y: 0, z: 0.7793282}
       damage: 3
       reaction: 1
-      stunDuration: 0
-      stunForce: {x: 0, y: 0, z: 4}
-      airborneForce: {x: 0, y: 0, z: 0}
+      stunDuration: 0.5
+      stunForce: 4
+      airborneForce: {x: 4, y: 2}
+      forceDirectionType: 0
       activateTime: 0.2
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
@@ -64,14 +70,17 @@ MonoBehaviour:
     preDelay: 0.2
     isGrab: 0
     useAim: 0
-    positionOffset: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   - info:
+      origin: {x: 17.797281, y: 1.0000005, z: -0.4797611}
+      forward: {x: 0.62661594, y: 0, z: 0.7793282}
       damage: 6
       reaction: 2
       stunDuration: 0
-      stunForce: {x: 0, y: 0, z: 4}
-      airborneForce: {x: 0, y: 4, z: 4}
+      stunForce: 0
+      airborneForce: {x: 6, y: 4}
+      forceDirectionType: 0
       activateTime: 0.2
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
@@ -79,7 +88,7 @@ MonoBehaviour:
     preDelay: 0.2
     isGrab: 0
     useAim: 0
-    positionOffset: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   useGrab: 0
   actionTime: 0.6

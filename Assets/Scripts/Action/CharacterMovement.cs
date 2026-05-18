@@ -193,23 +193,54 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public void StunMove(AttackInfo hit)
     {
-        switch (hit.reaction)
+        var dir = Vector3.zero;
+
+        switch (hit.forceDirectionType)
         {
-            case HitReactionType.HitStun:
-                horizontalVelocity = hit.stunForce;
-                isFreeMoveEnabled = false;
-                activeGravity = defaultGravity;
-                friction = 6f;
+            case ForceDirectionType.Fixed:
+                dir = hit.forward;
                 break;
-            case HitReactionType.Airborne:
-                transform.Translate(Vector3.up * 0.5f);
-                var h = hit.airborneForce;
-                h.y = 0;
-                horizontalVelocity = h;
-                verticalVelocity = hit.airborneForce.y;
-                isFreeMoveEnabled = false;
-                activeGravity = defaultGravity;
+            case ForceDirectionType.Spread:
+                dir = transform.position - hit.origin;
+                dir.Normalize();
                 break;
+            case ForceDirectionType.Random:
+                break;
+            default:
+                dir = hit.forward;
+                break;
+        }
+
+        if (state.State != CharacterState.Airborne)
+        {
+            switch (hit.reaction)
+            {
+                case HitReactionType.HitStun:
+                    horizontalVelocity = dir * hit.stunForce;
+                    isFreeMoveEnabled = false;
+                    activeGravity = defaultGravity;
+                    friction = 6f;
+                    break;
+                case HitReactionType.Airborne:
+                    transform.Translate(Vector3.up * 0.5f);
+                    var h = hit.airborneForce;
+                    h.y = 0;
+                    horizontalVelocity = dir * h.x;
+                    verticalVelocity = hit.airborneForce.y;
+                    isFreeMoveEnabled = false;
+                    activeGravity = defaultGravity;
+                    break;
+            }
+        }
+        else
+        {
+            transform.Translate(Vector3.up * 0.5f);
+            var h = hit.airborneForce;
+            h.y = 0;
+            horizontalVelocity = dir * h.x;
+            verticalVelocity = hit.airborneForce.y;
+            isFreeMoveEnabled = false;
+            activeGravity = defaultGravity;
         }
     }
 

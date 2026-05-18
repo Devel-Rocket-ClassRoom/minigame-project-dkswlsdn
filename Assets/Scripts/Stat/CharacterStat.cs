@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CharacterStat : MonoBehaviour, IDamageable
+public class CharacterStat : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
@@ -87,18 +87,26 @@ public class AttackInfo
 
     public AttackInfo(AttackInfo hit)
     {
+        origin = hit.origin;
+        forward = hit.forward;
         damage = hit.damage;
         reaction = hit.reaction;
         stunDuration = hit.stunDuration;
         stunForce = hit.stunForce;
         airborneForce = hit.airborneForce;
+        forceDirectionType = hit.forceDirectionType;
     }
 
+    public Vector3 origin;
+    public Vector3 forward;
     public float damage;
+
     public HitReactionType reaction;
     public float stunDuration;
-    public Vector3 stunForce;
-    public Vector3 airborneForce;
+    public float stunForce;
+    public Vector2 airborneForce;
+
+    public ForceDirectionType forceDirectionType; 
     public float activateTime;
     public bool isDestroyOnCanceled;
     public bool isReleaseGrab;

@@ -711,8 +711,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb9ddb5ca5b6a44eab259f7e6ad8830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillActionTest
-  skill1: {fileID: 11400000, guid: 37f329e04ae721f41b6fb67157cfe326, type: 2}
-  skill2: {fileID: 11400000, guid: 37f329e04ae721f41b6fb67157cfe326, type: 2}
+  skill1: {fileID: 11400000, guid: d2d75d4d6244984439f095e80dbfa655, type: 2}
+  skill2: {fileID: 11400000, guid: eef1f14ac866533409754e7bb34b10bd, type: 2}
   skill3: {fileID: 0}
   skill4: {fileID: 0}
   skill5: {fileID: 0}
@@ -798,11 +798,14 @@ MonoBehaviour:
   armor: 0
   doTest: 1
   testHitInfo:
+    origin: {x: 0, y: 0, z: 0}
+    forward: {x: 0, y: 0, z: 1}
     damage: 1
-    reaction: 2
+    reaction: 1
     stunDuration: 3
-    stunForce: {x: 0, y: 0, z: -5}
-    airborneForce: {x: 0, y: 5, z: -5}
+    stunForce: 0
+    airborneForce: {x: 0, y: 5}
+    forceDirectionType: 0
     activateTime: 0
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
@@ -825,8 +828,8 @@ MonoBehaviour:
   reverseY: 0
   reverseX: 0
   canRotateCharacter: 1
-  verticalSpeed: 10
-  horizontalSpeed: 10
+  verticalSpeed: 30
+  horizontalSpeed: 30
   minVerticalRotation: -25
   maxVerticalRotation: 45
 --- !u!114 &742310339
@@ -1099,11 +1102,14 @@ MonoBehaviour:
   armor: 0
   doTest: 0
   testHitInfo:
+    origin: {x: 0, y: 0, z: 0}
+    forward: {x: 0, y: 0, z: 0}
     damage: 1
     reaction: 2
     stunDuration: 3
-    stunForce: {x: 0, y: 0, z: -5}
-    airborneForce: {x: 0, y: 5, z: -5}
+    stunForce: 0
+    airborneForce: {x: 0, y: 5}
+    forceDirectionType: 0
     activateTime: 0
     isDestroyOnCanceled: 0
     isReleaseGrab: 0

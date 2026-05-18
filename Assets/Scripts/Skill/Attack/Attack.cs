@@ -14,13 +14,15 @@ public class Attack : MonoBehaviour
     public bool IsHit { get; private set; }
     public event Action<Character> onHit;
 
-    public void Activate(AttackInfo hitInfo, Vector3 origin, Quaternion rotation, int team, bool isGrab = false)
+    public void Activate(AttackInfo hitInfo, Vector3 origin, Vector3 forward, int team, bool isGrab = false)
     {
         hitTarget.Clear();
         IsHit = false;
         HitInfo = hitInfo;
+        hitInfo.origin = origin;
+        hitInfo.forward = forward;
         transform.position = origin;
-        transform.rotation = rotation;
+        transform.forward = forward;
         this.team = team;
         this.isGrab = isGrab;
         deactivateTime = Time.time + hitInfo.activateTime;
@@ -48,7 +50,9 @@ public class Attack : MonoBehaviour
         IsHit = true;
 
         if (!isGrab)
+        {
             character.Stat.TakeDamage(HitInfo);
+        }
 
         onHit?.Invoke(character);
     }

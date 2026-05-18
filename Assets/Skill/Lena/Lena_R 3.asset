@@ -25,6 +25,7 @@ MonoBehaviour:
     neutralDistance: 0
     backwardDistance: 0
     followTerrain: 0
+    useInputDirection: 0
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
@@ -36,17 +37,21 @@ MonoBehaviour:
     lookSpeedLimit: 30
   attack:
   - info:
+      origin: {x: 19.039326, y: 0.00000071525574, z: 11.7647505}
+      forward: {x: -0.034438558, y: 0, z: 0.9994068}
       damage: 3
       reaction: 2
       stunDuration: 0
-      stunForce: {x: 0, y: 0, z: 0}
-      airborneForce: {x: 0, y: 10, z: 0}
+      stunForce: 0
+      airborneForce: {x: 0, y: 10}
+      forceDirectionType: 0
       activateTime: 3
       isDestroyOnCanceled: 1
+      isReleaseGrab: 0
     hitbox: {fileID: -6511346260383199460, guid: 9d197006e517abb41ab95bc8e5a66951, type: 3}
     preDelay: 0
+    isGrab: 0
     useAim: 0
-    isGrab: 1
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   useGrab: 1
