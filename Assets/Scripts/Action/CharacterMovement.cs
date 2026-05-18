@@ -198,16 +198,16 @@ public abstract class CharacterMovement : MonoBehaviour
         switch (hit.forceDirectionType)
         {
             case ForceDirectionType.Fixed:
-                dir = hit.forward;
+                dir = hit.origin.forward;
                 break;
             case ForceDirectionType.Spread:
-                dir = transform.position - hit.origin;
+                dir = transform.position - hit.origin.position;
                 dir.Normalize();
                 break;
             case ForceDirectionType.Random:
                 break;
             default:
-                dir = hit.forward;
+                dir = hit.origin.forward;
                 break;
         }
 

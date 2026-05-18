@@ -167,7 +167,7 @@ public class SkillCaster : MonoBehaviour
             yield return new WaitForSeconds(attack.preDelay);
 
             var instance = Instantiate(attack.hitbox);
-            instance.Activate(attack.info, transform.position + attack.positionOffset, transform.forward, character.team, attack.isGrab);
+            instance.Activate(attack, transform, character.team);
             activateAttack.Add(instance);
 
             var capturedContext = context;
@@ -214,7 +214,7 @@ public class SkillCaster : MonoBehaviour
 
         for (int i = activateAttack.Count - 1; i >= 0; i--)
         {
-            if (activateAttack[i].HitInfo.isDestroyOnCanceled)
+            if (activateAttack[i].HitInfo.info.isDestroyOnCanceled)
             {
                 Destroy(activateAttack[i].gameObject);
                 activateAttack.RemoveAt(i);

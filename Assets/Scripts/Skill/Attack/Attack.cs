@@ -5,27 +5,26 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     private HashSet<int> hitTarget = new HashSet<int>();
-    [HideInInspector] public AttackInfo HitInfo;
+    [HideInInspector] public AttackMethod HitInfo;
     [HideInInspector] public bool isGrab;
-    public int team;
+    private int team;
     private float deactivateTime;
     private bool isActive;
 
     public bool IsHit { get; private set; }
     public event Action<Character> onHit;
 
-    public void Activate(AttackInfo hitInfo, Vector3 origin, Vector3 forward, int team, bool isGrab = false)
+    public void Activate(AttackMethod attackInfo, Transform origin, int team)
     {
         hitTarget.Clear();
         IsHit = false;
-        HitInfo = hitInfo;
-        hitInfo.origin = origin;
-        hitInfo.forward = forward;
-        transform.position = origin;
-        transform.forward = forward;
+        HitInfo = attackInfo;
+        HitInfo.info.origin = origin;
+        transform.position = origin.position + origin.TransformVector(attackInfo.positionOffset);
+        transform.forward = origin.forward;
         this.team = team;
-        this.isGrab = isGrab;
-        deactivateTime = Time.time + hitInfo.activateTime;
+        isGrab = attackInfo.isGrab;
+        deactivateTime = Time.time + attackInfo.info.activateTime;
         isActive = true;
     }
 
@@ -39,6 +38,14 @@ public class Attack : MonoBehaviour
     {
         if (isActive && deactivateTime < Time.time)
             DeActivate();
+        if (HitInfo.movementType == AttackMovementMethod.FollowCharacter)
+        {
+            transform.position = HitInfo.info.origin.position + HitInfo.positionOffset;
+        }
+        else if (HitInfo.movementType == AttackMovementMethod.Linear)
+        {
+            transform.position += transform.forward * HitInfo.info.projectileSpeed * Time.deltaTime;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,7 +58,7 @@ public class Attack : MonoBehaviour
 
         if (!isGrab)
         {
-            character.Stat.TakeDamage(HitInfo);
+            character.Stat.TakeDamage(HitInfo.info);
         }
 
         onHit?.Invoke(character);

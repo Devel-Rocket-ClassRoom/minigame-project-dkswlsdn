@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb9ddb5ca5b6a44eab259f7e6ad8830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillActionTest
-  skill1: {fileID: 11400000, guid: d2d75d4d6244984439f095e80dbfa655, type: 2}
+  skill1: {fileID: 11400000, guid: fccf8f2323486064dbce031b0b8ff679, type: 2}
   skill2: {fileID: 11400000, guid: eef1f14ac866533409754e7bb34b10bd, type: 2}
   skill3: {fileID: 0}
   skill4: {fileID: 0}
@@ -776,7 +776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateManager
   state: 0
   stat: {fileID: 742310337}
-  modelAnimation: {fileID: 0}
+  modelAnimation: {fileID: 482202842}
   knockdownTimer: 0
 --- !u!114 &742310337
 MonoBehaviour:
@@ -798,8 +798,7 @@ MonoBehaviour:
   armor: 0
   doTest: 1
   testHitInfo:
-    origin: {x: 0, y: 0, z: 0}
-    forward: {x: 0, y: 0, z: 1}
+    origin: {fileID: 0}
     damage: 1
     reaction: 1
     stunDuration: 3
@@ -809,6 +808,7 @@ MonoBehaviour:
     activateTime: 0
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
+    projectileSpeed: 0
 --- !u!114 &742310338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,8 +1102,7 @@ MonoBehaviour:
   armor: 0
   doTest: 0
   testHitInfo:
-    origin: {x: 0, y: 0, z: 0}
-    forward: {x: 0, y: 0, z: 0}
+    origin: {fileID: 0}
     damage: 1
     reaction: 2
     stunDuration: 3
@@ -1113,6 +1112,7 @@ MonoBehaviour:
     activateTime: 0
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
+    projectileSpeed: 0
 --- !u!114 &844186670
 MonoBehaviour:
   m_ObjectHideFlags: 0

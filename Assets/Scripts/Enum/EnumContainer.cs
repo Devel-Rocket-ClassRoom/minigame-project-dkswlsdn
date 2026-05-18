@@ -58,3 +58,11 @@ public enum ForceDirectionType
     Spread,
     Random,
 }
+
+public enum AttackMovementMethod
+{
+    Fixed,
+    FollowCharacter,
+    Teleport,
+    Linear,
+}

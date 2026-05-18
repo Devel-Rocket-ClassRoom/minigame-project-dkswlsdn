@@ -88,7 +88,6 @@ public class AttackInfo
     public AttackInfo(AttackInfo hit)
     {
         origin = hit.origin;
-        forward = hit.forward;
         damage = hit.damage;
         reaction = hit.reaction;
         stunDuration = hit.stunDuration;
@@ -97,8 +96,8 @@ public class AttackInfo
         forceDirectionType = hit.forceDirectionType;
     }
 
-    public Vector3 origin;
-    public Vector3 forward;
+    [HideInInspector]
+    public Transform origin;
     public float damage;
 
     public HitReactionType reaction;
@@ -110,4 +109,6 @@ public class AttackInfo
     public float activateTime;
     public bool isDestroyOnCanceled;
     public bool isReleaseGrab;
+
+    public float projectileSpeed;
 }
