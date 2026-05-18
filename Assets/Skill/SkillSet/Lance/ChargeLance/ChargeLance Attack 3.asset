@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
+  m_Name: ChargeLance Attack 3
+  m_EditorClassIdentifier: Assembly-CSharp::SkillAction
+  actionId: 0
+  movementMethod:
+    calcType: 0
+    gravity: 0
+    friction: 0
+    startToMove: 0
+    directionReverse: 0
+    rightSide: 0
+    canFreeMove: 0
+    distance: 0
+    neutralDistance: 0
+    backwardDistance: 0
+    followTerrain: 0
+    useInputDirection: 0
+    maxAltitude: 0
+    minAltitude: 0
+    verticalSpeed: 0
+    jumpHeight: 0
+    minJumpHeight: 0
+    regularTime: 0
+    yawLimit: 0
+    cameraLocked: 0
+    lookSpeedLimit: 0
+  attack: []
+  useGrab: 0
+  actionTime: 0
+  minTransitionTime: 0
+  maxTransitionTime: 0
+  transitions: []
+  autoTransition: {fileID: 0}
