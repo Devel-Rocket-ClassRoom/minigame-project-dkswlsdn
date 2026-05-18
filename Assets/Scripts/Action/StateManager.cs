@@ -1,0 +1,175 @@
+using System;
+using UnityEngine;
+
+public class StateManager : MonoBehaviour
+{
+    [SerializeField]
+    private CharacterState state = CharacterState.Idle;
+    public CharacterState State
+    {
+        get => state;
+        set
+        {
+            state = value;
+            //modelAnimation?.SetInteger("state", (int)state);
+        }
+    }
+
+    public bool CanMove => state == CharacterState.Idle || state == CharacterState.Move;
+    public bool CanRotatePlayer => CanMove || state == CharacterState.WakeUp;
+    public bool CanRotateCamera => CanRotatePlayer || state == CharacterState.Knockdown;
+    public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Knockdown || state == CharacterState.Groggy
+        || state == CharacterState.Grapped || state == CharacterState.WakeUp || state == CharacterState.Dead;
+
+    [SerializeField] private CharacterStat stat;
+    public Animator modelAnimation;
+
+    public event Action onIdle;
+    public event Action onmove;
+    public event Action onSkill;
+    public event Action onHitstun;
+    public event Action onKnockdown;
+    public event Action onWakeUp;
+    public event Action onAirborne;
+    public event Action onGroggy;
+    public event Action onGrab;
+    public event Action onDead;
+
+
+    private bool isGrounded;
+    private float stunEndTime;
+    [SerializeField] private float knockdownTimer;
+    private float wakeUpTimer;
+
+    private const float BASE_KNOCKDOWN_DURATION = 2f;
+    private const float BASE_WAKEUP_DURATION    = 0.7f;
+    private const float KNOCKDOWN_EXTEND_AMOUNT  = 0.1f;
+
+    private void Awake()
+    {
+        stat.onDamageTake += OnDamageTaken;
+        
+    }
+
+    private void Update()
+    {
+        CheckTransition();
+    }
+
+    private void CheckTransition()
+    {
+        switch (state)
+        {
+            case CharacterState.Idle:
+                break;
+            case CharacterState.Move:
+                break;
+            case CharacterState.Skill:
+                break;
+            case CharacterState.HitStun:
+                if (Time.time >= stunEndTime) ChangeState(CharacterState.Idle);
+                break;
+            case CharacterState.Airborne:
+                break;
+            case CharacterState.Knockdown:
+                if (isGrounded) knockdownTimer -= Time.deltaTime;
+                if (knockdownTimer <= 0f) ChangeState(CharacterState.WakeUp);
+                break;
+            case CharacterState.WakeUp:
+                if (Time.time >= wakeUpTimer) ChangeState(CharacterState.Idle);
+                break;
+            case CharacterState.Groggy:
+                break;
+            case CharacterState.Grapped:
+                break;
+            case CharacterState.Dead:
+                break;
+        }
+    }
+
+    public void ChangeState(CharacterState state)
+    {
+        State = state;
+
+        switch (state)
+        {
+            case CharacterState.Idle:
+                onIdle?.Invoke();
+                break;
+            case CharacterState.Move:
+                onmove?.Invoke();
+                break;
+            case CharacterState.Skill:
+                onSkill?.Invoke();
+                break;
+            case CharacterState.HitStun:
+                onHitstun?.Invoke();
+                break;
+            case CharacterState.Airborne:
+                onAirborne?.Invoke();
+                break;
+            case CharacterState.Knockdown:
+                onKnockdown?.Invoke();
+                break;
+            case CharacterState.WakeUp:
+                wakeUpTimer = BASE_WAKEUP_DURATION + Time.time;
+                onWakeUp?.Invoke();
+                break;
+            case CharacterState.Groggy:
+                onGroggy?.Invoke();
+                break;
+            case CharacterState.Grapped:
+                onGrab?.Invoke();
+                break;
+            case CharacterState.Dead:
+                onDead?.Invoke();
+                break;
+        }
+    }
+
+    public void SetGrounded(bool grounded) { isGrounded = grounded; }
+
+    public void OnLand()
+    {
+        if (state == CharacterState.Airborne)
+            ChangeState(CharacterState.Knockdown);
+    }
+
+    private void OnDamageTaken(AttackInfo hit)
+    {
+        switch (hit.reaction)
+        {
+            case HitReactionType.HitStun:
+                if (state == CharacterState.Knockdown)
+                {
+                    knockdownTimer += KNOCKDOWN_EXTEND_AMOUNT;
+                }
+                else
+                {
+                    ChangeState(CharacterState.HitStun);
+                    stunEndTime = hit.stunDuration + Time.time;
+                }
+                break;
+
+            case HitReactionType.Airborne:
+                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill || state == CharacterState.Grapped)
+                    knockdownTimer = BASE_KNOCKDOWN_DURATION;
+                ChangeState(CharacterState.Airborne);
+                break;
+
+            case HitReactionType.Knockdown:
+                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill || state == CharacterState.Grapped)
+                    knockdownTimer = BASE_KNOCKDOWN_DURATION;
+                ChangeState(CharacterState.Knockdown);
+                break;
+
+            case HitReactionType.Groggy:
+                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill)
+                {
+                    knockdownTimer = BASE_KNOCKDOWN_DURATION;
+                    ChangeState(CharacterState.Groggy);
+                }
+                break;
+        }
+    }
+}
