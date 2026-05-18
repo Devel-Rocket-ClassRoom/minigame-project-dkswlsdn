@@ -1,0 +1,74 @@
+using UnityEngine;
+
+public class SkillExecuter : MonoBehaviour
+{
+    public Weapon testWeapon;
+
+    private SkillCaster caster;
+    private CharacterCommander commander;
+
+    private readonly Skill[] skills = new Skill[8];
+    private readonly float[] cooldowns = new float[8];
+
+    private static readonly ConditionInput[] inputs =
+    {
+        ConditionInput.SkillR,
+        ConditionInput.SkillSL,
+        ConditionInput.SkillLR,
+        ConditionInput.Q,
+        ConditionInput.E,
+        ConditionInput.F,
+        ConditionInput.Space,
+    };
+
+    private void Awake()
+    {
+        caster = GetComponent<SkillCaster>();
+        commander = GetComponent<CharacterCommander>();
+        Init(testWeapon);
+    }
+
+    public void Init(Weapon weapon)
+    {
+        skills[0] = weapon.LSkill;
+        skills[1] = weapon.RSkill;
+        skills[2] = weapon.SLSkill;
+        skills[3] = weapon.LRSkill;
+        skills[4] = weapon.QSkill;
+        skills[5] = weapon.ESkill;
+        skills[6] = weapon.FSkill;
+        skills[7] = weapon.SpaceSkill;
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < cooldowns.Length; i++)
+            cooldowns[i] -= Time.deltaTime;
+
+        for (int i = 1; i < inputs.Length + 1; i++)
+        {
+            if (skills[i] == null) continue;
+            if (cooldowns[i] > 0) continue;
+            if (!commander.GetInput(inputs[i - 1], false)) continue;
+
+            caster.Cast(skills[i]);
+            cooldowns[i] = skills[i].cooldown;
+            break;
+        }
+
+        if (skills[0] != null && cooldowns[0] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
+        {
+            caster.Cast(skills[0]);
+            cooldowns[0] = skills[0].cooldown;
+        }
+    }
+
+    public Skill GetSkill(int index) => skills[index];
+
+    // 0 = 준비됨, 1 = 쿨타임 최대
+    public float GetCooldownRatio(int index)
+    {
+        if (skills[index] == null || skills[index].cooldown <= 0f) return 0f;
+        return Mathf.Clamp01(cooldowns[index] / skills[index].cooldown);
+    }
+}

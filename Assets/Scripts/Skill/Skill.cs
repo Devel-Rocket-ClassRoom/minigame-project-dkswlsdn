@@ -5,6 +5,7 @@ using UnityEngine;
 public class Skill : ScriptableObject
 {
     public string skillName;
+    public float cooldown;
     public List<SkillAction> actions;
     public List<SkillTransition> transitions;
 }
