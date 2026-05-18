@@ -185,7 +185,7 @@ public abstract class CharacterMovement : MonoBehaviour
                 activeGravity = method.gravity;
             }
 
-            skillHorizontalSpeed = (distance / actionTime) + (0.5f * method.friction * actionTime);
+            skillHorizontalSpeed = (distance / actionTime) + (0.5f * friction * actionTime);
         }
         else
         {

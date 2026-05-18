@@ -65,4 +65,5 @@ public enum AttackMovementMethod
     FollowCharacter,
     Teleport,
     Linear,
+    Parabola,
 }

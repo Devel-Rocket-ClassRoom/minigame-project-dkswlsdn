@@ -67,4 +67,43 @@ public class CharacterAim : MonoBehaviour
             return distance;
         }
     }
+
+    public Vector3 GetLookAtVector(MovementMethod method, Transform character, out float y)
+    {
+        Ray aimRay = cam.ScreenPointToRay(aim.position);
+
+        if (Physics.Raycast(aimRay, out RaycastHit aimHit, method.distance * 2f, groundLayer))
+        {
+            Vector3 dir = (aimHit.point - character.position).normalized;
+            Ray charRay = new Ray(character.position, dir);
+
+            if (Physics.Raycast(charRay, out RaycastHit charHit, method.distance, groundLayer))
+            {
+                y = charHit.point.y;
+                return charHit.point;
+            }
+            else
+            {
+                Vector3 endPoint = character.position + dir * method.distance;
+                if (Physics.Raycast(endPoint, Vector3.down, out RaycastHit downHit, Mathf.Infinity, groundLayer))
+                {
+                    y = downHit.point.y;
+                    return downHit.point;
+                }
+                y = endPoint.y;
+                return endPoint;
+            }
+        }
+        else
+        {
+            Vector3 endPoint = aimRay.origin + aimRay.direction * method.distance * 2f;
+            if (Physics.Raycast(endPoint, Vector3.down, out RaycastHit downHit, Mathf.Infinity, groundLayer))
+            {
+                y = downHit.point.y;
+                return downHit.point;
+            }
+            y = endPoint.y;
+            return endPoint;
+        }
+    }
 }

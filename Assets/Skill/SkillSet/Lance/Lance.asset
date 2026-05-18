@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   model: {fileID: 0}
   LSkill: {fileID: 0}
-  RSkill: {fileID: 0}
+  RSkill: {fileID: 11400000, guid: 05e215d8ef7823741aa9f88fc80327bb, type: 2}
   LRSkill: {fileID: 0}
   SLSkill: {fileID: 0}
   FSkill: {fileID: 0}

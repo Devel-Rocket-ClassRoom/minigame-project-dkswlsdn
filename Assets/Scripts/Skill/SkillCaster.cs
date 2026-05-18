@@ -6,6 +6,7 @@ using UnityEngine;
 public class SkillCaster : MonoBehaviour
 {
     private CharacterMovement movement;
+    private CharacterAim aim;
     private StateManager state;
     private Character character;
     private CharacterAnchor anchor;
@@ -25,6 +26,7 @@ public class SkillCaster : MonoBehaviour
     private void Awake()
     {
         movement = GetComponent<CharacterMovement>();
+        aim = GetComponent<CharacterAim>();
         state = GetComponent<StateManager>();
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
