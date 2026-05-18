@@ -124,6 +124,8 @@ public abstract class CharacterMovement : MonoBehaviour
             return;
         }
 
+        if (method.startToMove) verticalVelocity = 0f;
+
         this.method = method;
         skillEndTime = time + Time.time;
         isFreeMoveEnabled = method.canFreeMove;
@@ -222,7 +224,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     friction = 6f;
                     break;
                 case HitReactionType.Airborne:
-                    transform.Translate(Vector3.up * 0.5f);
+                    transform.Translate(Vector3.up * 0.1f);
                     var h = hit.airborneForce;
                     h.y = 0;
                     horizontalVelocity = dir * h.x;

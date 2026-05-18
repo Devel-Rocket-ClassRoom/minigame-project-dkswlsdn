@@ -21,7 +21,7 @@ MonoBehaviour:
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 5
+    distance: 7
     neutralDistance: 0
     backwardDistance: 0
     followTerrain: 0
@@ -33,11 +33,11 @@ MonoBehaviour:
     minJumpHeight: 0
     regularTime: 0
     yawLimit: 0
-    cameraLocked: 0
+    cameraLocked: 1
     lookSpeedLimit: 0
   attack: []
   useGrab: 0
-  actionTime: 0.4
+  actionTime: 0.2
   minTransitionTime: 0
   maxTransitionTime: 0
   transitions:
@@ -45,4 +45,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
     nextAction: {fileID: 11400000, guid: 564bba050f62ef94fa11c57fc90c2aa7, type: 2}
     immediateTransition: 1
-  autoTransition: {fileID: 0}
+  autoTransition: {fileID: 11400000, guid: 9220e1606c18d674f9ef6562b697e7e5, type: 2}

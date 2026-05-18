@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class Attack : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class Attack : MonoBehaviour
             DeActivate();
         if (HitInfo.movementType == AttackMovementMethod.FollowCharacter)
         {
-            transform.position = HitInfo.info.origin.position + HitInfo.positionOffset;
+            transform.position = HitInfo.info.origin.position + HitInfo.info.origin.TransformVector(HitInfo.positionOffset); ;
         }
         else if (HitInfo.movementType == AttackMovementMethod.Linear)
         {

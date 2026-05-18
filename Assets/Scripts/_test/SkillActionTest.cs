@@ -22,6 +22,7 @@ public class SkillActionTest : MonoBehaviour
         PlayerMovement.action.Player.SkillL.performed += LSkill;
         PlayerMovement.action.Player.SkillR.performed += RSkill;
         PlayerMovement.action.Player.SkillLR.performed += LRSkill;
+        PlayerMovement.action.Player.Space.performed += SpaceSkill;
     }
 
     public void LSkill(CallbackContext context)
@@ -37,5 +38,10 @@ public class SkillActionTest : MonoBehaviour
     public void LRSkill(CallbackContext context)
     {
         caster.Cast(skill3);
+    }
+
+    public void SpaceSkill(CallbackContext context)
+    {
+        caster.Cast(skill4);
     }
 }

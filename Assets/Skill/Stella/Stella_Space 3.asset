@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: Eva_R 1
+  m_Name: Stella_Space 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
-  actionId: 1
+  actionId: 2
   movementMethod:
     calcType: 0
     gravity: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 15
+    distance: 4
     neutralDistance: 0
     backwardDistance: 0
     followTerrain: 0
@@ -29,34 +29,34 @@ MonoBehaviour:
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
-    jumpHeight: 0
+    jumpHeight: 6
     minJumpHeight: 0
-    regularTime: 0
+    regularTime: 0.7
     yawLimit: 0
-    cameraLocked: 1
-    lookSpeedLimit: 0
+    cameraLocked: 0
+    lookSpeedLimit: 20
   attack:
   - info:
       origin: {fileID: 0}
-      damage: 0
-      reaction: 0
+      damage: 1
+      reaction: 2
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: 0, y: 0}
+      airborneForce: {x: 5, y: 15}
       forceDirectionType: 0
       activateTime: 0.5
       isDestroyOnCanceled: 0
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: -6511346260383199460, guid: 9d197006e517abb41ab95bc8e5a66951, type: 3}
-    preDelay: 0.7
-    isGrab: 1
-    positionOffset: {x: 0, y: 0, z: 0}
+    hitbox: {fileID: 2535085328157878388, guid: 496436e22cbf19d47bc66b0d85f363c9, type: 3}
+    preDelay: 0
+    isGrab: 0
+    positionOffset: {x: 0, y: 0, z: 1}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    movementType: 0
-  useGrab: 1
-  actionTime: 1.4
+    movementType: 1
+  useGrab: 0
+  actionTime: 0.7
   minTransitionTime: 0
   maxTransitionTime: 0
   transitions: []
-  autoTransition: {fileID: 11400000, guid: efcf38a164d576d4c970c29895b83853, type: 2}
+  autoTransition: {fileID: 0}

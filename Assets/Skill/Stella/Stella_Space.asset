@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Stella_Space
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   skillName: 
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 1672cfcd70419344ea3193cc7a953419, type: 2}
   transitions: []

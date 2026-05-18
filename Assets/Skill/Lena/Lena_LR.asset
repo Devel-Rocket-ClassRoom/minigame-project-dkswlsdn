@@ -15,4 +15,12 @@ MonoBehaviour:
   skillName: 
   actions:
   - {fileID: 11400000, guid: 461ea9f5ac946d7498f684aebaf1c4e8, type: 2}
-  transitions: []
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 09cc93eb5b030ca4091436f0a9de53b4, type: 2}
+    nextAction: {fileID: 11400000, guid: 461ea9f5ac946d7498f684aebaf1c4e8, type: 2}
+    immediateTransition: 0
+  - conditions:
+    - {fileID: 11400000, guid: 4e62a8dbb0d51a246ac720842cf830e9, type: 2}
+    nextAction: {fileID: 11400000, guid: 461ea9f5ac946d7498f684aebaf1c4e8, type: 2}
+    immediateTransition: 0

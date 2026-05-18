@@ -39,10 +39,12 @@ public class SkillCaster : MonoBehaviour
         state.onKnockdown += OnCanceled;
 
         activateAttack = new List<Attack>();
+        context = new SkillContext();
     }
 
     private void Update()
     {
+        context.spendTime += Time.deltaTime;
         activateAttack.RemoveAll(atk => atk == null);
 
         foreach (var atk in activateAttack)
@@ -65,8 +67,7 @@ public class SkillCaster : MonoBehaviour
 
     public void Cast(Skill skill)
     {
-        context = new SkillContext();
-        currentSkill = skill;
+        if (skill == null) return;
 
         if (skill.transitions.Count > 0)
         {
@@ -74,7 +75,10 @@ public class SkillCaster : MonoBehaviour
             {
                 if (AllConditionIsMet(skill.transitions[i]))
                 {
+                    OnCanceled();
                     state.ChangeState(CharacterState.Skill);
+                    context = new SkillContext();
+                    currentSkill = skill;
                     ExecuteAction(skill.transitions[i].nextAction);
                     break;
                 }
@@ -84,7 +88,10 @@ public class SkillCaster : MonoBehaviour
         {
             if (state.CanMove)
             {
+                OnCanceled();
                 state.ChangeState(CharacterState.Skill);
+                context = new SkillContext();
+                currentSkill = skill;
                 ExecuteAction(skill.actions[0]);
             }
         }
@@ -93,6 +100,7 @@ public class SkillCaster : MonoBehaviour
     public void ExecuteAction(SkillAction action)
     {
         currentAction = action;
+        context.current = action;
         actionTimer = action.actionTime + Time.time;
         minTransitionTimer = action.minTransitionTime + Time.time;
         context.wasDamagedInAction = false;
@@ -230,6 +238,8 @@ public class SkillCaster : MonoBehaviour
 
 public class SkillContext
 {
+    public float spendTime;
+    public SkillAction current;
     public SkillAction next;
     public bool isHit;
     public int hitCount;

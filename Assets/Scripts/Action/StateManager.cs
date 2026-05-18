@@ -144,6 +144,10 @@ public class StateManager : MonoBehaviour
                 {
                     knockdownTimer += KNOCKDOWN_EXTEND_AMOUNT;
                 }
+                else if (state == CharacterState.Airborne)
+                {
+
+                }
                 else
                 {
                     ChangeState(CharacterState.HitStun);

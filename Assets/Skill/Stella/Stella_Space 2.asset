@@ -16,12 +16,12 @@ MonoBehaviour:
   movementMethod:
     calcType: 0
     gravity: 0
-    friction: 0
+    friction: 3
     startToMove: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 4
+    distance: 1
     neutralDistance: 0
     backwardDistance: 0
     followTerrain: 0
@@ -29,34 +29,20 @@ MonoBehaviour:
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
-    jumpHeight: 6
+    jumpHeight: 0
     minJumpHeight: 0
-    regularTime: 0.7
+    regularTime: 0
     yawLimit: 0
-    cameraLocked: 0
+    cameraLocked: 1
     lookSpeedLimit: 0
-  attack:
-  - info:
-      origin: {fileID: 0}
-      damage: 1
-      reaction: 2
-      stunDuration: 0
-      stunForce: 0
-      airborneForce: {x: 5, y: 10}
-      forceDirectionType: 0
-      activateTime: 0.5
-      isDestroyOnCanceled: 0
-      isReleaseGrab: 0
-      projectileSpeed: 0
-    hitbox: {fileID: 2535085328157878388, guid: 496436e22cbf19d47bc66b0d85f363c9, type: 3}
-    preDelay: 0
-    isGrab: 0
-    positionOffset: {x: 0, y: 0, z: 1}
-    rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    movementType: 1
+  attack: []
   useGrab: 0
-  actionTime: 0
+  actionTime: 0.2
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
+    nextAction: {fileID: 11400000, guid: 564bba050f62ef94fa11c57fc90c2aa7, type: 2}
+    immediateTransition: 1
   autoTransition: {fileID: 0}
