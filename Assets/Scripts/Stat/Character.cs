@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
     public PlayerCamera Camera { get; private set; }
     public CharacterAim Aim { get; private set; }
     public StateManager State { get; private set; }
+    public CharacterCommander Commander { get; private set; }
 
 
     private void Awake()
@@ -28,5 +29,6 @@ public class Character : MonoBehaviour
         Camera = GetComponent<PlayerCamera>();
         Aim = GetComponent<CharacterAim>();
         State = GetComponent<StateManager>();
+        Commander = GetComponent<CharacterCommander>();
     }
 }
