@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public enum ConditionInput
 {
@@ -26,26 +25,7 @@ public class InputCondition : SkillCondition
 
     public override bool IsMet(Character character, SkillContext context)
     {
-        var p = PlayerMovement.Action.Player;
-
-        InputAction action = input switch
-        {
-            ConditionInput.MoveForward  => p.MoveForward,
-            ConditionInput.MoveBackward => p.MoveBackward,
-            ConditionInput.MoveLeft     => p.MoveLeft,
-            ConditionInput.MoveRight    => p.MoveRight,
-            ConditionInput.SkillL       => p.SkillL,
-            ConditionInput.SkillR       => p.SkillR,
-            ConditionInput.SkillLR      => p.SkillLR,
-            ConditionInput.SkillSL      => p.SkillSL,
-            ConditionInput.Space        => p.Space,
-            ConditionInput.F            => p.F,
-            ConditionInput.Q            => p.Q,
-            ConditionInput.E            => p.E,
-            _                           => null
-        };
-
-        if (action == null) return false;
-        return held ? action.IsPressed() : action.WasPressedThisFrame();
+        if (character.Commander == null) return false;
+        return character.Commander.GetInput(input, held);
     }
 }
