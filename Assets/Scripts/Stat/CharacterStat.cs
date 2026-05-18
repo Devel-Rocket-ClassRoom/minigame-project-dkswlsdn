@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CharacterStat : MonoBehaviour
 {
+    [SerializeField] private CharacterAnchor anchor;
+
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
     [SerializeField] private float maxMp;
@@ -23,6 +25,12 @@ public class CharacterStat : MonoBehaviour
 
     [ContextMenu("Test TakeDamage")]
     private void TestTakeDamage() => TakeDamage(testHitInfo);
+
+    private void Awake()
+    {
+        anchor = GetComponent<CharacterAnchor>();
+        Debug.Log(anchor);
+    }
 
     private void Update()
     {
@@ -58,7 +66,7 @@ public class CharacterStat : MonoBehaviour
 
 
         health -= myHit.damage;
-
+        DamagePopupManager.instance?.Popup(myHit.damage, anchor.head.position);
 
         if (health <= 0)
         {
@@ -98,6 +106,8 @@ public class AttackInfo
 
     [HideInInspector]
     public Transform origin;
+    [HideInInspector]
+    public int id;
     public float damage;
 
     public HitReactionType reaction;

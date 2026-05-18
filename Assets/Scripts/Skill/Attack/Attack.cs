@@ -15,11 +15,12 @@ public class Attack : MonoBehaviour
     public bool IsHit { get; private set; }
     public event Action<Character> onHit;
 
-    public void Activate(AttackMethod attackInfo, Transform origin, int team)
+    public void Activate(AttackMethod attackInfo, Transform origin, int team, int id)
     {
         hitTarget.Clear();
         IsHit = false;
         HitInfo = attackInfo;
+        HitInfo.info.id = id;
         HitInfo.info.origin = origin;
         transform.position = origin.position + origin.TransformVector(attackInfo.positionOffset);
         transform.forward = origin.forward;

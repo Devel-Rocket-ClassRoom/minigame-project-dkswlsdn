@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     public CharacterAim Aim { get; private set; }
     public StateManager State { get; private set; }
     public CharacterCommander Commander { get; private set; }
+    public CharacterAnchor Anchor { get; private set; }
 
 
     private void Awake()
@@ -30,5 +31,6 @@ public class Character : MonoBehaviour
         Aim = GetComponent<CharacterAim>();
         State = GetComponent<StateManager>();
         Commander = GetComponent<CharacterCommander>();
+        Anchor = GetComponent<CharacterAnchor>();
     }
 }

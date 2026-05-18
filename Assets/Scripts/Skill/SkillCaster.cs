@@ -175,7 +175,7 @@ public class SkillCaster : MonoBehaviour
             yield return new WaitForSeconds(attack.preDelay);
 
             var instance = Instantiate(attack.hitbox);
-            instance.Activate(attack, transform, character.team);
+            instance.Activate(attack, transform, character.team, character.Id);
             activateAttack.Add(instance);
 
             var capturedContext = context;
