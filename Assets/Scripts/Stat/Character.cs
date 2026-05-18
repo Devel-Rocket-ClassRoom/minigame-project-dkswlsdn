@@ -6,12 +6,6 @@ public class Character : MonoBehaviour
     public int Id;
     public int team;
 
-    public Character()
-    {
-        team = id;
-        Id = id++;
-    }
-
     public CharacterStat Stat { get; private set; }
     public SkillCaster Caster { get; private set; }
     public CharacterMovement Movement { get; private set; }
@@ -32,5 +26,8 @@ public class Character : MonoBehaviour
         State = GetComponent<StateManager>();
         Commander = GetComponent<CharacterCommander>();
         Anchor = GetComponent<CharacterAnchor>();
+
+        team = id;
+        Id = id++;
     }
 }

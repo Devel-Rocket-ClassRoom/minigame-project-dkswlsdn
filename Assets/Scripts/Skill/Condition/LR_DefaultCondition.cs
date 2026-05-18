@@ -7,8 +7,6 @@ public class LR_DefaultCondition : SkillCondition
     {
         bool canMove = character.State.CanMove;
         bool isLSkill = context.current.actionId == 1 && context.spendTime <= 0.1f;
-        Debug.Log(canMove);
-        Debug.Log(isLSkill);
         return canMove || isLSkill;
     }
 }

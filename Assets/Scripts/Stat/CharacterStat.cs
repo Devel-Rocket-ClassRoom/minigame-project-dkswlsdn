@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterStat : MonoBehaviour
 {
-    [SerializeField] private CharacterAnchor anchor;
+    private CharacterAnchor anchor;
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
@@ -29,7 +29,6 @@ public class CharacterStat : MonoBehaviour
     private void Awake()
     {
         anchor = GetComponent<CharacterAnchor>();
-        Debug.Log(anchor);
     }
 
     private void Update()
@@ -66,7 +65,7 @@ public class CharacterStat : MonoBehaviour
 
 
         health -= myHit.damage;
-        DamagePopupManager.instance?.Popup(myHit.damage, anchor.head.position);
+        DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
 
         if (health <= 0)
         {

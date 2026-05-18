@@ -5,6 +5,7 @@ public class DamagePopupManager : MonoBehaviour
 {
     public static DamagePopupManager instance;
     [SerializeField] private TextMeshProUGUI damagePrefab;
+    [SerializeField] private Canvas canvas;
     private Camera cam;
 
     private void Awake()
@@ -23,8 +24,11 @@ public class DamagePopupManager : MonoBehaviour
 
     public void Popup(float damage, Vector3 head)
     {
-        var g = Instantiate(damagePrefab);
+        var g = Instantiate(damagePrefab, canvas.transform);
         g.text = ((int)damage).ToString();
-        g.transform.position = cam.WorldToScreenPoint(head + Vector3.up);
+        var point = cam.WorldToScreenPoint(head);
+        point.z = 0f;
+        g.transform.position = point;
+        Debug.Log(damage);
     }
 }

@@ -21,7 +21,7 @@ public class StateManager : MonoBehaviour
     public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Knockdown || state == CharacterState.Groggy
         || state == CharacterState.Grapped || state == CharacterState.WakeUp || state == CharacterState.Dead;
 
-    [SerializeField] private CharacterStat stat;
+    private CharacterStat stat;
     public Animator modelAnimation;
 
     public event Action onIdle;
@@ -47,6 +47,7 @@ public class StateManager : MonoBehaviour
 
     private void Awake()
     {
+        stat = GetComponent<CharacterStat>();
         stat.onDamageTake += OnDamageTaken;
         
     }
