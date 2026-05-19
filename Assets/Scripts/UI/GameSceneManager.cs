@@ -40,6 +40,7 @@ public class GameSceneManager : MonoBehaviour
     public void LoadBaseCamp()
     {
         LoadScene(SceneName.BaseCamp);
+        SaveManager.instance.LoadRequest(1);
     }
 }
 

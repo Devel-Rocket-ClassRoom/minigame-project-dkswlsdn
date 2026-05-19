@@ -2,10 +2,22 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class SaveDataV1
+public abstract class SaveData
 {
-    public float PlayTime;
-    public Weapon EquipedWeapon;
-    public Dictionary<int, bool> UnlockedWeaponList;
+    public abstract SaveData NextVersion();
+}
+
+[Serializable]
+public class SaveDataV1 : SaveData
+{
+    public int version = 1;
+
+    public float playTime;
+    public string equipedWeapon;
+    public List<string> unlockedWeaponList;
+
+    public override SaveData NextVersion()
+    {
+        throw new NotImplementedException();
+    }
 }
