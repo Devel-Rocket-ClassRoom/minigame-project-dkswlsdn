@@ -34,6 +34,11 @@ public class MenuManager : MonoBehaviour
         else playerAction.Enable();
     }
 
+    public void TitleOpen()
+    {
+        OpenMenu(mainPanel);
+    }
+
     public void OpenMenu(MenuPanel panel, bool isBack = false)
     {
         if (current != null)
