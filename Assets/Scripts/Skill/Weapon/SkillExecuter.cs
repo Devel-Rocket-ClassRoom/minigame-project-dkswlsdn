@@ -52,8 +52,10 @@ public class SkillExecuter : MonoBehaviour
             if (!commander.GetInput(inputs[i - 1], false)) continue;
 
             if (caster.Cast(skills[i]))
+            {
                 cooldowns[i] = skills[i].cooldown;
-            break;
+                break;
+            }
         }
 
         if (skills[0] != null && cooldowns[0] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
