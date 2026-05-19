@@ -2,7 +2,16 @@ using UnityEngine;
 
 public class SkillExecuter : MonoBehaviour
 {
-    public Weapon testWeapon;
+    private Weapon currentWeapon;
+    public Weapon CurrentWeapon
+    {
+        get => currentWeapon;
+        set
+        {
+            currentWeapon = value;
+            Init(currentWeapon);
+        }
+    }
 
     private SkillCaster caster;
     private CharacterCommander commander;
@@ -25,7 +34,7 @@ public class SkillExecuter : MonoBehaviour
     {
         caster = GetComponent<SkillCaster>();
         commander = GetComponent<CharacterCommander>();
-        Init(testWeapon);
+        Init(currentWeapon);
     }
 
     public void Init(Weapon weapon)

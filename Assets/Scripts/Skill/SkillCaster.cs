@@ -68,7 +68,6 @@ public class SkillCaster : MonoBehaviour
     public bool Cast(Skill skill)
     {
         if (skill == null) return false;
-        Debug.Log(skill.skillName);
 
         if (skill.transitions.Count > 0)
         {

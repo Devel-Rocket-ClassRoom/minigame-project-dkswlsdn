@@ -10,7 +10,7 @@ public class SaveManager : MonoBehaviour
     public int currentVersion;
 
     private int currentSlot = 0;
-    private SaveDataVC currentSave;
+    public SaveDataVC CurrentSave { get; private set; }
 
     private string mainPath;
     private readonly string[] fileName =
@@ -37,7 +37,7 @@ public class SaveManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             Debug.Log(mainPath);
-            Debug.Log(currentSave.version);
+            Debug.Log(CurrentSave.version);
         }
     }
 
@@ -48,6 +48,7 @@ public class SaveManager : MonoBehaviour
             var path = Path.Combine(mainPath, fileName[currentSlot]);
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(path, json);
+            CurrentSave = data;
         }
         catch (Exception e)
         {
@@ -66,20 +67,20 @@ public class SaveManager : MonoBehaviour
             var path = Path.Combine(mainPath, fileName[slot]);
             if (!File.Exists(path))
             {
-                currentSave = new SaveDataVC();
-                return currentSave;
+                CurrentSave = new SaveDataVC();
+                return CurrentSave;
             }
 
             var json = File.ReadAllText(path);
             var data = JsonConvert.DeserializeObject<SaveDataVC>(json);
-            currentSave = data;
+            CurrentSave = data;
             return data;
         }
         catch (Exception e)
         {
             Debug.LogError($"불러오기 실패: {e.Message}");
-            currentSave = new SaveDataVC();
-            return currentSave;
+            CurrentSave = new SaveDataVC();
+            return CurrentSave;
         }
     }
 }
