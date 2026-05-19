@@ -11,8 +11,6 @@ public class SkillCaster : MonoBehaviour
     private Character character;
     private CharacterAnchor anchor;
 
-    private Skill currentSkill;
-    private SkillAction currentAction;
     private SkillContext context;
 
     private float actionTimer;
@@ -20,7 +18,7 @@ public class SkillCaster : MonoBehaviour
 
     private List<Attack> activateAttack;
 
-    public event Action<MovementMethod, float> onActionStart;
+    public event Action<SkillAction> onActionStart;
     public event Action onSkillEnd;
 
     private void Awake()
@@ -57,7 +55,7 @@ public class SkillCaster : MonoBehaviour
         CheckTransition();
         CheckHitbox();
 
-        if (currentAction != null && currentAction.useGrab && context?.grabTarget.Count > 0)
+        if (context.current != null && context.current.useGrab && context?.grabTarget.Count > 0)
         {
             foreach (var target in context.grabTarget)
             {
@@ -80,7 +78,6 @@ public class SkillCaster : MonoBehaviour
                     OnCanceled();
                     state.ChangeState(CharacterState.Skill);
                     context = new SkillContext();
-                    currentSkill = skill;
                     ExecuteAction(skill.transitions[i].nextAction);
                     break;
                 }
@@ -93,7 +90,6 @@ public class SkillCaster : MonoBehaviour
                 OnCanceled();
                 state.ChangeState(CharacterState.Skill);
                 context = new SkillContext();
-                currentSkill = skill;
                 ExecuteAction(skill.actions[0]);
             }
         }
@@ -101,7 +97,7 @@ public class SkillCaster : MonoBehaviour
 
     public void ExecuteAction(SkillAction action)
     {
-        currentAction = action;
+        context.targetPoint = aim.GetLookAtVector(action.targetting, transform, action.aimDistance, out _);
         context.current = action;
         actionTimer = action.actionTime + Time.time;
         minTransitionTimer = action.minTransitionTime + Time.time;
@@ -111,24 +107,26 @@ public class SkillCaster : MonoBehaviour
         StopCoroutine(nameof(CoSkillAttack));
         StartCoroutine(nameof(CoSkillAttack));
 
-        onActionStart.Invoke(action.movementMethod, action.actionTime);
+        onActionStart.Invoke(action);
     }
 
     public void CheckTransition()
     {
-        if (currentAction == null) return;
+        if (context.current == null) return;
 
         if (Time.time > minTransitionTimer && Time.time < actionTimer)
         {
             if (context.next == null)
             {
-                foreach (var transition in currentAction.transitions)
+                foreach (var transition in context.current.transitions)
                 {
                     if (AllConditionIsMet(transition))
                     {
                         if (transition.immediateTransition)
                         {
-                            ExecuteAction(transition.nextAction);
+                            if (transition.nextAction != null)
+                                ExecuteAction(transition.nextAction);
+                            else SkillEnd();
                             return;
                         }
                         else
@@ -146,19 +144,23 @@ public class SkillCaster : MonoBehaviour
                 context.next = null;
                 ExecuteAction(next);
             }
-            else if (currentAction.autoTransition != null)
+            else if (context.current.autoTransition != null)
             {
-                ExecuteAction(currentAction.autoTransition);
+                ExecuteAction(context.current.autoTransition);
             }
             else
             {
-                ReleaseGrab(CharacterState.Idle);
-                currentAction = null;
-                currentSkill = null;
-                state.ChangeState(CharacterState.Idle);
-                onSkillEnd.Invoke();
+                SkillEnd();
             }
         }
+    }
+
+    private void SkillEnd()
+    {
+        ReleaseGrab(CharacterState.Idle);
+        context.current = null;
+        state.ChangeState(CharacterState.Idle);
+        onSkillEnd.Invoke();
     }
 
     public bool AllConditionIsMet(SkillTransition transition)
@@ -172,7 +174,7 @@ public class SkillCaster : MonoBehaviour
 
     IEnumerator CoSkillAttack()
     {
-        foreach (var attack in currentAction.attack)
+        foreach (var attack in context.current.attack)
         {
             yield return new WaitForSeconds(attack.preDelay);
 
@@ -218,8 +220,7 @@ public class SkillCaster : MonoBehaviour
     {
         ReleaseGrab(CharacterState.Idle);
 
-        currentAction = null;
-        currentSkill = null;
+        context.current = null;
         StopAllCoroutines();
 
         for (int i = activateAttack.Count - 1; i >= 0; i--)
@@ -240,12 +241,18 @@ public class SkillCaster : MonoBehaviour
 
 public class SkillContext
 {
+    // 현재 스킬
     public float spendTime;
-    public SkillAction current;
-    public SkillAction next;
     public bool isHit;
     public int hitCount;
+    public float cost;
     public List<Character> hitTarget = new List<Character>();
     public List<Character> grabTarget = new List<Character>();
     public bool wasDamagedInAction;
+
+    // 현재 액션
+    public Transform target;
+    public Vector3 targetPoint;
+    public SkillAction current;
+    public SkillAction next;
 }

@@ -26,6 +26,7 @@ MonoBehaviour:
     backwardDistance: 0
     followTerrain: 0
     useInputDirection: 0
+    isStaticDirection: 1
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
@@ -38,6 +39,7 @@ MonoBehaviour:
   attack:
   - info:
       origin: {fileID: 0}
+      id: 1
       damage: 1
       reaction: 2
       stunDuration: 0
@@ -54,9 +56,14 @@ MonoBehaviour:
     positionOffset: {x: 0, y: 0, z: 1}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
     movementType: 1
+  aimDistance: 0
   useGrab: 0
   actionTime: 0.7
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: b30b3ec54f5ecd4448f2e22346bee148, type: 2}
+    nextAction: {fileID: 0}
+    immediateTransition: 0
   autoTransition: {fileID: 0}

@@ -1,10 +1,11 @@
+using System.Net;
 using UnityEngine;
 
 public class CharacterAim : MonoBehaviour
 {
     private Camera cam;
     [SerializeField] private PlayerCamera playerCamera;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask stiffLayer;
     [SerializeField] private Transform aim;
 
@@ -18,92 +19,115 @@ public class CharacterAim : MonoBehaviour
         aim.position = cam.ViewportToScreenPoint(new Vector3(0.5f, playerCamera.VerticalRate(), 0));
     }
 
-    public float GetLookAtDistance(float distance, out float y)
+    public float GetLookAtDistance(TargettingMethod method, float distance, out float y)
     {
-        Ray ray = cam.ScreenPointToRay(aim.position);
+        Vector3 targetPos = GetLookAtVector(method, transform, distance, out y);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, distance * 2f, groundLayer))
+        Vector3 directionToTarget = targetPos - transform.position;
+        directionToTarget.y = 0;
+
+        float dot = Vector3.Dot(transform.forward, directionToTarget.normalized);
+
+        if (dot > 0)
         {
-            Vector3 targetPos = hit.point;
-            y = hit.point.y;
+            float horizontalDist = directionToTarget.magnitude;
+            return Mathf.Min(horizontalDist, distance);
+        }
+        else
+        {
+            y = transform.position.y;
+            return 0f;
+        }
+    }
 
-            Vector3 directionToTarget = (targetPos - transform.position);
-            directionToTarget.y = 0;
+    public Vector3 GetLookAtVector(TargettingMethod method, Transform origin, float distance, out float y)
+{
+    Ray aimRay = cam.ScreenPointToRay(aim.position);
+    float current = transform.position.y;
+    distance = distance + 10f;
 
-            float dot = Vector3.Dot(transform.forward, directionToTarget.normalized);
-
-            if (dot > 0)
+    if (Physics.Raycast(aimRay, out RaycastHit aimHit, distance, layer))
+    {
+        if (method.useOnlyCamera)
+        {
+            y = aimHit.point.y - current;
+            return aimHit.point;
+        }
+        else
+        {
+            // 맞은 지점에서 아래로 레이
+            if (Physics.Raycast(aimHit.point + Vector3.up * 0.1f, Vector3.down, out RaycastHit downHit, Mathf.Infinity, layer))
             {
-                float horizontalDist = directionToTarget.magnitude;
-
-                if (horizontalDist < distance)
+                if (method.isHighAngle)
                 {
-                    return horizontalDist;
+                    y = downHit.point.y - current;
+                    return downHit.point;
                 }
                 else
                 {
-                    return distance;
+                    // origin에서 downHit 지점까지 레이
+                    Vector3 dir = (downHit.point - origin.position).normalized;
+                    float dist = Vector3.Distance(origin.position, downHit.point);
+
+                    if (Physics.Raycast(origin.position, dir, out RaycastHit charHit, dist, layer))
+                    {
+                        y = charHit.point.y - current;
+                        return charHit.point;
+                    }
+                    else
+                    {
+                        y = downHit.point.y - current;
+                        return downHit.point;
+                    }
                 }
             }
             else
             {
-                y = transform.position.y;
-                return 0f;
+                throw new System.Exception("지형을 찾을 수 없음");
             }
-        }
-        else
-        {
-            Ray forwardRay = new Ray(transform.position, transform.forward);
-
-            if (Physics.Raycast(forwardRay, out RaycastHit forwardHit, distance, stiffLayer))
-            {
-                y = forwardHit.point.y;
-            }
-            else
-            {
-                y = transform.position.y;
-            }
-
-            return distance;
         }
     }
-
-    public Vector3 GetLookAtVector(MovementMethod method, Transform character, out float y)
+    else
     {
-        Ray aimRay = cam.ScreenPointToRay(aim.position);
+        Vector3 endPoint = aimRay.origin + aimRay.direction * distance;
 
-        if (Physics.Raycast(aimRay, out RaycastHit aimHit, method.distance * 2f, groundLayer))
+        if (method.useOnlyCamera)
         {
-            Vector3 dir = (aimHit.point - character.position).normalized;
-            Ray charRay = new Ray(character.position, dir);
-
-            if (Physics.Raycast(charRay, out RaycastHit charHit, method.distance, groundLayer))
-            {
-                y = charHit.point.y;
-                return charHit.point;
-            }
-            else
-            {
-                Vector3 endPoint = character.position + dir * method.distance;
-                if (Physics.Raycast(endPoint, Vector3.down, out RaycastHit downHit, Mathf.Infinity, groundLayer))
-                {
-                    y = downHit.point.y;
-                    return downHit.point;
-                }
-                y = endPoint.y;
-                return endPoint;
-            }
-        }
-        else
-        {
-            Vector3 endPoint = aimRay.origin + aimRay.direction * method.distance * 2f;
-            if (Physics.Raycast(endPoint, Vector3.down, out RaycastHit downHit, Mathf.Infinity, groundLayer))
-            {
-                y = downHit.point.y;
-                return downHit.point;
-            }
-            y = endPoint.y;
+            y = endPoint.y - current;
             return endPoint;
         }
+        else
+        {
+            if (Physics.Raycast(endPoint, Vector3.down, out RaycastHit downHit, Mathf.Infinity, layer))
+            {
+                if (method.isHighAngle)
+                {
+                    y = downHit.point.y - current;
+                    return downHit.point;
+                }
+                else
+                {
+                    // origin에서 downHit 지점까지 레이
+                    Vector3 dir = (downHit.point - origin.position).normalized;
+                    float dist = Vector3.Distance(origin.position, downHit.point);
+
+                    if (Physics.Raycast(origin.position, dir, out RaycastHit charHit, dist, layer))
+                    {
+                        y = charHit.point.y - current;
+                        return charHit.point;
+                    }
+                    else
+                    {
+                        y = downHit.point.y - current;
+                        return downHit.point;
+                    }
+                }
+            }
+            else
+            {
+                throw new System.Exception("지형을 찾을 수 없음");
+            }
+        }
     }
+}
 }

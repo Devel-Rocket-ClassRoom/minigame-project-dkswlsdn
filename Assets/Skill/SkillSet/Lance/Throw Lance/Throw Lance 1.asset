@@ -16,7 +16,7 @@ MonoBehaviour:
   movementMethod:
     calcType: 0
     gravity: 20
-    friction: 100
+    friction: 5
     startToMove: 1
     directionReverse: 0
     rightSide: 0
@@ -26,6 +26,7 @@ MonoBehaviour:
     backwardDistance: 0
     followTerrain: 1
     useInputDirection: 0
+    isStaticDirection: 1
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
@@ -36,6 +37,7 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack: []
+  aimDistance: 0
   useGrab: 0
   actionTime: 1
   minTransitionTime: 0

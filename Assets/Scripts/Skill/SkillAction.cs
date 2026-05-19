@@ -8,6 +8,8 @@ public class SkillAction : ScriptableObject
     public int actionId;
     public MovementMethod movementMethod;
     public List<AttackMethod> attack;
+    public TargettingMethod targetting;
+    public float aimDistance;
     public bool useGrab;
     public float actionTime;
     public float minTransitionTime;
@@ -43,6 +45,7 @@ public struct MovementMethod
     public float backwardDistance;
     public bool followTerrain;
     public bool useInputDirection;
+    public bool isStaticDirection;
 
     [Header("높이차이")]
     public float maxAltitude;
@@ -72,4 +75,10 @@ public struct AttackMethod
     public Vector3 positionOffset;
     public Quaternion rotationOffset;
     public AttackMovementMethod movementType;
+}
+
+public struct TargettingMethod
+{
+    public bool isHighAngle;
+    public bool useOnlyCamera;
 }

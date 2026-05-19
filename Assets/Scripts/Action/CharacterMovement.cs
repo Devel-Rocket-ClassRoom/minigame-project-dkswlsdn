@@ -21,9 +21,10 @@ public abstract class CharacterMovement : MonoBehaviour
     // 현재 물리 정보
     protected Vector3 inputDirection;
     private Vector3 localDirection;
+    private Vector3 staticLocalDirection;
     private Vector3 horizontalVelocity;
     [SerializeField] private float verticalVelocity;
-    private float skillHorizontalSpeed;
+    private float horizontalSpeed;
     protected Vector3 surfaceNormal;
     protected bool isFreeMoveEnabled = true;
 
@@ -91,19 +92,24 @@ public abstract class CharacterMovement : MonoBehaviour
 
     protected void ApplyFriction()
     {
-        float horizontalSpeed = horizontalVelocity.magnitude;
-
         if (horizontalSpeed > 0.01f)
         {
             float reduction = friction * Time.deltaTime;
-            float newSpeed = Mathf.Max(horizontalSpeed - reduction, 0);
-            horizontalVelocity = horizontalVelocity.normalized * newSpeed;
+            horizontalSpeed = Mathf.Max(horizontalSpeed - reduction, 0);
+            horizontalVelocity = horizontalVelocity.normalized * horizontalSpeed;
         }
     }
 
     private void SkillMove()
     {
-        horizontalVelocity = transform.TransformDirection(localDirection) * skillHorizontalSpeed;
+        if (method.isStaticDirection)
+        {
+            horizontalVelocity = staticLocalDirection * horizontalSpeed;
+        }
+        else
+        {
+            horizontalVelocity = transform.TransformDirection(localDirection) * horizontalSpeed;
+        }
 
         if (method.followTerrain)
         {
@@ -116,30 +122,35 @@ public abstract class CharacterMovement : MonoBehaviour
         }
     }
 
-    public void SkillMove(MovementMethod method, float time)
+    public void SkillMove(SkillAction action)
     {
+        var time = action.actionTime;
+
         if (time <= 0f)
         {
             Debug.LogError("ActionTime <= 0");
             return;
         }
 
-        if (method.startToMove) verticalVelocity = 0f;
+        var method = action.movementMethod;
+
 
         this.method = method;
         skillEndTime = time + Time.time;
         isFreeMoveEnabled = method.canFreeMove;
 
-        var direction = method.rightSide ? Vector3.right : Vector3.forward;
-        direction = method.directionReverse ? -direction : direction;
-
-        localDirection = method.useInputDirection ? inputDirection : direction;
+        localDirection = method.rightSide ? Vector3.right : Vector3.forward;
+        localDirection = method.directionReverse ? -localDirection : localDirection;
+        localDirection = method.useInputDirection ? inputDirection : localDirection;
+        staticLocalDirection = transform.TransformDirection(localDirection);
 
         if (method.startToMove)
         {
             float distance = method.distance;
             float targetY = float.MaxValue;
             float actionTime = 0f;
+
+            verticalVelocity = 0f;
 
             switch (method.calcType)
             {
@@ -156,7 +167,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     break;
                 case DistanceCalculateType.UseAim:
-                    distance = aim.GetLookAtDistance(distance, out targetY);
+                    distance = aim.GetLookAtDistance(action.targetting, distance, out targetY);
                     break;
                 case DistanceCalculateType.Mixed:
                     if (inputDirection.z < -0.01f)
@@ -165,7 +176,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     else
                     {
-                        distance = aim.GetLookAtDistance(distance, out targetY);
+                        distance = aim.GetLookAtDistance(action.targetting, distance, out targetY);
                     }
                     break;
             }
@@ -185,11 +196,11 @@ public abstract class CharacterMovement : MonoBehaviour
                 activeGravity = method.gravity;
             }
 
-            skillHorizontalSpeed = (distance / actionTime) + (0.5f * friction * actionTime);
+            horizontalSpeed = (distance / actionTime) + (0.5f * friction * actionTime);
         }
         else
         {
-            skillHorizontalSpeed = moveSpeed;
+            horizontalSpeed = moveSpeed;
         }
     }
 
@@ -346,4 +357,10 @@ public abstract class CharacterMovement : MonoBehaviour
     {
         rigid.MovePosition(worldPosition);
     }
+}
+
+public class MovementRequest
+{
+    public MovementMethod method;
+    public Vector3 point;
 }

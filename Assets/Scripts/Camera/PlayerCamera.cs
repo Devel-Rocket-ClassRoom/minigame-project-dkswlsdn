@@ -69,10 +69,10 @@ public class PlayerCamera : MonoBehaviour
         return x / (diff + offset);
     }
 
-    public void OnUseSkill(MovementMethod method, float time)
+    public void OnUseSkill(SkillAction action)
     {
-        hSpeed = method.lookSpeedLimit;
-        vSpeed = method.lookSpeedLimit;
+        hSpeed = action.movementMethod.lookSpeedLimit;
+        vSpeed = action.movementMethod.lookSpeedLimit;
     }
 
     public void ReturnOrigin()
