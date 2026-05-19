@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2213272448764118047}
   - component: {fileID: 3946770219924009707}
   - component: {fileID: 1028214832064434266}
+  - component: {fileID: 9220737540452151603}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -104,6 +105,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9220737540452151603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2253792557956101125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f48c4926a6592b4092667fedb201826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuPanel
+  close: {fileID: 5781838349665208768}
+  back: {fileID: 5719703658081239564}
 --- !u!1001 &3331174452747108170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,6 +224,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
   m_PrefabInstance: {fileID: 3331174452747108170}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5781838349665208768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9081371052879017610, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
+  m_PrefabInstance: {fileID: 3331174452747108170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6141983950440511480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &6141983950440511480 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8864773326878329010, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
@@ -364,3 +390,14 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5719703658081239564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9081371052879017610, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
+  m_PrefabInstance: {fileID: 3560089972313764998}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5359840631860624436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
