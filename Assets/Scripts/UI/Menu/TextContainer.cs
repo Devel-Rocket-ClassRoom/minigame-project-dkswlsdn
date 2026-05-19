@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ButtonTextContainer : MonoBehaviour
+public class TextContainer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tmp;
     [SerializeField] private string text;

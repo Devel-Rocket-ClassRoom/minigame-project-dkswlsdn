@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,7 @@ public class MenuManager : MonoBehaviour
     private InputAction action;
     private PlayerInputAction.PlayerActions playerAction;
     private bool isMenuOpen = false;
+    [SerializeField] private bool isMainAlwaysOpen;
 
 
     private void Awake()
@@ -44,7 +46,15 @@ public class MenuManager : MonoBehaviour
         if (current != null)
         {
             if (!isBack) prePanels.Push(current);
-            current.gameObject.SetActive(false);
+
+            if (isMainAlwaysOpen)
+            {
+                if (!current.Equals(mainPanel)) current.gameObject.SetActive(false);
+            }
+            else
+            {
+                current.gameObject.SetActive(false);
+            }
         }
         panel.gameObject.SetActive(true);
         current = panel;
@@ -56,8 +66,17 @@ public class MenuManager : MonoBehaviour
         current.gameObject.SetActive(false);
         current = null;
         isMenuOpen = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        
+        if (isMainAlwaysOpen)
+        {
+            current = mainPanel;
+            mainPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     public void BackMenu()
