@@ -59,6 +59,8 @@ public abstract class CharacterMovement : MonoBehaviour
         CheckGround();
         if (!isOnGround || verticalVelocity > 0f) verticalVelocity -= activeGravity * Time.fixedDeltaTime;
 
+        
+
         SetDirection();
 
         if (!state.CanNotMove)
@@ -84,6 +86,7 @@ public abstract class CharacterMovement : MonoBehaviour
 
     protected void FreeMove()
     {
+        horizontalSpeed = moveSpeed;
         Vector3 relativeDir = transform.TransformDirection(inputDirection.normalized);
         Vector3 slopeMoveDir = Vector3.ProjectOnPlane(relativeDir, surfaceNormal).normalized;
         localDirection = inputDirection;
@@ -120,6 +123,8 @@ public abstract class CharacterMovement : MonoBehaviour
         {
             horizontalVelocity = Vector3.zero;
         }
+
+        if (!isOnGround && method.useAltitudeModifire && !method.isVerticalSpeedAutoCalc) verticalVelocity = method.verticalSpeed;
     }
 
     public void SkillMove(SkillAction action)
@@ -155,6 +160,7 @@ public abstract class CharacterMovement : MonoBehaviour
             switch (method.calcType)
             {
                 case DistanceCalculateType.Fixed:
+                    aim.GetLookAtDistance(action.targetting, distance, out targetY);
                     break;
                 case DistanceCalculateType.UseInput:
                     if (Mathf.Abs(inputDirection.z) < 0.01f)
@@ -194,6 +200,11 @@ public abstract class CharacterMovement : MonoBehaviour
             {
                 actionTime = time;
                 activeGravity = method.gravity;
+            }
+
+            if (method.minAltitude < targetY && method.maxAltitude > targetY && method.useAltitudeModifire)
+            {
+                if (method.isVerticalSpeedAutoCalc) verticalVelocity = targetY / actionTime;
             }
 
             horizontalSpeed = (distance / actionTime) + (0.5f * friction * actionTime);

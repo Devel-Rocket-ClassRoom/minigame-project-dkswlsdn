@@ -10,44 +10,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: Lena_R 2
+  m_Name: JetKick 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
   movementMethod:
-    calcType: 3
-    gravity: 80
+    calcType: 0
+    gravity: 0
     friction: 0
     startToMove: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 30
+    distance: 0
     neutralDistance: 0
     backwardDistance: 0
     followTerrain: 0
     useInputDirection: 0
-    isStaticDirection: 1
+    isStaticDirection: 0
+    useAltitudeModifire: 0
     maxAltitude: 0
     minAltitude: 0
-    verticalSpeed: 0
-    jumpHeight: 8
+    verticalSpeed: -40
+    isVerticalSpeedAutoCalc: 0
+    jumpHeight: 0
     minJumpHeight: 0
-    regularTime: 1
+    regularTime: 0
     yawLimit: 0
     cameraLocked: 0
     lookSpeedLimit: 0
   attack: []
   targetting:
-    isHighAngle: 1
+    isHighAngle: 0
     useOnlyCamera: 0
   aimDistance: 0
   useGrab: 0
-  actionTime: 2
+  actionTime: 1
   minTransitionTime: 0
   maxTransitionTime: 0
   transitions:
   - conditions:
     - {fileID: 11400000, guid: b30b3ec54f5ecd4448f2e22346bee148, type: 2}
-    nextAction: {fileID: 11400000, guid: 5b755d773e0570e4f9b36e55a7b299fd, type: 2}
-    immediateTransition: 1
-  autoTransition: {fileID: 11400000, guid: 5b755d773e0570e4f9b36e55a7b299fd, type: 2}
+    nextAction: {fileID: 0}
+    immediateTransition: 0
+  autoTransition: {fileID: 0}

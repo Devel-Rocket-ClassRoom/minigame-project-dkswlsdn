@@ -48,9 +48,11 @@ public struct MovementMethod
     public bool isStaticDirection;
 
     [Header("높이차이")]
+    public bool useAltitudeModifire;
     public float maxAltitude;
     public float minAltitude;
     public float verticalSpeed;
+    public bool isVerticalSpeedAutoCalc;
 
     [Header("점프")]
     public float jumpHeight;
@@ -77,6 +79,7 @@ public struct AttackMethod
     public AttackMovementMethod movementType;
 }
 
+[Serializable]
 public struct TargettingMethod
 {
     public bool isHighAngle;

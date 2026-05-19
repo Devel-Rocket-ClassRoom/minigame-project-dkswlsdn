@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4366895384797361925}
   - component: {fileID: 5268671981195612778}
   - component: {fileID: 2916882112603110621}
-  - component: {fileID: 4906507500279071067}
+  - component: {fileID: 8372076317205111726}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -282,7 +282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StateManager
   state: 0
-  stat: {fileID: 0}
   modelAnimation: {fileID: 0}
   knockdownTimer: 0
 --- !u!114 &5516006700171324602
@@ -360,7 +359,7 @@ MonoBehaviour:
   moveSpeed: 1
   verticalVelocity: 0
   isOnGround: 0
---- !u!114 &4906507500279071067
+--- !u!114 &8372076317205111726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,9 +368,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5591380644818824215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62ef803583a2e27428bcd44f18e902a6, type: 3}
+  m_Script: {fileID: 11500000, guid: e1fee756013942c4d85e03cfaf03d3f6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCommander
+  m_EditorClassIdentifier: Assembly-CSharp::NPCCommander
 --- !u!1 &6722033091085766767
 GameObject:
   m_ObjectHideFlags: 0

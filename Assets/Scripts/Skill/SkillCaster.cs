@@ -65,9 +65,10 @@ public class SkillCaster : MonoBehaviour
         }
     }
 
-    public void Cast(Skill skill)
+    public bool Cast(Skill skill)
     {
-        if (skill == null) return;
+        if (skill == null) return false;
+        Debug.Log(skill.skillName);
 
         if (skill.transitions.Count > 0)
         {
@@ -79,9 +80,10 @@ public class SkillCaster : MonoBehaviour
                     state.ChangeState(CharacterState.Skill);
                     context = new SkillContext();
                     ExecuteAction(skill.transitions[i].nextAction);
-                    break;
+                    return true;
                 }
             }
+            return false;
         }
         else
         {
@@ -91,7 +93,9 @@ public class SkillCaster : MonoBehaviour
                 state.ChangeState(CharacterState.Skill);
                 context = new SkillContext();
                 ExecuteAction(skill.actions[0]);
+                return true;
             }
+            return false;
         }
     }
 
@@ -126,7 +130,6 @@ public class SkillCaster : MonoBehaviour
                         {
                             if (transition.nextAction != null)
                                 ExecuteAction(transition.nextAction);
-                            else SkillEnd();
                             return;
                         }
                         else
@@ -158,8 +161,9 @@ public class SkillCaster : MonoBehaviour
     private void SkillEnd()
     {
         ReleaseGrab(CharacterState.Idle);
-        context.current = null;
         state.ChangeState(CharacterState.Idle);
+        context.current = null;
+        context = new SkillContext();
         onSkillEnd.Invoke();
     }
 

@@ -17,7 +17,7 @@ MonoBehaviour:
   RSkill: {fileID: 11400000, guid: 05e215d8ef7823741aa9f88fc80327bb, type: 2}
   LRSkill: {fileID: 0}
   SLSkill: {fileID: 0}
-  FSkill: {fileID: 0}
+  FSkill: {fileID: 11400000, guid: 8d0f8186141e2ed4cac03711ea163c53, type: 2}
   QSkill: {fileID: 0}
   ESkill: {fileID: 0}
   SpaceSkill: {fileID: 11400000, guid: d6e08f358f271f04f98582415fbe57bc, type: 2}

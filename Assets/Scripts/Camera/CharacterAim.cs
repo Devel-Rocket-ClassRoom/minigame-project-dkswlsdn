@@ -35,7 +35,7 @@ public class CharacterAim : MonoBehaviour
         }
         else
         {
-            y = transform.position.y;
+            y = 0f;
             return 0f;
         }
     }
