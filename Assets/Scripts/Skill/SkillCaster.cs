@@ -70,22 +70,25 @@ public class SkillCaster : MonoBehaviour
     {
         if (skill == null) return false;
 
-        context = new SkillContext();
-        context.currentIndex = idx;
-
         if (skill.transitions.Count > 0)
         {
+            int prevIndex = context.currentIndex;
+            context.currentIndex = idx;
+
             for (int i = 0; i < skill.transitions.Count; i++)
             {
                 if (AllConditionIsMet(skill.transitions[i]))
                 {
                     OnCanceled();
                     state.ChangeState(CharacterState.Skill);
+                    context = new SkillContext();
                     context.currentIndex = idx;
                     ExecuteAction(skill.transitions[i].nextAction);
                     return true;
                 }
             }
+
+            context.currentIndex = prevIndex;
         }
         else
         {
@@ -93,18 +96,24 @@ public class SkillCaster : MonoBehaviour
             {
                 OnCanceled();
                 state.ChangeState(CharacterState.Skill);
+                context = new SkillContext();
                 context.currentIndex = idx;
                 ExecuteAction(skill.actions[0]);
                 return true;
             }
         }
-
-        context.Clear();
+        
         return false;
     }
 
     public void ExecuteAction(SkillAction action)
     {
+        if (action == null)
+        {
+            SkillEnd();
+            return;
+        }
+
         context.targetPoint = aim.GetLookAtVector(action.targetting, transform, action.aimDistance, out _);
         context.current = action;
         actionTimer = action.actionTime + Time.time;
