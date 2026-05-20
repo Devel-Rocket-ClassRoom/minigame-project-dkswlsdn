@@ -71,6 +71,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void OnUseSkill(SkillAction action)
     {
+        canRotateCharacter = true;
         hSpeed = action.movementMethod.lookSpeedLimit;
         vSpeed = action.movementMethod.lookSpeedLimit;
     }

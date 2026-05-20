@@ -21,9 +21,11 @@ MonoBehaviour:
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 3
+    freeMoveSpeed: 0
+    distance: 2
     neutralDistance: 0
     backwardDistance: 0
+    isKeepSpeed: 0
     isFrictionAutoCalc: 1
     followTerrain: 0
     useInputDirection: 0

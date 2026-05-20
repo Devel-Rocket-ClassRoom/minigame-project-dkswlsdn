@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -5,6 +6,9 @@ public class Character : MonoBehaviour
     private static int id = 0;
     public int Id;
     public int team;
+
+    [HideInInspector, NonSerialized]
+    public int[] opennedToken = new int[9];
 
     public CharacterStat Stat { get; private set; }
     public SkillCaster Caster { get; private set; }

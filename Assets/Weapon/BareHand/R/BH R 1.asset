@@ -21,6 +21,7 @@ MonoBehaviour:
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
+    freeMoveSpeed: 0
     distance: 20
     neutralDistance: 20
     backwardDistance: 0
@@ -42,12 +43,10 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack:
   - info:
-      origin: {fileID: 0}
-      id: 0
       damage: 1
       reaction: 1
       stunDuration: 0.4
-      stunForce: 8
+      stunForce: 30
       airborneForce: {x: 4, y: 1}
       forceDirectionType: 0
       activateTime: 0.4

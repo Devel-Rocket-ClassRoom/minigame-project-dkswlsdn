@@ -70,6 +70,9 @@ public class SkillCaster : MonoBehaviour
     {
         if (skill == null) return false;
 
+        context = new SkillContext();
+        context.currentIndex = idx;
+
         if (skill.transitions.Count > 0)
         {
             for (int i = 0; i < skill.transitions.Count; i++)
@@ -78,13 +81,11 @@ public class SkillCaster : MonoBehaviour
                 {
                     OnCanceled();
                     state.ChangeState(CharacterState.Skill);
-                    context = new SkillContext();
                     context.currentIndex = idx;
                     ExecuteAction(skill.transitions[i].nextAction);
                     return true;
                 }
             }
-            return false;
         }
         else
         {
@@ -92,13 +93,14 @@ public class SkillCaster : MonoBehaviour
             {
                 OnCanceled();
                 state.ChangeState(CharacterState.Skill);
-                context = new SkillContext();
                 context.currentIndex = idx;
                 ExecuteAction(skill.actions[0]);
                 return true;
             }
-            return false;
         }
+
+        context.Clear();
+        return false;
     }
 
     public void ExecuteAction(SkillAction action)
@@ -166,7 +168,7 @@ public class SkillCaster : MonoBehaviour
         state.ChangeState(CharacterState.Idle);
         onCooldownReset?.Invoke(context.currentIndex);
         context.current = null;
-        context = new SkillContext();
+        context.Clear();
         onSkillEnd.Invoke();
     }
 
@@ -282,4 +284,20 @@ public class SkillContext
     public Vector3 targetPoint;
     public SkillAction current;
     public SkillAction next;
+
+    public void Clear()
+    {
+        currentIndex = -1;
+        spendTime = 0f;
+        isHit = false;
+        hitCount = 0;
+        cost = 0f;
+        hitTarget.Clear();
+        grabTarget.Clear();
+        wasDamagedInAction = false;
+        target = null;
+        targetPoint = Vector3.zero;
+        current = null;
+        next = null;
+    }
 }

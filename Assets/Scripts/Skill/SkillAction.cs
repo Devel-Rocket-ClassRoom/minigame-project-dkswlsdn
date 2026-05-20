@@ -38,6 +38,7 @@ public struct MovementMethod
     public bool directionReverse;
     public bool rightSide;
     public bool canFreeMove;
+    public float freeMoveSpeed;
 
     [Header("수평이동")]
     public float distance;

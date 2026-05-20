@@ -65,7 +65,8 @@ public abstract class CharacterMovement : MonoBehaviour
 
         if (!state.CanNotMove)
         {
-            if (isFreeMoveEnabled) FreeMove();
+            if (isFreeMoveEnabled && skillEndTime < Time.time) FreeMove();
+            else if (isFreeMoveEnabled && skillEndTime > Time.time) SkillFreeMove();
             else if (skillEndTime > Time.time) SkillMove();
         }
 
@@ -94,6 +95,15 @@ public abstract class CharacterMovement : MonoBehaviour
         Vector3 slopeMoveDir = Vector3.ProjectOnPlane(relativeDir, surfaceNormal).normalized;
         localDirection = inputDirection;
         horizontalVelocity = slopeMoveDir * moveSpeed;
+    }
+
+    protected void SkillFreeMove()
+    {
+        horizontalSpeed = method.freeMoveSpeed;
+        Vector3 relativeDir = transform.TransformDirection(inputDirection.normalized);
+        Vector3 slopeMoveDir = Vector3.ProjectOnPlane(relativeDir, surfaceNormal).normalized;
+        localDirection = inputDirection;
+        horizontalVelocity = slopeMoveDir * method.freeMoveSpeed;
     }
 
     protected void ApplyFriction()
@@ -238,7 +248,7 @@ public abstract class CharacterMovement : MonoBehaviour
             case ForceDirectionType.Random:
                 break;
             default:
-                dir = hit.origin.forward;
+                dir = -transform.forward;
                 break;
         }
 

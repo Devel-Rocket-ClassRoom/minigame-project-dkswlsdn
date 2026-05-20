@@ -11,7 +11,7 @@ public class StateCondition : SkillCondition
 
         for (int i = 0; i < state.Length; i++)
         {
-            if (state[i] != character.State.State) b = true;
+            if (state[i] == character.State.State) b = true;
         }
 
         return b;

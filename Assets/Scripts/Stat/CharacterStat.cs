@@ -65,7 +65,7 @@ public class CharacterStat : MonoBehaviour
 
 
         health -= myHit.damage;
-        DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
+        if (hit.id == 0) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
 
         if (health <= 0)
         {
@@ -95,6 +95,7 @@ public class AttackInfo
     public AttackInfo(AttackInfo hit)
     {
         origin = hit.origin;
+        id = hit.id;
         damage = hit.damage;
         reaction = hit.reaction;
         stunDuration = hit.stunDuration;
@@ -103,10 +104,10 @@ public class AttackInfo
         forceDirectionType = hit.forceDirectionType;
     }
 
-    [HideInInspector]
+    [HideInInspector, NonSerialized]
     public Transform origin;
-    [HideInInspector]
-    public int id;
+    [HideInInspector, NonSerialized]
+    public int id = -1;
     public float damage;
 
     public HitReactionType reaction;

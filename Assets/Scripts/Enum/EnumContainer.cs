@@ -57,6 +57,7 @@ public enum ForceDirectionType
     Fixed,
     Spread,
     Random,
+    World,
 }
 
 public enum AttackMovementMethod
