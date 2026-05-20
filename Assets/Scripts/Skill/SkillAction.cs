@@ -43,6 +43,7 @@ public struct MovementMethod
     public float distance;
     public float neutralDistance;
     public float backwardDistance;
+    public bool isFrictionAutoCalc;
     public bool followTerrain;
     public bool useInputDirection;
     public bool isStaticDirection;

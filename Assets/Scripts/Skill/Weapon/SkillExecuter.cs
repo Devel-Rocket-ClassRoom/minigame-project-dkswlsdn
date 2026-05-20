@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SkillExecuter : MonoBehaviour
@@ -8,10 +9,18 @@ public class SkillExecuter : MonoBehaviour
         get => currentWeapon;
         set
         {
+            if (value == null)
+            {
+                if (defaultWeapon == null) throw new Exception("기본 무기 설정되지 않음");
+                value = defaultWeapon;
+                currentWeapon = value;
+            }
             currentWeapon = value;
             Init(currentWeapon);
         }
     }
+
+    [SerializeField] private Weapon defaultWeapon;
 
     private SkillCaster caster;
     private CharacterCommander commander;
@@ -34,10 +43,14 @@ public class SkillExecuter : MonoBehaviour
     {
         caster = GetComponent<SkillCaster>();
         commander = GetComponent<CharacterCommander>();
-        Init(currentWeapon);
     }
 
-    public void Init(Weapon weapon)
+    private void OnEnable()
+    {
+        CurrentWeapon = defaultWeapon;
+    }
+
+    private void Init(Weapon weapon)
     {
         skills[0] = weapon.LSkill;
         skills[1] = weapon.RSkill;

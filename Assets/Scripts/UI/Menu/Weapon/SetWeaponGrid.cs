@@ -4,13 +4,14 @@ using UnityEngine.UI;
 public class SetWeaponGrid : MonoBehaviour
 {
     [SerializeField] private WeaponDatabase weaponDatabase;
-    [SerializeField] private Button weaponButton;
+    [SerializeField] private WepponButton weaponButton;
 
     private void Awake()
     {
         foreach (var weapon in weaponDatabase.weapons)
         {
-            Instantiate(weaponButton, transform);
+            var b = Instantiate(weaponButton, transform);
+            b.Init(weapon);
         }
     }
 

@@ -17,7 +17,7 @@ public class ShowWeaponInfo : MonoBehaviour
 
     public SkillSlot[] slots = new SkillSlot[7];
 
-    private SkillExecuter executer;
+    private PlayerSkillExecuter executer;
 
     private void Awake()
     {
@@ -27,14 +27,13 @@ public class ShowWeaponInfo : MonoBehaviour
 
     private void Start()
     {
-        var executer = FindAnyObjectByType<PlayerSkillExecuter>();
-        if (executer != null) Init(executer);
+        executer = FindAnyObjectByType<PlayerSkillExecuter>();
+        if (executer != null) Init();
+        executer.onWeaponChanged += Init;
     }
 
-    public void Init(SkillExecuter executer)
+    public void Init()
     {
-        this.executer = executer;
-
         for (int i = 0; i < slots.Length; i++)
         {
             var skill = executer.GetSkill(i + 1);
@@ -45,7 +44,7 @@ public class ShowWeaponInfo : MonoBehaviour
 
     private void Update()
     {
-        if (executer == null) return; 
+        if (executer == null) return;
 
         for (int i = 0; i < slots.Length; i++)
         {

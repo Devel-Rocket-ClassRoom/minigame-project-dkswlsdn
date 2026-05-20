@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6756785310515365472}
   - component: {fileID: 2686302998459952198}
   - component: {fileID: 6095730476735464935}
+  - component: {fileID: 5898286580252701849}
   m_Layer: 5
   m_Name: WeaponButton
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonTextContainer
   tmp: {fileID: 4854184084664603227}
   text: 
+--- !u!114 &5898286580252701849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748876127108490584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d6e2e8a17fee9409ba985dde88886a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WepponButton
 --- !u!1 &7555479829953303070
 GameObject:
   m_ObjectHideFlags: 0

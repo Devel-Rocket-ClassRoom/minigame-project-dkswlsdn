@@ -187,7 +187,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     break;
             }
 
-            friction = method.friction;
+            
 
             if (method.jumpHeight != 0)
             {
@@ -201,6 +201,8 @@ public abstract class CharacterMovement : MonoBehaviour
                 actionTime = time;
                 activeGravity = method.gravity;
             }
+
+            friction = method.isFrictionAutoCalc ? (2f * distance) / (actionTime * actionTime) : method.friction;
 
             if (method.minAltitude < targetY && method.maxAltitude > targetY && method.useAltitudeModifire)
             {
