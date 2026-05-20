@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
   m_Name: BareHand
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  id: BareHand
+  id: 0
+  weaponName: BareHand
+  icon: {fileID: 0}
   model: {fileID: 0}
   LSkill: {fileID: 11400000, guid: 59dbd2998c1392048a030dfdbd21fb6b, type: 2}
   RSkill: {fileID: 11400000, guid: 2d208a02889380140876b8a0be55b34c, type: 2}

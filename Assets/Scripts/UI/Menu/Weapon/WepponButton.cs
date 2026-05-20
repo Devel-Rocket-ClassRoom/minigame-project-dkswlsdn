@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class WepponButton : MonoBehaviour
 {
+    public static string selected { get; private set; }
+
     private Weapon weapon;
 
     public void Init(Weapon weapon)
@@ -18,10 +20,6 @@ public class WepponButton : MonoBehaviour
         var data = SaveManager.instance.CurrentSave;
         data.equipedWeapon = weapon.weaponName;
         SaveManager.instance.SaveRequest(data);
-    }
-    
-    public void EquipWeapon()
-    {
-
+        selected = data.equipedWeapon;
     }
 }

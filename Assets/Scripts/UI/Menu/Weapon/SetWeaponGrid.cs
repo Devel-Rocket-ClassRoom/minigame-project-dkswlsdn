@@ -5,6 +5,8 @@ public class SetWeaponGrid : MonoBehaviour
 {
     [SerializeField] private WeaponDatabase weaponDatabase;
     [SerializeField] private WepponButton weaponButton;
+    [SerializeField] private PlayerSkillExecuter executer;
+
 
     private void Awake()
     {
@@ -18,5 +20,10 @@ public class SetWeaponGrid : MonoBehaviour
     private void OnEnable()
     {
         // 세이브데이터와 비교해서 잠금상태 업데이트
+    }
+
+    private void OnDisable()
+    {
+        executer.LoadWeapon();
     }
 }

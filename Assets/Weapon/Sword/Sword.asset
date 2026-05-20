@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  id: Sword
+  id: 0
+  weaponName: Sword
+  icon: {fileID: 0}
   model: {fileID: 0}
   LSkill: {fileID: 0}
   RSkill: {fileID: 0}

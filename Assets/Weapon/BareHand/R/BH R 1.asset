@@ -22,7 +22,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     distance: 20
-    neutralDistance: 5
+    neutralDistance: 20
     backwardDistance: 0
     isKeepSpeed: 0
     isFrictionAutoCalc: 0

@@ -12,10 +12,12 @@ public class SkillExecuter : MonoBehaviour
             if (value == null)
             {
                 if (defaultWeapon == null) throw new Exception("기본 무기 설정되지 않음");
-                value = defaultWeapon;
+                currentWeapon = defaultWeapon;
+            }
+            else
+            {
                 currentWeapon = value;
             }
-            currentWeapon = value;
             Init(currentWeapon);
         }
     }
