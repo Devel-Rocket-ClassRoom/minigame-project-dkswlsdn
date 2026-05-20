@@ -59,7 +59,7 @@ public abstract class CharacterMovement : MonoBehaviour
         CheckGround();
         if (!isOnGround || verticalVelocity > 0f) verticalVelocity -= activeGravity * Time.fixedDeltaTime;
 
-        
+
 
         SetDirection();
 
@@ -81,7 +81,10 @@ public abstract class CharacterMovement : MonoBehaviour
 
     private void Move()
     {
-        rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
+        if (!state.CanNotMove)
+            rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
+        else
+            rigid.linearVelocity = new Vector3(rigid.linearVelocity.x, verticalVelocity, rigid.linearVelocity.z);
     }
 
     protected void FreeMove()
@@ -220,6 +223,7 @@ public abstract class CharacterMovement : MonoBehaviour
     public void StunMove(AttackInfo hit)
     {
         var dir = Vector3.zero;
+        rigid.linearVelocity = dir;
 
         switch (hit.forceDirectionType)
         {
@@ -228,6 +232,7 @@ public abstract class CharacterMovement : MonoBehaviour
                 break;
             case ForceDirectionType.Spread:
                 dir = transform.position - hit.origin.position;
+                dir.y = 0;
                 dir.Normalize();
                 break;
             case ForceDirectionType.Random:
@@ -242,16 +247,14 @@ public abstract class CharacterMovement : MonoBehaviour
             switch (hit.reaction)
             {
                 case HitReactionType.HitStun:
-                    horizontalVelocity = dir * hit.stunForce;
+                    rigid.AddForce(dir * hit.stunForce, ForceMode.Impulse);
                     isFreeMoveEnabled = false;
                     activeGravity = defaultGravity;
                     friction = 6f;
                     break;
                 case HitReactionType.Airborne:
                     transform.Translate(Vector3.up * 0.1f);
-                    var h = hit.airborneForce;
-                    h.y = 0;
-                    horizontalVelocity = dir * h.x;
+                    rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
                     verticalVelocity = hit.airborneForce.y;
                     isFreeMoveEnabled = false;
                     activeGravity = defaultGravity;
@@ -261,9 +264,7 @@ public abstract class CharacterMovement : MonoBehaviour
         else
         {
             transform.Translate(Vector3.up * 0.5f);
-            var h = hit.airborneForce;
-            h.y = 0;
-            horizontalVelocity = dir * h.x;
+            rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
             verticalVelocity = hit.airborneForce.y;
             isFreeMoveEnabled = false;
             activeGravity = defaultGravity;
@@ -302,6 +303,15 @@ public abstract class CharacterMovement : MonoBehaviour
         wasGrounded = isGrounded;
     }
 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground") && isNearGround && verticalVelocity < 0)
+        {
+            verticalVelocity = 0f;
+            isOnGround = true;
+        }
+    }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.collider.CompareTag("Ground") && isNearGround && verticalVelocity < 0)

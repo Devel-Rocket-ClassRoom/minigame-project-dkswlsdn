@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: ChargeLance Attack 1
+  m_Name: BH R 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
   movementMethod:
     calcType: 0
-    gravity: 10
+    gravity: 0
     friction: 0
-    startToMove: 1
+    startToMove: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 7
+    distance: 0
     neutralDistance: 0
     backwardDistance: 0
+    isKeepSpeed: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
@@ -38,27 +39,29 @@ MonoBehaviour:
     regularTime: 0
     yawLimit: 0
     cameraLocked: 0
-    lookSpeedLimit: 0
+    lookSpeedLimit: 10
   attack:
   - info:
       origin: {fileID: 0}
-      id: 1
-      damage: 30
+      id: 0
+      damage: 12
       reaction: 2
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: 10, y: 5}
+      airborneForce: {x: 4, y: 5}
       forceDirectionType: 0
-      activateTime: 0.3
-      isDestroyOnCanceled: 1
+      activateTime: 0.2
+      isDestroyOnCanceled: 0
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: 6806447412980190811, guid: cc48f168eeaf4514ab794b649460a66c, type: 3}
-    preDelay: 0.1
+    hitbox: {fileID: -3699011696439304722, guid: 7cf7b152728859d42b55b87e9ecca360, type: 3}
+    preDelay: 0.3
+    isCheckHit: 0
     isGrab: 0
-    positionOffset: {x: 0, y: 0, z: 0}
+    toGrab: 0
+    positionOffset: {x: 0, y: 1, z: 1}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    movementType: 1
+    movementType: 0
   targetting:
     isHighAngle: 0
     useOnlyCamera: 0

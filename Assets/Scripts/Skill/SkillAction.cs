@@ -43,6 +43,7 @@ public struct MovementMethod
     public float distance;
     public float neutralDistance;
     public float backwardDistance;
+    public bool isKeepSpeed;
     public bool isFrictionAutoCalc;
     public bool followTerrain;
     public bool useInputDirection;
@@ -73,7 +74,9 @@ public struct AttackMethod
     public Attack hitbox;
     public float preDelay;
 
+    public bool isCheckHit;
     public bool isGrab;
+    public bool toGrab;
 
     public Vector3 positionOffset;
     public Quaternion rotationOffset;

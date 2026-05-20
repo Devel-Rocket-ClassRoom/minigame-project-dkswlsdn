@@ -3,7 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon", menuName = "Scriptable Objects/Weapon")]
 public class Weapon : ScriptableObject
 {
-    public string id;
+    public int id;
+    public string weaponName;
+    public Sprite icon;
     public GameObject model;
 
     public Skill LSkill;

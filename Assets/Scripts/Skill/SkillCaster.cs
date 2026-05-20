@@ -20,6 +20,7 @@ public class SkillCaster : MonoBehaviour
 
     public event Action<SkillAction> onActionStart;
     public event Action onSkillEnd;
+    public event Action<int> onCooldownReset;
 
     private void Awake()
     {
@@ -65,7 +66,7 @@ public class SkillCaster : MonoBehaviour
         }
     }
 
-    public bool Cast(Skill skill)
+    public bool Cast(Skill skill, int idx)
     {
         if (skill == null) return false;
 
@@ -78,6 +79,7 @@ public class SkillCaster : MonoBehaviour
                     OnCanceled();
                     state.ChangeState(CharacterState.Skill);
                     context = new SkillContext();
+                    context.currentIndex = idx;
                     ExecuteAction(skill.transitions[i].nextAction);
                     return true;
                 }
@@ -91,6 +93,7 @@ public class SkillCaster : MonoBehaviour
                 OnCanceled();
                 state.ChangeState(CharacterState.Skill);
                 context = new SkillContext();
+                context.currentIndex = idx;
                 ExecuteAction(skill.actions[0]);
                 return true;
             }
@@ -161,6 +164,7 @@ public class SkillCaster : MonoBehaviour
     {
         ReleaseGrab(CharacterState.Idle);
         state.ChangeState(CharacterState.Idle);
+        onCooldownReset?.Invoke(context.currentIndex);
         context.current = null;
         context = new SkillContext();
         onSkillEnd.Invoke();
@@ -181,28 +185,47 @@ public class SkillCaster : MonoBehaviour
         {
             yield return new WaitForSeconds(attack.preDelay);
 
-            var instance = Instantiate(attack.hitbox);
-            instance.Activate(attack, transform, character.team, character.Id);
-            activateAttack.Add(instance);
+            if (attack.hitbox != null)
+            {
+                var instance = Instantiate(attack.hitbox);
+                instance.Activate(attack, transform, character.team, character.Id);
+                activateAttack.Add(instance);
 
-            var capturedContext = context;
-            if (attack.isGrab) instance.onHit += (crt) =>
-            {
-                if (crt.Id != character.Id && crt.State.State != CharacterState.Grapped)
+                var capturedContext = context;
+                if (attack.isGrab) instance.onHit += (crt) =>
                 {
-                    capturedContext.grabTarget.Add(crt);
-                    crt.State.ChangeState(CharacterState.Grapped);
-                    crt.Movement.StartGrabbed();
-                }
-            };
-            else instance.onHit += (crt) =>
-            {
-                if (crt.Id != character.Id)
+                    if (crt.Id != character.Id && crt.State.State != CharacterState.Grapped)
+                    {
+                        capturedContext.grabTarget.Add(crt);
+                        crt.State.ChangeState(CharacterState.Grapped);
+                        crt.Movement.StartGrabbed();
+                    }
+                };
+                else if (!attack.isGrab && attack.isCheckHit) instance.onHit += (crt) =>
                 {
-                    capturedContext.hitTarget.Add(crt);
-                    if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
+                    if (crt.Id != character.Id)
+                    {
+                        capturedContext.hitTarget.Add(crt);
+                        if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
+                    }
+                };
+            }
+            else if (attack.hitbox == null && attack.toGrab)
+            {
+                foreach (var c in context.grabTarget)
+                {
+                    var info = new AttackInfo(attack.info);
+                    info.id = character.Id;
+                    info.origin = transform;
+                    c.Stat.TakeDamage(info);
                 }
-            };
+
+                if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
+            }
+            else
+            {
+                throw new Exception("할당된 히트박스 없음");
+            }
         }
     }
 
@@ -245,6 +268,7 @@ public class SkillCaster : MonoBehaviour
 public class SkillContext
 {
     // 현재 스킬
+    public int currentIndex;
     public float spendTime;
     public bool isHit;
     public int hitCount;

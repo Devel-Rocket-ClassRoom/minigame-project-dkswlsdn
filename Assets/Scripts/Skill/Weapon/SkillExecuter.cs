@@ -27,6 +27,7 @@ public class SkillExecuter : MonoBehaviour
 
     private readonly Skill[] skills = new Skill[8];
     private readonly float[] cooldowns = new float[8];
+    private int currentIndex = -1;
 
     private static readonly ConditionInput[] inputs =
     {
@@ -43,6 +44,7 @@ public class SkillExecuter : MonoBehaviour
     {
         caster = GetComponent<SkillCaster>();
         commander = GetComponent<CharacterCommander>();
+        caster.onCooldownReset += CooldownReset;
     }
 
     private void OnEnable()
@@ -65,7 +67,10 @@ public class SkillExecuter : MonoBehaviour
     private void Update()
     {
         for (int i = 0; i < cooldowns.Length; i++)
+        {
+            if (i == currentIndex) continue;
             cooldowns[i] -= Time.deltaTime;
+        }
 
         for (int i = 1; i < inputs.Length + 1; i++)
         {
@@ -73,17 +78,21 @@ public class SkillExecuter : MonoBehaviour
             if (cooldowns[i] > 0) continue;
             if (!commander.GetInput(inputs[i - 1], false)) continue;
 
-            if (caster.Cast(skills[i]))
+            if (caster.Cast(skills[i], i))
             {
                 cooldowns[i] = skills[i].cooldown;
+                currentIndex = i;
                 break;
             }
         }
 
         if (skills[0] != null && cooldowns[0] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
         {
-            if (caster.Cast(skills[0]))
+            if (caster.Cast(skills[0], 0))
+            {
                 cooldowns[0] = skills[0].cooldown;
+                currentIndex = 0;
+            }
         }
     }
 
@@ -94,5 +103,11 @@ public class SkillExecuter : MonoBehaviour
     {
         if (skills[index] == null || skills[index].cooldown <= 0f) return 0f;
         return Mathf.Clamp01(cooldowns[index] / skills[index].cooldown);
+    }
+
+    public void CooldownReset(int index)
+    {
+        cooldowns[index] = skills[index].cooldown;
+        currentIndex = -1;
     }
 }

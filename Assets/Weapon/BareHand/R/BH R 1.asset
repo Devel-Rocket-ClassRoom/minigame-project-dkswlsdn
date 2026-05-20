@@ -10,53 +10,56 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: ChargeLance Attack 1
+  m_Name: BH R 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
   movementMethod:
-    calcType: 0
-    gravity: 10
+    calcType: 1
+    gravity: 0
     friction: 0
     startToMove: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 7
-    neutralDistance: 0
+    distance: 20
+    neutralDistance: 5
     backwardDistance: 0
+    isKeepSpeed: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
     isStaticDirection: 0
-    useAltitudeModifire: 0
+    useAltitudeModifire: 1
     maxAltitude: 0
     minAltitude: 0
-    verticalSpeed: 0
+    verticalSpeed: -10
     isVerticalSpeedAutoCalc: 0
     jumpHeight: 0
     minJumpHeight: 0
     regularTime: 0
     yawLimit: 0
-    cameraLocked: 0
+    cameraLocked: 1
     lookSpeedLimit: 0
   attack:
   - info:
       origin: {fileID: 0}
-      id: 1
-      damage: 30
-      reaction: 2
-      stunDuration: 0
-      stunForce: 0
-      airborneForce: {x: 10, y: 5}
+      id: 0
+      damage: 1
+      reaction: 1
+      stunDuration: 0.4
+      stunForce: 8
+      airborneForce: {x: 4, y: 1}
       forceDirectionType: 0
-      activateTime: 0.3
+      activateTime: 0.4
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: 6806447412980190811, guid: cc48f168eeaf4514ab794b649460a66c, type: 3}
-    preDelay: 0.1
+    hitbox: {fileID: 1866161880405631953, guid: 1a53a3e4407abec49a22312862a15b4b, type: 3}
+    preDelay: 0
+    isCheckHit: 1
     isGrab: 0
-    positionOffset: {x: 0, y: 0, z: 0}
+    toGrab: 0
+    positionOffset: {x: 0, y: 1.3, z: 0.75}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
     movementType: 1
   targetting:
@@ -64,8 +67,16 @@ MonoBehaviour:
     useOnlyCamera: 0
   aimDistance: 0
   useGrab: 0
-  actionTime: 0.7
+  actionTime: 0.4
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: ebeebd1d7f2267648b555920d8de2821, type: 2}
+    nextAction: {fileID: 11400000, guid: 0e08e9d2f7b6aec4795a113dfb02de4f, type: 2}
+    immediateTransition: 0
+  - conditions:
+    - {fileID: 11400000, guid: 9a58e31bb5b9a5e438d08e6752760277, type: 2}
+    nextAction: {fileID: 11400000, guid: 0e08e9d2f7b6aec4795a113dfb02de4f, type: 2}
+    immediateTransition: 1
   autoTransition: {fileID: 0}

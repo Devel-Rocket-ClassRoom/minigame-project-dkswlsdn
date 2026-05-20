@@ -20,6 +20,7 @@ public class Attack : MonoBehaviour
         hitTarget.Clear();
         IsHit = false;
         HitInfo = attackInfo;
+        HitInfo.info = new AttackInfo(attackInfo.info);
         HitInfo.info.id = id;
         HitInfo.info.origin = origin;
         transform.position = origin.position + origin.TransformVector(attackInfo.positionOffset);

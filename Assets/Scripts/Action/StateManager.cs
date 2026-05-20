@@ -18,8 +18,7 @@ public class StateManager : MonoBehaviour
     public bool CanMove => state == CharacterState.Idle || state == CharacterState.Move;
     public bool CanRotatePlayer => CanMove || state == CharacterState.WakeUp;
     public bool CanRotateCamera => CanRotatePlayer || state == CharacterState.Knockdown;
-    public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Knockdown || state == CharacterState.Groggy
-        || state == CharacterState.Grapped || state == CharacterState.WakeUp || state == CharacterState.Dead;
+    public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Grapped;
 
     private CharacterStat stat;
     public Animator modelAnimation;

@@ -17,6 +17,6 @@ public class SetWeaponGrid : MonoBehaviour
 
     private void OnEnable()
     {
-        // 세이브데이터와 비교
+        // 세이브데이터와 비교해서 잠금상태 업데이트
     }
 }

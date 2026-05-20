@@ -15,10 +15,10 @@ MonoBehaviour:
   id: BareHand
   model: {fileID: 0}
   LSkill: {fileID: 11400000, guid: 59dbd2998c1392048a030dfdbd21fb6b, type: 2}
-  RSkill: {fileID: 0}
+  RSkill: {fileID: 11400000, guid: 2d208a02889380140876b8a0be55b34c, type: 2}
   LRSkill: {fileID: 0}
   SLSkill: {fileID: 0}
-  FSkill: {fileID: 0}
+  FSkill: {fileID: 11400000, guid: 2fe8ae55cb040de46ad3fb814bca60db, type: 2}
   QSkill: {fileID: 0}
   ESkill: {fileID: 0}
   SpaceSkill: {fileID: 0}

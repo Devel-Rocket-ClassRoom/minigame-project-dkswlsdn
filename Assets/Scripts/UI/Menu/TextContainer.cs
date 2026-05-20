@@ -4,7 +4,12 @@ using UnityEngine;
 public class TextContainer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tmp;
-    [SerializeField] private string text;
+    public string text;
+
+    public void ChangeText(string text)
+    {
+        tmp.text = text;
+    }
 
     private void OnValidate()
     {
