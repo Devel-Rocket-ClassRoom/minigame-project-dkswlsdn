@@ -53,6 +53,8 @@ public class Attack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.isTrigger) return;
+
         var character = other.GetComponent<Character>();
         if (character == null || hitTarget.Contains(character.Id) || character.team == team) return;
 

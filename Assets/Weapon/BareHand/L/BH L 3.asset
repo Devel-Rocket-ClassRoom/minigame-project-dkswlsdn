@@ -21,9 +21,11 @@ MonoBehaviour:
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
-    distance: 9
-    neutralDistance: 6
+    freeMoveSpeed: 0
+    distance: 5
+    neutralDistance: 2.5
     backwardDistance: 0
+    isKeepSpeed: 0
     isFrictionAutoCalc: 1
     followTerrain: 1
     useInputDirection: 0
@@ -39,7 +41,26 @@ MonoBehaviour:
     yawLimit: 0
     cameraLocked: 1
     lookSpeedLimit: 0
-  attack: []
+  attack:
+  - info:
+      damage: 7
+      reaction: 2
+      stunDuration: 0.3
+      stunForce: 5
+      airborneForce: {x: 7, y: 6}
+      forceDirectionType: 0
+      activateTime: 0.1
+      isDestroyOnCanceled: 1
+      isReleaseGrab: 0
+      projectileSpeed: 0
+    hitbox: {fileID: 8581388796989905290, guid: fe8139c647de9a045a0721b536da5d60, type: 3}
+    preDelay: 0.1
+    isCheckHit: 0
+    isGrab: 0
+    toGrab: 0
+    positionOffset: {x: 0, y: 1.2, z: 0.5}
+    rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    movementType: 1
   targetting:
     isHighAngle: 0
     useOnlyCamera: 0

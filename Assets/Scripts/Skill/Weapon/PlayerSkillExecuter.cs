@@ -17,5 +17,4 @@ public class PlayerSkillExecuter : SkillExecuter
         CurrentWeapon = weaponDatabase.weapons.Find((w) => w.weaponName == data.equipedWeapon);
         onWeaponChanged?.Invoke();
     }
-
 }

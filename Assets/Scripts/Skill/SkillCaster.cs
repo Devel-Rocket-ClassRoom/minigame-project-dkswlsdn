@@ -61,7 +61,9 @@ public class SkillCaster : MonoBehaviour
             foreach (var target in context.grabTarget)
             {
                 if (target != null)
-                    target.Movement.MoveToPosition(anchor.anchor.position);
+                {
+                    target.Movement.MoveToPosition(anchor.anchor);
+                }
             }
         }
     }

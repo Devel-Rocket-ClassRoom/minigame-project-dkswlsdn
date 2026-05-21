@@ -13,7 +13,7 @@ public abstract class CharacterMovement : MonoBehaviour
     private CharacterCommander commander;
 
     // 기본 물리 정보
-    public float moveSpeed = 1f;
+    public float moveSpeed = 10f;
     public readonly float defaultGravity = 20f;
     private float activeGravity = 20f;
     private float friction = 0;
@@ -59,8 +59,6 @@ public abstract class CharacterMovement : MonoBehaviour
         CheckGround();
         if (!isOnGround || verticalVelocity > 0f) verticalVelocity -= activeGravity * Time.fixedDeltaTime;
 
-
-
         SetDirection();
 
         if (!state.CanNotMove)
@@ -90,11 +88,27 @@ public abstract class CharacterMovement : MonoBehaviour
 
     protected void FreeMove()
     {
-        horizontalSpeed = moveSpeed;
+        if (inputDirection.z > 0)
+        {
+            horizontalSpeed = moveSpeed;
+        }
+        else if (inputDirection.z < 0)
+        {
+            horizontalSpeed = moveSpeed * 0.3f;
+        }
+        else if (inputDirection.x != 0)
+        {
+            horizontalSpeed = moveSpeed * 0.5f;
+        }
+        else
+        {
+            horizontalSpeed = 0f;
+        }
+
         Vector3 relativeDir = transform.TransformDirection(inputDirection.normalized);
         Vector3 slopeMoveDir = Vector3.ProjectOnPlane(relativeDir, surfaceNormal).normalized;
         localDirection = inputDirection;
-        horizontalVelocity = slopeMoveDir * moveSpeed;
+        horizontalVelocity = slopeMoveDir * horizontalSpeed;
     }
 
     protected void SkillFreeMove()
@@ -252,7 +266,7 @@ public abstract class CharacterMovement : MonoBehaviour
                 break;
         }
 
-        if (state.State != CharacterState.Airborne)
+        if (state.State != CharacterState.Airborne && state.State != CharacterState.Knockdown)
         {
             switch (hit.reaction)
             {
@@ -375,20 +389,17 @@ public abstract class CharacterMovement : MonoBehaviour
         isOnGround = false;
         activeGravity = 0f;
         verticalVelocity = 0f;
-        foreach (var col in GetComponents<Collider>())
-            if (!col.isTrigger) col.enabled = false;
     }
 
     public void EndGrabbed()
     {
         activeGravity = defaultGravity;
-        foreach (var col in GetComponents<Collider>())
-            if (!col.isTrigger) col.enabled = true;
     }
 
-    public void MoveToPosition(Vector3 worldPosition)
+    public void MoveToPosition(Transform worldPosition)
     {
-        rigid.MovePosition(worldPosition);
+        rigid.MovePosition(worldPosition.position);
+        rigid.MoveRotation(worldPosition.rotation);
     }
 }
 

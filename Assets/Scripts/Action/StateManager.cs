@@ -21,7 +21,7 @@ public class StateManager : MonoBehaviour
     public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Grapped;
 
     private CharacterStat stat;
-    public Animator modelAnimation;
+    [SerializeField] private Animator animator;
 
     public event Action onIdle;
     public event Action onmove;
@@ -39,6 +39,9 @@ public class StateManager : MonoBehaviour
     private float stunEndTime;
     [SerializeField] private float knockdownTimer;
     private float wakeUpTimer;
+
+    [SerializeField] private Collider standCollider;
+    [SerializeField] private Collider layCollider;
 
     private const float BASE_KNOCKDOWN_DURATION = 2f;
     private const float BASE_WAKEUP_DURATION    = 0.7f;
@@ -95,21 +98,28 @@ public class StateManager : MonoBehaviour
         {
             case CharacterState.Idle:
                 onIdle?.Invoke();
+                animator.SetTrigger("ReturnToIdle");
+                SetColliderState(true);
                 break;
             case CharacterState.Move:
                 onmove?.Invoke();
                 break;
             case CharacterState.Skill:
                 onSkill?.Invoke();
+                SetColliderState(true);
                 break;
             case CharacterState.HitStun:
                 onHitstun?.Invoke();
                 break;
             case CharacterState.Airborne:
                 onAirborne?.Invoke();
+                animator.SetTrigger("Airborne");
+                SetColliderState(false);
                 break;
             case CharacterState.Knockdown:
                 onKnockdown?.Invoke();
+                animator.SetTrigger("Airborne");
+                SetColliderState(false);
                 break;
             case CharacterState.WakeUp:
                 wakeUpTimer = BASE_WAKEUP_DURATION + Time.time;
@@ -142,7 +152,10 @@ public class StateManager : MonoBehaviour
             case HitReactionType.HitStun:
                 if (state == CharacterState.Knockdown)
                 {
-                    knockdownTimer += KNOCKDOWN_EXTEND_AMOUNT;
+                    if (hit.airborneForce.y <= 0)
+                        knockdownTimer = Mathf.Min(2, KNOCKDOWN_EXTEND_AMOUNT + knockdownTimer);
+                    else
+                        ChangeState(CharacterState.Airborne);
                 }
                 else if (state == CharacterState.Airborne)
                 {
@@ -175,5 +188,11 @@ public class StateManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private void SetColliderState(bool isStand)
+    {
+        standCollider.enabled = isStand;
+        layCollider.enabled = !isStand;
     }
 }
