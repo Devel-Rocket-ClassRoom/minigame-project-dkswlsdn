@@ -20,12 +20,13 @@ public enum ConditionInput
 public class InputCondition : SkillCondition
 {
     public ConditionInput input;
-    // false: 누른 순간만 (WasPressedThisFrame), true: 누르는 동안 (IsPressed)
     public bool held;
+    public bool up;
 
     public override bool IsMet(Character character, SkillContext context)
     {
         if (character.Commander == null) return false;
+        if (up) return character.Commander.GetInputUp(input);
         return character.Commander.GetInput(input, held);
     }
 }

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
+  m_Name: LAN E 1-1
+  m_EditorClassIdentifier: Assembly-CSharp::SkillAction
+  actionId: 0
+  movementMethod:
+    calcType: 0
+    gravity: 0
+    friction: 0
+    startToMove: 1
+    directionReverse: 0
+    rightSide: 0
+    canFreeMove: 0
+    freeMoveSpeed: 0
+    distance: 0
+    neutralDistance: 0
+    backwardDistance: 0
+    isKeepSpeed: 0
+    isFrictionAutoCalc: 0
+    followTerrain: 0
+    useInputDirection: 0
+    isStaticDirection: 0
+    useAltitudeModifire: 0
+    maxAltitude: 0
+    minAltitude: 0
+    verticalSpeed: 0
+    isVerticalSpeedAutoCalc: 0
+    jumpHeight: 100
+    minJumpHeight: 0
+    regularTime: 5
+    yawLimit: 0
+    cameraLocked: 0
+    lookSpeedLimit: 30
+  attack: []
+  targetting:
+    isHighAngle: 0
+    useOnlyCamera: 0
+  aimDistance: 0
+  useGrab: 0
+  actionTime: 6
+  minTransitionTime: 1
+  maxTransitionTime: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: b30b3ec54f5ecd4448f2e22346bee148, type: 2}
+    nextAction: {fileID: 11400000, guid: 692b4a2b08775a449ba85449af0f53a4, type: 2}
+    immediateTransition: 1
+  - conditions:
+    - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
+    nextAction: {fileID: 11400000, guid: dba8b18729798b442be336dfea019099, type: 2}
+    immediateTransition: 1
+  autoTransition: {fileID: 0}

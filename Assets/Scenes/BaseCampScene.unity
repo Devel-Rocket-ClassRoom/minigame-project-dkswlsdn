@@ -2899,6 +2899,10 @@ PrefabInstance:
       propertyPath: aim
       value: 
       objectReference: {fileID: 444787138}
+    - target: {fileID: 4475563755678765951, guid: b7605f816f60197428ae720408a52e34, type: 3}
+      propertyPath: layer.m_Bits
+      value: 384
+      objectReference: {fileID: 0}
     - target: {fileID: 4886264997926590039, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: cam
       value: 

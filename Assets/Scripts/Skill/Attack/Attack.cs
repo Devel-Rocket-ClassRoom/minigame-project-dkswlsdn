@@ -15,7 +15,7 @@ public class Attack : MonoBehaviour
     public bool IsHit { get; private set; }
     public event Action<Character> onHit;
 
-    public void Activate(AttackMethod attackInfo, Transform origin, int team, int id)
+    public void Activate(SkillContext context, AttackMethod attackInfo, Transform origin, int team, int id)
     {
         hitTarget.Clear();
         IsHit = false;
@@ -23,7 +23,8 @@ public class Attack : MonoBehaviour
         HitInfo.info = new AttackInfo(attackInfo.info);
         HitInfo.info.id = id;
         HitInfo.info.origin = origin;
-        transform.position = origin.position + origin.TransformVector(attackInfo.positionOffset);
+        if (attackInfo.movementType == AttackMovementMethod.Teleport) transform.position = context.targetPoint;
+        else transform.position = origin.position + origin.TransformVector(attackInfo.positionOffset);
         transform.forward = origin.forward;
         this.team = team;
         isGrab = attackInfo.isGrab;
@@ -47,7 +48,14 @@ public class Attack : MonoBehaviour
         }
         else if (HitInfo.movementType == AttackMovementMethod.Linear)
         {
-            transform.position += transform.forward * HitInfo.info.projectileSpeed * Time.deltaTime;
+            if (HitInfo.useAim)
+            {
+                transform.position += HitInfo.aimDir * HitInfo.info.projectileSpeed * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += transform.forward * HitInfo.info.projectileSpeed * Time.deltaTime;
+            }
         }
     }
 

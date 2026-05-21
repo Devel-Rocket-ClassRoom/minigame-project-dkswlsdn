@@ -66,10 +66,10 @@ public class CharacterAim : MonoBehaviour
                 else
                 {
                     // origin에서 downHit 지점까지 레이
-                    Vector3 dir = (downHit.point - origin.position).normalized;
-                    float dist = Vector3.Distance(origin.position, downHit.point);
+                    Vector3 dir = (downHit.point - origin.position + Vector3.up).normalized;
+                    float dist = Vector3.Distance(origin.position + Vector3.up, downHit.point);
 
-                    if (Physics.Raycast(origin.position, dir, out RaycastHit charHit, dist, layer))
+                    if (Physics.Raycast(origin.position + Vector3.up, dir, out RaycastHit charHit, dist, layer))
                     {
                         y = charHit.point.y - current;
                         return charHit.point;
@@ -108,10 +108,10 @@ public class CharacterAim : MonoBehaviour
                 else
                 {
                     // origin에서 downHit 지점까지 레이
-                    Vector3 dir = (downHit.point - origin.position).normalized;
-                    float dist = Vector3.Distance(origin.position, downHit.point);
+                    Vector3 dir = (downHit.point - origin.position + Vector3.up).normalized;
+                    float dist = Vector3.Distance(origin.position + Vector3.up, downHit.point);
 
-                    if (Physics.Raycast(origin.position, dir, out RaycastHit charHit, dist, layer))
+                    if (Physics.Raycast(origin.position + Vector3.up, dir, out RaycastHit charHit, dist, layer))
                     {
                         y = charHit.point.y - current;
                         return charHit.point;

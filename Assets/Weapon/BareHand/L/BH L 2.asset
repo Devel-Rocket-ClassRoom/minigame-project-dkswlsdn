@@ -47,7 +47,7 @@ MonoBehaviour:
       reaction: 1
       stunDuration: 0.3
       stunForce: 3
-      airborneForce: {x: 3, y: 3}
+      airborneForce: {x: 3, y: 2}
       forceDirectionType: 0
       activateTime: 0.1
       isDestroyOnCanceled: 1

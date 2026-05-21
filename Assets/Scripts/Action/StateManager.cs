@@ -92,6 +92,7 @@ public class StateManager : MonoBehaviour
 
     public void ChangeState(CharacterState state)
     {
+        var prev = State;
         State = state;
 
         switch (state)
@@ -112,6 +113,7 @@ public class StateManager : MonoBehaviour
                 onHitstun?.Invoke();
                 break;
             case CharacterState.Airborne:
+                if (prev == CharacterState.Grapped) knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 onAirborne?.Invoke();
                 animator.SetTrigger("Airborne");
                 SetColliderState(false);
@@ -157,7 +159,7 @@ public class StateManager : MonoBehaviour
                     else
                         ChangeState(CharacterState.Airborne);
                 }
-                else if (state == CharacterState.Airborne)
+                else if (state == CharacterState.Airborne || state == CharacterState.Grapped)
                 {
 
                 }

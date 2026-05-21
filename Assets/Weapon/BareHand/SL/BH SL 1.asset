@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
+  m_Name: BH SL 1
+  m_EditorClassIdentifier: Assembly-CSharp::SkillAction
+  actionId: 0
+  movementMethod:
+    calcType: 0
+    gravity: 0
+    friction: 1
+    startToMove: 1
+    directionReverse: 0
+    rightSide: 0
+    canFreeMove: 0
+    freeMoveSpeed: 0
+    distance: 6
+    neutralDistance: 0
+    backwardDistance: 0
+    isKeepSpeed: 0
+    isFrictionAutoCalc: 0
+    followTerrain: 0
+    useInputDirection: 0
+    isStaticDirection: 0
+    useAltitudeModifire: 1
+    maxAltitude: 0
+    minAltitude: 0
+    verticalSpeed: -10
+    isVerticalSpeedAutoCalc: 0
+    jumpHeight: 0
+    minJumpHeight: 0
+    regularTime: 0
+    yawLimit: 0
+    cameraLocked: 1
+    lookSpeedLimit: 0
+  attack:
+  - info:
+      damage: 1
+      reaction: 1
+      stunDuration: 0.35
+      stunForce: 0
+      airborneForce: {x: 0, y: 1}
+      forceDirectionType: 0
+      activateTime: 0.2
+      isDestroyOnCanceled: 0
+      isReleaseGrab: 0
+      projectileSpeed: 0
+    hitbox: {fileID: 408621661830622823, guid: 4e1e41f2ac49c944f9071a15f5e12f80, type: 3}
+    preDelay: 0.1
+    isCheckHit: 1
+    isGrab: 0
+    toGrab: 0
+    positionOffset: {x: 0, y: 0.8, z: 0.25}
+    rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    movementType: 1
+  targetting:
+    isHighAngle: 0
+    useOnlyCamera: 0
+  aimDistance: 0
+  useGrab: 0
+  actionTime: 0.3
+  minTransitionTime: 0
+  maxTransitionTime: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 9a58e31bb5b9a5e438d08e6752760277, type: 2}
+    nextAction: {fileID: 11400000, guid: 7ef91e5867fd72f4a9d8c2eea58f7034, type: 2}
+    immediateTransition: 1
+  autoTransition: {fileID: 0}

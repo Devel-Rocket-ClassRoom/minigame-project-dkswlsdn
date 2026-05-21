@@ -200,8 +200,11 @@ public class SkillCaster : MonoBehaviour
 
             if (attack.hitbox != null)
             {
+                var atk = attack;
+                atk.aimDir = (context.targetPoint - (transform.position + atk.positionOffset)).normalized;
+
                 var instance = Instantiate(attack.hitbox);
-                instance.Activate(attack, transform, character.team, character.Id);
+                instance.Activate(context, atk, transform, character.team, character.Id);
                 activateAttack.Add(instance);
 
                 var capturedContext = context;
@@ -219,9 +222,10 @@ public class SkillCaster : MonoBehaviour
                     if (crt.Id != character.Id)
                     {
                         capturedContext.hitTarget.Add(crt);
-                        if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
                     }
                 };
+
+                if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
             }
             else if (attack.hitbox == null && attack.toGrab)
             {

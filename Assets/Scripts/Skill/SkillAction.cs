@@ -79,6 +79,9 @@ public struct AttackMethod
     public bool isGrab;
     public bool toGrab;
 
+    public bool useAim;
+    public Vector3 aimDir;
+
     public Vector3 positionOffset;
     public Quaternion rotationOffset;
     public AttackMovementMethod movementType;

@@ -88,17 +88,17 @@ public abstract class CharacterMovement : MonoBehaviour
 
     protected void FreeMove()
     {
-        if (inputDirection.z > 0)
+        if (inputDirection.z > 0.01f)
         {
             horizontalSpeed = moveSpeed;
         }
-        else if (inputDirection.z < 0)
+        else if (inputDirection.z < -0.01f)
         {
             horizontalSpeed = moveSpeed * 0.3f;
         }
         else if (inputDirection.x != 0)
         {
-            horizontalSpeed = moveSpeed * 0.5f;
+            horizontalSpeed = moveSpeed * 0.8f;
         }
         else
         {
@@ -151,7 +151,10 @@ public abstract class CharacterMovement : MonoBehaviour
             horizontalVelocity = Vector3.zero;
         }
 
-        if (!isOnGround && method.useAltitudeModifire && !method.isVerticalSpeedAutoCalc) verticalVelocity = method.verticalSpeed;
+        if (!isOnGround && method.useAltitudeModifire && !method.isVerticalSpeedAutoCalc)
+        {
+            verticalVelocity = method.verticalSpeed;
+        }
     }
 
     public void SkillMove(SkillAction action)
@@ -277,7 +280,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     friction = 6f;
                     break;
                 case HitReactionType.Airborne:
-                    transform.Translate(Vector3.up * 0.1f);
+                    transform.Translate(Vector3.up * 1f);
                     rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
                     verticalVelocity = hit.airborneForce.y;
                     isFreeMoveEnabled = false;

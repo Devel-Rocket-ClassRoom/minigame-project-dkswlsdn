@@ -16,11 +16,11 @@ MonoBehaviour:
   weaponName: Lance
   icon: {fileID: 0}
   model: {fileID: 0}
-  LSkill: {fileID: 11400000, guid: 208a31cf7d0051e4886475bb5ddc9520, type: 2}
+  LSkill: {fileID: 11400000, guid: c6bf2d2f583aae74bb7fe1e2211c3faa, type: 2}
   RSkill: {fileID: 11400000, guid: 05e215d8ef7823741aa9f88fc80327bb, type: 2}
   LRSkill: {fileID: 0}
-  SLSkill: {fileID: 0}
-  FSkill: {fileID: 11400000, guid: 8d0f8186141e2ed4cac03711ea163c53, type: 2}
+  SLSkill: {fileID: 11400000, guid: e23d71929b2cb2548a783e00d79f9590, type: 2}
+  FSkill: {fileID: 11400000, guid: 7f8f62d7b5d23dc49ae96fe2b046377c, type: 2}
   QSkill: {fileID: 0}
-  ESkill: {fileID: 0}
+  ESkill: {fileID: 11400000, guid: 175273cbb847968459ac440ac0c13ffb, type: 2}
   SpaceSkill: {fileID: 11400000, guid: d6e08f358f271f04f98582415fbe57bc, type: 2}

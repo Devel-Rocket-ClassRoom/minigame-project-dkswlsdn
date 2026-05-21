@@ -47,14 +47,14 @@ MonoBehaviour:
       reaction: 1
       stunDuration: 0.3
       stunForce: 3
-      airborneForce: {x: 3, y: 3}
+      airborneForce: {x: 3, y: 2}
       forceDirectionType: 0
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
     hitbox: {fileID: 8581388796989905290, guid: fe8139c647de9a045a0721b536da5d60, type: 3}
-    preDelay: 0.15
+    preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
     toGrab: 0

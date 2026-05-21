@@ -7,6 +7,7 @@ public class NPCCommander : CharacterCommander
     private Vector2 rotateInput;
     private readonly HashSet<ConditionInput> heldInputs = new();
     private readonly HashSet<ConditionInput> pressedThisFrame = new();
+    private readonly HashSet<ConditionInput> releasedThisFrame = new();
 
     public override Vector2 MoveInput => moveInput;
     public override Vector2 RotateInput => rotateInput;
@@ -29,10 +30,17 @@ public class NPCCommander : CharacterCommander
     public void ReleaseInput(ConditionInput input)
     {
         heldInputs.Remove(input);
+        releasedThisFrame.Add(input);
     }
 
     private void LateUpdate()
     {
         pressedThisFrame.Clear();
+        releasedThisFrame.Clear();
+    }
+
+    public override bool GetInputUp(ConditionInput input)
+    {
+        return releasedThisFrame.Contains(input);
     }
 }

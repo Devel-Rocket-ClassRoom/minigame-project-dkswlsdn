@@ -102,6 +102,10 @@ public class AttackInfo
         stunForce = hit.stunForce;
         airborneForce = hit.airborneForce;
         forceDirectionType = hit.forceDirectionType;
+        activateTime = hit.activateTime;
+        isDestroyOnCanceled = hit.isDestroyOnCanceled;
+        isReleaseGrab = hit.isReleaseGrab;
+        projectileSpeed = hit.projectileSpeed;
     }
 
     [HideInInspector, NonSerialized]
