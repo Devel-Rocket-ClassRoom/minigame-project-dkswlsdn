@@ -64,6 +64,11 @@ public class SkillExecuter : MonoBehaviour
         skills[5] = weapon.ESkill;
         skills[6] = weapon.FSkill;
         skills[7] = weapon.SpaceSkill;
+
+        for (int i = 0; i < cooldowns.Length; i++)
+        {
+            cooldowns[i] = 0f;
+        }
     }
 
     private void Update()

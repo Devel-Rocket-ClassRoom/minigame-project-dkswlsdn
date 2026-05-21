@@ -17,7 +17,7 @@ MonoBehaviour:
     calcType: 0
     gravity: 0
     friction: 0
-    startToMove: 1
+    isKeepSpeed: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -25,7 +25,6 @@ MonoBehaviour:
     distance: 3
     neutralDistance: 0
     backwardDistance: 0
-    isKeepSpeed: 0
     isFrictionAutoCalc: 1
     followTerrain: 0
     useInputDirection: 0

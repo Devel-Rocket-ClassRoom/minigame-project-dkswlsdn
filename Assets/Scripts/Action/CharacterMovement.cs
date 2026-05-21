@@ -146,7 +146,7 @@ public abstract class CharacterMovement : MonoBehaviour
             horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, surfaceNormal);
         }
 
-        if (!method.startToMove && isOnGround)
+        if (method.isKeepSpeed && isOnGround)
         {
             horizontalVelocity = Vector3.zero;
         }
@@ -179,7 +179,7 @@ public abstract class CharacterMovement : MonoBehaviour
         localDirection = method.useInputDirection ? inputDirection : localDirection;
         staticLocalDirection = transform.TransformDirection(localDirection);
 
-        if (method.startToMove)
+        if (!method.isKeepSpeed)
         {
             float distance = method.distance;
             float targetY = float.MaxValue;

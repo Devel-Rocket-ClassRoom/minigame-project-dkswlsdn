@@ -34,7 +34,7 @@ public struct MovementMethod
     [Header("공통")]
     public float gravity;
     public float friction;
-    public bool startToMove;
+    public bool isKeepSpeed;
     public bool directionReverse;
     public bool rightSide;
     public bool canFreeMove;
@@ -44,7 +44,6 @@ public struct MovementMethod
     public float distance;
     public float neutralDistance;
     public float backwardDistance;
-    public bool isKeepSpeed;
     public bool isFrictionAutoCalc;
     public bool followTerrain;
     public bool useInputDirection;

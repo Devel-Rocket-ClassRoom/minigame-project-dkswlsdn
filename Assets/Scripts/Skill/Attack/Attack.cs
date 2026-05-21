@@ -14,6 +14,7 @@ public class Attack : MonoBehaviour
 
     public bool IsHit { get; private set; }
     public event Action<Character> onHit;
+    public event Action<Vector3> onTargetHit;
 
     public void Activate(SkillContext context, AttackMethod attackInfo, Transform origin, int team, int id)
     {

@@ -17,18 +17,23 @@ MonoBehaviour:
     calcType: 0
     gravity: 0
     friction: 0
-    startToMove: 0
+    isKeepSpeed: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
+    freeMoveSpeed: 0
     distance: 0
     neutralDistance: 0
     backwardDistance: 0
+    isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
+    isStaticDirection: 0
+    useAltitudeModifire: 0
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
+    isVerticalSpeedAutoCalc: 0
     jumpHeight: 0
     minJumpHeight: 0
     regularTime: 0
@@ -36,6 +41,10 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 10
   attack: []
+  targetting:
+    isHighAngle: 0
+    useOnlyCamera: 0
+  aimDistance: 0
   useGrab: 0
   actionTime: 0.5
   minTransitionTime: 0
