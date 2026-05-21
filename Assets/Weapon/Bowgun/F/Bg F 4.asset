@@ -87,7 +87,7 @@ MonoBehaviour:
     isGrab: 0
     toGrab: 1
     useAim: 0
-    aimDir: {x: 0, y: 0, z: 0}
+    aimDir: {x: 0, y: 1, z: 1}
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
     scale: {x: 5, y: 5, z: 5}
