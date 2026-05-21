@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
+  m_Name: Bg R 2
+  m_EditorClassIdentifier: Assembly-CSharp::SkillAction
+  actionId: 0
+  actionTime: 0.3
+  useGrab: 0
+  movementMethod:
+    calcType: 0
+    gravity: 0
+    friction: 0
+    isKeepSpeed: 0
+    directionReverse: 1
+    rightSide: 0
+    canFreeMove: 0
+    freeMoveSpeed: 0
+    distance: 7
+    neutralDistance: 0
+    backwardDistance: 0
+    isFrictionAutoCalc: 1
+    followTerrain: 0
+    useInputDirection: 0
+    isStaticDirection: 0
+    useAltitudeModifire: 0
+    maxAltitude: 0
+    minAltitude: 0
+    verticalSpeed: 0
+    isVerticalSpeedAutoCalc: 0
+    jumpHeight: 0
+    minJumpHeight: 0
+    regularTime: 0
+    yawLimit: 0
+    cameraLocked: 0
+    lookSpeedLimit: 20
+  attack:
+  - info:
+      damage: 6
+      stack: {fileID: 0}
+      count: 0
+      reaction: 1
+      stunDuration: 0.4
+      stunForce: 4
+      airborneForce: {x: 4, y: 3}
+      forceDirectionType: 0
+      activateTime: 0.5
+      isDestroyOnCanceled: 0
+      isReleaseGrab: 0
+      projectileSpeed: 40
+    type: 2
+    preDelay: 0
+    isCheckHit: 0
+    isGrab: 0
+    toGrab: 0
+    useAim: 1
+    aimDir: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 1, y: 1, z: 1}
+    movementType: 3
+    spawnRules: []
+  - info:
+      damage: 6
+      stack: {fileID: 0}
+      count: 0
+      reaction: 1
+      stunDuration: 0.4
+      stunForce: 4
+      airborneForce: {x: 4, y: 3}
+      forceDirectionType: 0
+      activateTime: 0.5
+      isDestroyOnCanceled: 0
+      isReleaseGrab: 0
+      projectileSpeed: 40
+    type: 2
+    preDelay: 0
+    isCheckHit: 0
+    isGrab: 0
+    toGrab: 0
+    useAim: 1
+    aimDir: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotationOffset: {x: 0, y: -0.1305262, z: 0, w: 0.9914449}
+    scale: {x: 1, y: 1, z: 1}
+    movementType: 3
+    spawnRules: []
+  - info:
+      damage: 6
+      stack: {fileID: 0}
+      count: 0
+      reaction: 1
+      stunDuration: 0.4
+      stunForce: 4
+      airborneForce: {x: 4, y: 3}
+      forceDirectionType: 0
+      activateTime: 0.5
+      isDestroyOnCanceled: 0
+      isReleaseGrab: 0
+      projectileSpeed: 40
+    type: 2
+    preDelay: 0
+    isCheckHit: 0
+    isGrab: 0
+    toGrab: 0
+    useAim: 1
+    aimDir: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotationOffset: {x: 0, y: 0.1305262, z: 0, w: 0.9914449}
+    scale: {x: 1, y: 1, z: 1}
+    movementType: 3
+    spawnRules: []
+  stack: []
+  targetting: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  aimDistance: 20
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: ebeebd1d7f2267648b555920d8de2821, type: 2}
+    nextAction: {fileID: 11400000, guid: 5c46d4d09c593c84bbe75b904c47fe45, type: 2}
+    immediateTransition: 0
+  minTransitionTime: 0
+  maxTransitionTime: 0
+  autoTransition: {fileID: 0}

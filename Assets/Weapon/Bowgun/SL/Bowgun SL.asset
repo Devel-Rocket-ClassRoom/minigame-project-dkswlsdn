@@ -16,4 +16,13 @@ MonoBehaviour:
   cooldown: 4.5
   actions:
   - {fileID: 11400000, guid: 5c9ccfed932de4041be511045bd7c246, type: 2}
-  transitions: []
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 605c6aaa21f25f742b5d71d8158bbbf4, type: 2}
+    - {fileID: 11400000, guid: 68dc5d219260afc4d87e2f1eefa4d61c, type: 2}
+    nextAction: {fileID: 11400000, guid: 8a208db5de3d5de49a4345ea7acdb224, type: 2}
+    immediateTransition: 0
+  - conditions:
+    - {fileID: 11400000, guid: 605c6aaa21f25f742b5d71d8158bbbf4, type: 2}
+    nextAction: {fileID: 11400000, guid: 5c9ccfed932de4041be511045bd7c246, type: 2}
+    immediateTransition: 0

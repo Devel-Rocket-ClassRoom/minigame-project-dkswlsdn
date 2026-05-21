@@ -17,10 +17,10 @@ MonoBehaviour:
   icon: {fileID: 0}
   model: {fileID: 0}
   LSkill: {fileID: 11400000, guid: e3aa76ad3f38303499487fc17a70f3b8, type: 2}
-  RSkill: {fileID: 0}
-  LRSkill: {fileID: 0}
+  RSkill: {fileID: 11400000, guid: a614cfd35476f2448b7501869411194f, type: 2}
+  LRSkill: {fileID: 11400000, guid: 9ed4cc831123a3c4cb63c3e4823987e8, type: 2}
   SLSkill: {fileID: 11400000, guid: d37b6529c749d91418fb55bd2d5b84b8, type: 2}
   FSkill: {fileID: 11400000, guid: bca248cdc6cb8274684daeb5b25a3603, type: 2}
   QSkill: {fileID: 0}
-  ESkill: {fileID: 0}
+  ESkill: {fileID: 11400000, guid: d672e078bc0d99f4dbae9eb875f8f48d, type: 2}
   SpaceSkill: {fileID: 11400000, guid: 4561df3d839f5a34cad21f64ecdf48d2, type: 2}

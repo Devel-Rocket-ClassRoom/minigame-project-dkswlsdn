@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
     public StateManager State { get; private set; }
     public CharacterCommander Commander { get; private set; }
     public CharacterAnchor Anchor { get; private set; }
+    public SpecialStackHandler Stack { get; private set; }
 
 
     private void Awake()
@@ -30,6 +31,7 @@ public class Character : MonoBehaviour
         State = GetComponent<StateManager>();
         Commander = GetComponent<CharacterCommander>();
         Anchor = GetComponent<CharacterAnchor>();
+        Stack = GetComponent<SpecialStackHandler>();
 
         team = id;
         Id = id++;

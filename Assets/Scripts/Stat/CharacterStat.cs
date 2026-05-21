@@ -65,7 +65,7 @@ public class CharacterStat : MonoBehaviour
 
 
         health -= myHit.damage;
-        if (hit.id == 0) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
+        if (hit.id == 1) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
 
         if (health <= 0)
         {
@@ -87,42 +87,3 @@ public class CharacterStat : MonoBehaviour
 }
 
 
-[Serializable]
-public class AttackInfo
-{
-    public AttackInfo() { }
-
-    public AttackInfo(AttackInfo hit)
-    {
-        origin = hit.origin;
-        id = hit.id;
-        damage = hit.damage;
-        reaction = hit.reaction;
-        stunDuration = hit.stunDuration;
-        stunForce = hit.stunForce;
-        airborneForce = hit.airborneForce;
-        forceDirectionType = hit.forceDirectionType;
-        activateTime = hit.activateTime;
-        isDestroyOnCanceled = hit.isDestroyOnCanceled;
-        isReleaseGrab = hit.isReleaseGrab;
-        projectileSpeed = hit.projectileSpeed;
-    }
-
-    [HideInInspector, NonSerialized]
-    public Transform origin;
-    [HideInInspector, NonSerialized]
-    public int id = -1;
-    public float damage;
-
-    public HitReactionType reaction;
-    public float stunDuration;
-    public float stunForce;
-    public Vector2 airborneForce;
-
-    public ForceDirectionType forceDirectionType; 
-    public float activateTime;
-    public bool isDestroyOnCanceled;
-    public bool isReleaseGrab;
-
-    public float projectileSpeed;
-}

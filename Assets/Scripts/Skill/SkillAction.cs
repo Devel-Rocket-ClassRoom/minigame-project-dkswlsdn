@@ -6,15 +6,20 @@ using UnityEngine;
 public class SkillAction : ScriptableObject
 {
     public int actionId;
+    public float actionTime;
+    public bool useGrab;
+
     public MovementMethod movementMethod;
     public List<AttackMethod> attack;
-    public TargettingMethod targetting;
+    public List<StackMethod> stack;
+
+    public DestinationTargettingMethod targetting;
+    public LayerMask targetLayer;
     public float aimDistance;
-    public bool useGrab;
-    public float actionTime;
+
+    public List<SkillTransition> transitions;
     public float minTransitionTime;
     public float maxTransitionTime;
-    public List<SkillTransition> transitions;
     public SkillAction autoTransition;
 }
 
@@ -71,24 +76,86 @@ public struct MovementMethod
 public struct AttackMethod
 {
     public AttackInfo info;
-    public Attack hitbox;
+    public HitboxType type;
     public float preDelay;
 
-    public bool isCheckHit;
-    public bool isGrab;
-    public bool toGrab;
+    public bool isCheckHit; // hit한 대상 기록 여부
+    public bool isGrab; // 잡기판정인지 여부
+    public bool toGrab; // 잡은 대상에 대한 공격인지 여부
 
     public bool useAim;
     public Vector3 aimDir;
 
     public Vector3 positionOffset;
     public Quaternion rotationOffset;
+    public Vector3 scale;
     public AttackMovementMethod movementType;
+
+    public List<SpawnRule> spawnRules;
+}
+
+public enum SpawnTrigger  { OnHit, OnExpire }
+public enum SpawnPosition { AtHitPoint, AtTarget, AtOrigin }
+
+[Serializable]
+public struct SpawnRule
+{
+    public SpawnTrigger  trigger;
+    public SpawnPosition position;
+    public AttackMethod  spawn;
 }
 
 [Serializable]
-public struct TargettingMethod
+public class AttackInfo
 {
-    public bool isHighAngle;
-    public bool useOnlyCamera;
+    public AttackInfo() { }
+
+    public AttackInfo(AttackInfo hit)
+    {
+        origin = hit.origin;
+        id = hit.id;
+        damage = hit.damage;
+        reaction = hit.reaction;
+        stunDuration = hit.stunDuration;
+        stunForce = hit.stunForce;
+        airborneForce = hit.airborneForce;
+        forceDirectionType = hit.forceDirectionType;
+        activateTime = hit.activateTime;
+        isDestroyOnCanceled = hit.isDestroyOnCanceled;
+        isReleaseGrab = hit.isReleaseGrab;
+        projectileSpeed = hit.projectileSpeed;
+    }
+
+    [HideInInspector, NonSerialized]
+    public Transform origin;
+    [HideInInspector, NonSerialized]
+    public int id = -1;
+
+    [Header("데미지")]
+    public float damage;
+    public SpecialStackData stack;
+    public int count;
+
+    [Header("경직")]
+    public HitReactionType reaction;
+    public float stunDuration;
+    public float stunForce;
+    public Vector2 airborneForce;
+    public ForceDirectionType forceDirectionType;
+
+    [Header("기타")]
+    public float activateTime;
+    public bool isDestroyOnCanceled;
+    public bool isReleaseGrab;
+
+    public float projectileSpeed;
+}
+
+
+[Serializable]
+public struct StackMethod
+{
+    public SpecialStackData stack;
+    public int count;
+    public float preDelay;
 }

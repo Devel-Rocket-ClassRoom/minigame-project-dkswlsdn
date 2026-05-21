@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
+  m_Name: Bg R 1
+  m_EditorClassIdentifier: Assembly-CSharp::SkillAction
+  actionId: 0
+  actionTime: 0.4
+  useGrab: 0
+  movementMethod:
+    calcType: 0
+    gravity: 0
+    friction: 0
+    isKeepSpeed: 1
+    directionReverse: 0
+    rightSide: 0
+    canFreeMove: 0
+    freeMoveSpeed: 0
+    distance: 0
+    neutralDistance: 0
+    backwardDistance: 0
+    isFrictionAutoCalc: 0
+    followTerrain: 0
+    useInputDirection: 0
+    isStaticDirection: 0
+    useAltitudeModifire: 0
+    maxAltitude: 0
+    minAltitude: 0
+    verticalSpeed: 0
+    isVerticalSpeedAutoCalc: 0
+    jumpHeight: 0
+    minJumpHeight: 0
+    regularTime: 0
+    yawLimit: 0
+    cameraLocked: 0
+    lookSpeedLimit: 0
+  attack: []
+  stack: []
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  aimDistance: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 68dc5d219260afc4d87e2f1eefa4d61c, type: 2}
+    nextAction: {fileID: 11400000, guid: 4120b79386ecc7e4ba814112fe6abc86, type: 2}
+    immediateTransition: 0
+  minTransitionTime: 0
+  maxTransitionTime: 0
+  autoTransition: {fileID: 11400000, guid: 72130cf2a47d5df46891d78c0da7f3f1, type: 2}

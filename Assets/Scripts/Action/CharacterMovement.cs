@@ -17,6 +17,7 @@ public abstract class CharacterMovement : MonoBehaviour
     public readonly float defaultGravity = 20f;
     private float activeGravity = 20f;
     private float friction = 0;
+    [SerializeField] private LayerMask groundLayer;
 
     // 현재 물리 정보
     protected Vector3 inputDirection;
@@ -190,7 +191,7 @@ public abstract class CharacterMovement : MonoBehaviour
             switch (method.calcType)
             {
                 case DistanceCalculateType.Fixed:
-                    aim.GetLookAtDistance(action.targetting, distance, out targetY);
+                    aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     break;
                 case DistanceCalculateType.UseInput:
                     if (Mathf.Abs(inputDirection.z) < 0.01f)
@@ -203,7 +204,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     break;
                 case DistanceCalculateType.UseAim:
-                    distance = aim.GetLookAtDistance(action.targetting, distance, out targetY);
+                    distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     break;
                 case DistanceCalculateType.Mixed:
                     if (inputDirection.z < -0.01f)
@@ -212,7 +213,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     else
                     {
-                        distance = aim.GetLookAtDistance(action.targetting, distance, out targetY);
+                        distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     }
                     break;
             }

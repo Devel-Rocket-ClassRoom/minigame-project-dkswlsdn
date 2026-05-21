@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BH R 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.7
+  useGrab: 0
   movementMethod:
     calcType: 0
     gravity: 0
@@ -52,7 +54,7 @@ MonoBehaviour:
       isDestroyOnCanceled: 0
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: -3699011696439304722, guid: 7cf7b152728859d42b55b87e9ecca360, type: 3}
+    type: 1
     preDelay: 0.3
     isCheckHit: 0
     isGrab: 0
@@ -61,14 +63,14 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 1, z: 1}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 2, y: 2, z: 2}
     movementType: 0
-  targetting:
-    isHighAngle: 0
-    useOnlyCamera: 0
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aimDistance: 0
-  useGrab: 0
-  actionTime: 0.7
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
   autoTransition: {fileID: 0}

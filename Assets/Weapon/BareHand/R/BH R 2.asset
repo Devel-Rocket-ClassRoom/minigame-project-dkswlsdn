@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: BH R 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.6
+  useGrab: 0
   movementMethod:
     calcType: 0
     gravity: 0
     friction: 0
-    startToMove: 1
+    isKeepSpeed: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -25,7 +27,6 @@ MonoBehaviour:
     distance: 3
     neutralDistance: 0
     backwardDistance: 0
-    isKeepSpeed: 0
     isFrictionAutoCalc: 1
     followTerrain: 0
     useInputDirection: 0
@@ -53,25 +54,27 @@ MonoBehaviour:
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: -3699011696439304722, guid: 7cf7b152728859d42b55b87e9ecca360, type: 3}
+    type: 1
     preDelay: 0.3
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
+    useAim: 0
+    aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 1, z: 1}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 2, y: 2, z: 2}
     movementType: 1
-  targetting:
-    isHighAngle: 0
-    useOnlyCamera: 0
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aimDistance: 0
-  useGrab: 0
-  actionTime: 0.6
-  minTransitionTime: 0
-  maxTransitionTime: 0
   transitions:
   - conditions:
     - {fileID: 11400000, guid: ebeebd1d7f2267648b555920d8de2821, type: 2}
     nextAction: {fileID: 11400000, guid: 2a6dfcc9aa66d944aab9f4b5cf70d404, type: 2}
     immediateTransition: 0
+  minTransitionTime: 0
+  maxTransitionTime: 0
   autoTransition: {fileID: 0}

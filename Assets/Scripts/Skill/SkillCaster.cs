@@ -10,13 +10,15 @@ public class SkillCaster : MonoBehaviour
     private StateManager state;
     private Character character;
     private CharacterAnchor anchor;
+    private AttackManager attackManager;
 
     private SkillContext context;
+    public SkillContext Context => context;
 
     private float actionTimer;
     private float minTransitionTimer;
 
-    private List<Attack> activateAttack;
+    private List<Attack> spawnedAttacks;
 
     public event Action<SkillAction> onActionStart;
     public event Action onSkillEnd;
@@ -29,6 +31,7 @@ public class SkillCaster : MonoBehaviour
         state = GetComponent<StateManager>();
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
+        attackManager = GetComponent<AttackManager>();
 
         onActionStart += movement.SkillMove;
         onSkillEnd += movement.SkillEnd;
@@ -39,19 +42,14 @@ public class SkillCaster : MonoBehaviour
         state.onDead      += OnCanceled;
         state.onKnockdown += OnCanceled;
 
-        activateAttack = new List<Attack>();
+        spawnedAttacks = new List<Attack>();
         context = new SkillContext();
     }
 
     private void Update()
     {
         context.spendTime += Time.deltaTime;
-        activateAttack.RemoveAll(atk => atk == null);
-
-        foreach (var atk in activateAttack)
-        {
-            if (atk.IsHit) context.isHit = true;
-        }
+        spawnedAttacks.RemoveAll(atk => atk == null);
 
         CheckTransition();
         CheckHitbox();
@@ -83,7 +81,7 @@ public class SkillCaster : MonoBehaviour
                 {
                     OnCanceled();
                     state.ChangeState(CharacterState.Skill);
-                    context = new SkillContext();
+                    context.Clear();
                     context.currentIndex = idx;
                     ExecuteAction(skill.transitions[i].nextAction);
                     return true;
@@ -98,7 +96,7 @@ public class SkillCaster : MonoBehaviour
             {
                 OnCanceled();
                 state.ChangeState(CharacterState.Skill);
-                context = new SkillContext();
+                context.Clear();
                 context.currentIndex = idx;
                 ExecuteAction(skill.actions[0]);
                 return true;
@@ -116,7 +114,7 @@ public class SkillCaster : MonoBehaviour
             return;
         }
 
-        context.targetPoint = aim.GetLookAtVector(action.targetting, transform, action.aimDistance, out _);
+        context.targetPoint = aim.GetLookAtVector(action.targetting, action.targetLayer, action.aimDistance, out _);
         context.current = action;
         actionTimer = action.actionTime + Time.time;
         minTransitionTimer = action.minTransitionTime + Time.time;
@@ -125,6 +123,8 @@ public class SkillCaster : MonoBehaviour
 
         StopCoroutine(nameof(CoSkillAttack));
         StartCoroutine(nameof(CoSkillAttack));
+        StopCoroutine(nameof(CoGetStack));
+        StartCoroutine(nameof(CoGetStack));
 
         onActionStart.Invoke(action);
     }
@@ -192,42 +192,14 @@ public class SkillCaster : MonoBehaviour
         return true;
     }
 
+
     IEnumerator CoSkillAttack()
     {
         foreach (var attack in context.current.attack)
         {
             yield return new WaitForSeconds(attack.preDelay);
 
-            if (attack.hitbox != null)
-            {
-                var atk = attack;
-                atk.aimDir = (context.targetPoint - (transform.position + atk.positionOffset)).normalized;
-
-                var instance = Instantiate(attack.hitbox);
-                instance.Activate(context, atk, transform, character.team, character.Id);
-                activateAttack.Add(instance);
-
-                var capturedContext = context;
-                if (attack.isGrab) instance.onHit += (crt) =>
-                {
-                    if (crt.Id != character.Id && crt.State.State != CharacterState.Grapped)
-                    {
-                        capturedContext.grabTarget.Add(crt);
-                        crt.State.ChangeState(CharacterState.Grapped);
-                        crt.Movement.StartGrabbed();
-                    }
-                };
-                else if (!attack.isGrab && attack.isCheckHit) instance.onHit += (crt) =>
-                {
-                    if (crt.Id != character.Id)
-                    {
-                        capturedContext.hitTarget.Add(crt);
-                    }
-                };
-
-                if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
-            }
-            else if (attack.hitbox == null && attack.toGrab)
+            if (attack.toGrab)
             {
                 foreach (var c in context.grabTarget)
                 {
@@ -239,10 +211,56 @@ public class SkillCaster : MonoBehaviour
 
                 if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
             }
+            else if (attack.type != HitboxType.None)
+            {
+                var atk = attack;
+                atk.aimDir = (context.targetPoint - (transform.position + atk.positionOffset)).normalized;
+
+                var instance = attackManager.RequestAttack(atk, transform, character.team, character.Id, context.targetPoint);
+                if (instance == null) continue;
+
+                spawnedAttacks.Add(instance);
+
+                var capturedContext = context;
+                if (attack.isGrab)
+                {
+                    instance.onHit += (crt) =>
+                    {
+                        if (crt.Id != character.Id && crt.State.State != CharacterState.Grapped)
+                        {
+                            capturedContext.grabTarget.Add(crt);
+                            crt.State.ChangeState(CharacterState.Grapped);
+                            crt.Movement.StartGrabbed();
+                        }
+                    };
+                }
+                else
+                {
+                    instance.onHit += (crt) => { if (crt.Id != character.Id) capturedContext.isHit = true; };
+
+                    if (attack.isCheckHit) instance.onHit += (crt) =>
+                    {
+                        if (crt.Id != character.Id)
+                            capturedContext.hitTarget.Add(crt);
+                    };
+                }
+
+                if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
+            }
             else
             {
                 throw new Exception("할당된 히트박스 없음");
             }
+        }
+    }
+
+    IEnumerator CoGetStack()
+    {
+        foreach (var stack in context.current.stack)
+        {
+            yield return new WaitForSeconds(stack.preDelay);
+
+            character.Stack.Request(stack.stack, stack.count);
         }
     }
 
@@ -266,12 +284,12 @@ public class SkillCaster : MonoBehaviour
         context.current = null;
         StopAllCoroutines();
 
-        for (int i = activateAttack.Count - 1; i >= 0; i--)
+        for (int i = spawnedAttacks.Count - 1; i >= 0; i--)
         {
-            if (activateAttack[i].HitInfo.info.isDestroyOnCanceled)
+            if (spawnedAttacks[i] != null && spawnedAttacks[i].HitInfo.info.isDestroyOnCanceled)
             {
-                Destroy(activateAttack[i].gameObject);
-                activateAttack.RemoveAt(i);
+                attackManager.DestroyAttack(spawnedAttacks[i]);
+                spawnedAttacks.RemoveAt(i);
             }
         }
     }

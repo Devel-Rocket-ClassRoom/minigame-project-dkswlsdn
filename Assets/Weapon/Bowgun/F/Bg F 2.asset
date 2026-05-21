@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Bg F 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.8
+  useGrab: 1
   movementMethod:
     calcType: 0
     gravity: 0
     friction: 0
-    startToMove: 0
+    isKeepSpeed: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -25,7 +27,6 @@ MonoBehaviour:
     distance: 0
     neutralDistance: 0
     backwardDistance: 0
-    isKeepSpeed: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
@@ -44,6 +45,8 @@ MonoBehaviour:
   attack:
   - info:
       damage: 4
+      stack: {fileID: 0}
+      count: 0
       reaction: 0
       stunDuration: 0
       stunForce: 0
@@ -53,7 +56,7 @@ MonoBehaviour:
       isDestroyOnCanceled: 0
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: 0}
+    type: 0
     preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
@@ -62,9 +65,13 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 0, y: 0, z: 0}
     movementType: 0
+    spawnRules: []
   - info:
       damage: 4
+      stack: {fileID: 0}
+      count: 0
       reaction: 0
       stunDuration: 0
       stunForce: 0
@@ -74,7 +81,7 @@ MonoBehaviour:
       isDestroyOnCanceled: 0
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: 0}
+    type: 0
     preDelay: 0.3
     isCheckHit: 0
     isGrab: 0
@@ -83,14 +90,20 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 0, y: 0, z: 0}
     movementType: 0
-  targetting:
-    isHighAngle: 0
-    useOnlyCamera: 0
+    spawnRules: []
+  stack: []
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aimDistance: 0
-  useGrab: 1
-  actionTime: 0.8
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 68dc5d219260afc4d87e2f1eefa4d61c, type: 2}
+    nextAction: {fileID: 11400000, guid: ee95f8c32e6e69342a4c9f866fb5e5ce, type: 2}
+    immediateTransition: 0
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
   autoTransition: {fileID: 11400000, guid: 1426774ef78728740a913789adf28457, type: 2}

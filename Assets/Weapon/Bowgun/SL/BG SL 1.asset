@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BG SL 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.7
+  useGrab: 0
   movementMethod:
     calcType: 0
     gravity: 0
@@ -43,6 +45,8 @@ MonoBehaviour:
   attack:
   - info:
       damage: 20
+      stack: {fileID: 0}
+      count: 0
       reaction: 2
       stunDuration: 0
       stunForce: 0
@@ -52,7 +56,7 @@ MonoBehaviour:
       isDestroyOnCanceled: 0
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: 2156962704629117830, guid: b61fe4d49d5f4f448843c7420395a902, type: 3}
+    type: 1
     preDelay: 0.4
     isCheckHit: 0
     isGrab: 0
@@ -61,14 +65,16 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 2, y: 6, z: 2}
     movementType: 2
-  targetting:
-    isHighAngle: 1
-    useOnlyCamera: 0
+    spawnRules: []
+  stack: []
+  targetting: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
   aimDistance: 20
-  useGrab: 0
-  actionTime: 0.7
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
   autoTransition: {fileID: 0}

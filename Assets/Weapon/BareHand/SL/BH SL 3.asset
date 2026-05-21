@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: BH SL 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.5
+  useGrab: 0
   movementMethod:
     calcType: 0
     gravity: 0
     friction: 0
-    startToMove: 1
+    isKeepSpeed: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -25,7 +27,6 @@ MonoBehaviour:
     distance: -3
     neutralDistance: 0
     backwardDistance: 0
-    isKeepSpeed: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
@@ -53,21 +54,23 @@ MonoBehaviour:
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    hitbox: {fileID: 408621661830622823, guid: aeedf602d21c5a44b905a62466a2fb97, type: 3}
+    type: 1
     preDelay: 0
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
+    useAim: 0
+    aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 0.8, z: 0.25}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 1, y: 1.6, z: 1.7}
     movementType: 0
-  targetting:
-    isHighAngle: 0
-    useOnlyCamera: 0
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aimDistance: 0
-  useGrab: 0
-  actionTime: 0.5
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
   autoTransition: {fileID: 11400000, guid: 69a77e1db50d3a749a97072c34cf211c, type: 2}

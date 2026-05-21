@@ -68,3 +68,15 @@ public enum AttackMovementMethod
     Linear,
     Parabola,
 }
+
+public enum DestinationTargettingMethod
+{
+    LowAngle, // 캐릭터에서 사거리만큼
+    HighAngle,
+    FromCamera, // 카메라에서 사거리 + 10만큼
+}
+
+public enum HitboxType
+{
+    None, Box, Circle,
+}
