@@ -6,7 +6,7 @@ public class VisibilityManager : MonoBehaviour
     public static VisibilityManager instance;
 
     private static readonly int SightPositions = Shader.PropertyToID("_SightPositions");
-    private static readonly int SightCount = Shader.PropertyToID("_SightCount");
+    private static readonly int SightCount     = Shader.PropertyToID("_SightCount");
 
     private List<Character> friendlyUnits = new List<Character>();
     private Vector4[] sightData = new Vector4[8];
@@ -27,7 +27,6 @@ public class VisibilityManager : MonoBehaviour
 
             float range = unit.Stat.SightRange;
             Vector3 pos = unit.transform.position + unit.transform.forward * (range - 5);
-
             sightData[count] = new Vector4(pos.x, pos.y, pos.z, range);
             count++;
         }
