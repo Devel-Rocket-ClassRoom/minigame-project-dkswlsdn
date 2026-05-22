@@ -10,6 +10,9 @@ public class CharacterStat : MonoBehaviour
     [SerializeField] private float maxMp;
     [SerializeField] private float mp;
     [SerializeField] private float attack;
+    [SerializeField] private float sightRange;
+
+    public float SightRange => sightRange;
 
     [SerializeField] private ArmorType armor;
 
@@ -18,6 +21,7 @@ public class CharacterStat : MonoBehaviour
     public event Action onSuperArmorActivate; // 나 슈퍼아머 발동했어!
     public event Action onHealthLack; // 나 체력이 부족해!
     public event Action onHealthEnough; // 나 이제 체력 많아!
+    public event Action onStatChanged;
 
     [Header("Test")]
     [SerializeField] private bool doTest;

@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
     public CharacterCommander Commander { get; private set; }
     public CharacterAnchor Anchor { get; private set; }
     public SpecialStackHandler Stack { get; private set; }
+    public SightManager Sight { get; private set; }
 
 
     private void Awake()
@@ -33,8 +34,12 @@ public class Character : MonoBehaviour
         Commander = GetComponent<CharacterCommander>();
         Anchor = GetComponent<CharacterAnchor>();
         Stack = GetComponent<SpecialStackHandler>();
+        Sight = GetComponentInChildren<SightManager>();
 
         team = id;
         Id = id++;
+
+        if (isPlayer)
+            VisibilityManager.instance.Register(this);
     }
 }

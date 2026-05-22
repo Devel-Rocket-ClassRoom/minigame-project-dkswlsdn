@@ -3391,14 +3391,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3272753967670446771, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: interactionRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3272753967670446771, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: interactionLayer.m_Bits
-      value: 2048
-      objectReference: {fileID: 0}
     - target: {fileID: 4475563755678765951, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: aim
       value: 
@@ -3450,10 +3442,6 @@ PrefabInstance:
     - target: {fileID: 7369870928879973472, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8492135098999730931, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: isPlayer
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10153,6 +10141,50 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1847379929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847379931}
+  - component: {fileID: 1847379930}
+  m_Layer: 0
+  m_Name: VisibilityManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1847379930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847379929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8898806ffd064468ea04eb3d40e359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisibilityManager
+--- !u!4 &1847379931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847379929}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1870318235
 GameObject:
   m_ObjectHideFlags: 0
@@ -14037,3 +14069,4 @@ SceneRoots:
   - {fileID: 5765888530304557731}
   - {fileID: 2019907300}
   - {fileID: 2111178894}
+  - {fileID: 1847379931}

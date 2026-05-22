@@ -45,6 +45,8 @@ MonoBehaviour:
   attack:
   - info:
       damage: 5
+      stack: {fileID: 0}
+      count: 0
       reaction: 1
       stunDuration: 0.3
       stunForce: 3
@@ -65,10 +67,12 @@ MonoBehaviour:
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
     scale: {x: 1, y: 1, z: 1}
     movementType: 3
+    spawnRules: []
+  stack: []
   targetting: 2
   targetLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   aimDistance: 20
   transitions: []
   minTransitionTime: 0

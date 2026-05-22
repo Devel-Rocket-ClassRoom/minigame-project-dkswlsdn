@@ -5,7 +5,6 @@ public class CharacterAim : MonoBehaviour
     private Camera cam;
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask characterLayer;
     [SerializeField] private LayerMask stiffLayer;
     [SerializeField] private Transform aim;
 

@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: LAN SL 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.4
+  useGrab: 0
   movementMethod:
-    calcType: 1
+    calcType: 3
     gravity: 0
     friction: 0
-    startToMove: 1
+    isKeepSpeed: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -25,7 +27,6 @@ MonoBehaviour:
     distance: 5
     neutralDistance: 2.5
     backwardDistance: 0
-    isKeepSpeed: 0
     isFrictionAutoCalc: 1
     followTerrain: 0
     useInputDirection: 0
@@ -42,13 +43,13 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack: []
-  targetting:
-    isHighAngle: 0
-    useOnlyCamera: 0
+  stack: []
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
   aimDistance: 0
-  useGrab: 0
-  actionTime: 0.4
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
   autoTransition: {fileID: 11400000, guid: 1efaf52c23c44b143ae94c0aa274294e, type: 2}

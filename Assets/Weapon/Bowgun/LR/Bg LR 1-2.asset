@@ -100,11 +100,11 @@ MonoBehaviour:
   - stack: {fileID: 11400000, guid: 683f477a63980bb4086baeb223762507, type: 2}
     count: -1
     preDelay: 0
-  targetting: 0
+  targetting: 2
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  aimDistance: 0
+    m_Bits: 128
+  aimDistance: 20
   transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0

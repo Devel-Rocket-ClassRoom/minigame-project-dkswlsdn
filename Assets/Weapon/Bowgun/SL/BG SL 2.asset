@@ -100,7 +100,7 @@ MonoBehaviour:
   targetting: 1
   targetLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   aimDistance: 20
   transitions: []
   minTransitionTime: 0
