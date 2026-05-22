@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class AttackManager : MonoBehaviour
 {
     [SerializeField] private Attack[] hitboxes;
+    private Character character;
 
     private struct ActiveAttack
     {
@@ -15,9 +17,14 @@ public class AttackManager : MonoBehaviour
         public int       id;
     }
 
+    private void Awake()
+    {
+        character = GetComponent<Character>();
+    }
+
     private List<ActiveAttack> activeAttacks = new List<ActiveAttack>();
 
-    public Attack RequestAttack(AttackMethod method, Transform origin, int team, int id, Vector3 targetPoint)
+    public Attack RequestAttack(AttackMethod method, Transform origin, Vector3 targetPoint)
     {
         if (method.type == HitboxType.None) return null;
 
@@ -25,15 +32,15 @@ public class AttackManager : MonoBehaviour
         if (prefab == null) return null;
 
         var instance = Instantiate(prefab);
-        instance.Activate(method, origin, team, id, targetPoint);
+        instance.Activate(method, origin, character, targetPoint);
 
         activeAttacks.Add(new ActiveAttack
         {
             attack         = instance,
             deactivateTime = Time.time + method.info.activateTime,
             origin         = origin,
-            team           = team,
-            id             = id,
+            team           = character.team,
+            id             = character.Id,
         });
 
         if (method.spawnRules != null && method.spawnRules.Count > 0)
@@ -41,8 +48,7 @@ public class AttackManager : MonoBehaviour
             var rules = method.spawnRules;
             instance.onHit += (character) =>
                 StartCoroutine(CoSpawn(rules, SpawnTrigger.OnHit,
-                                       origin, character.transform, character.transform.position,
-                                       team, id));
+                                       origin, character.transform, character.transform.position));
         }
 
         return instance;
@@ -81,7 +87,7 @@ public class AttackManager : MonoBehaviour
                 {
                     var expirePos = entry.attack.transform.position;
                     StartCoroutine(CoSpawn(entry.attack.HitInfo.spawnRules, SpawnTrigger.OnExpire,
-                                           entry.origin, null, expirePos, entry.team, entry.id));
+                                           entry.origin, null, expirePos));
                 }
 
                 activeAttacks.RemoveAt(i);
@@ -91,8 +97,7 @@ public class AttackManager : MonoBehaviour
     }
 
     private IEnumerator CoSpawn(List<SpawnRule> rules, SpawnTrigger trigger,
-                                 Transform origin, Transform target, Vector3 hitPos,
-                                 int team, int id)
+                                 Transform origin, Transform target, Vector3 hitPos)
     {
         foreach (var rule in rules)
         {
@@ -102,14 +107,14 @@ public class AttackManager : MonoBehaviour
             switch (rule.position)
             {
                 case SpawnPosition.AtOrigin:
-                    RequestAttack(rule.spawn, origin, team, id, origin.position);
+                    RequestAttack(rule.spawn, origin, origin.position);
                     break;
                 case SpawnPosition.AtTarget:
                     var t = target != null ? target : origin;
-                    RequestAttack(rule.spawn, t, team, id, t.position);
+                    RequestAttack(rule.spawn, t, t.position);
                     break;
                 case SpawnPosition.AtHitPoint:
-                    RequestAttack(rule.spawn, origin, team, id, hitPos);
+                    RequestAttack(rule.spawn, origin, hitPos);
                     break;
             }
         }

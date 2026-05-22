@@ -6,6 +6,7 @@ public class Character : MonoBehaviour
     private static int id = 0;
     public int Id;
     public int team;
+    public bool isPlayer;
 
     [HideInInspector, NonSerialized]
     public int[] opennedToken = new int[9];

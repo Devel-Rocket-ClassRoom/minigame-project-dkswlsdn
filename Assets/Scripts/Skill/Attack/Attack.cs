@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class Attack : MonoBehaviour
 {
@@ -14,13 +15,14 @@ public class Attack : MonoBehaviour
     public event Action<Character> onHit;
     public event Action<Vector3> onTargetHit;
 
-    public void Activate(AttackMethod attackInfo, Transform origin, int team, int id, Vector3 targetPoint)
+    public void Activate(AttackMethod attackInfo, Transform origin, Character character, Vector3 targetPoint)
     {
         hitTarget.Clear();
         IsHit = false;
         HitInfo = attackInfo;
         HitInfo.info = new AttackInfo(attackInfo.info);
-        HitInfo.info.id = id;
+        HitInfo.info.id = character.Id;
+        HitInfo.info.isPopup = character.isPlayer;
         HitInfo.info.origin = origin;
         if (attackInfo.movementType == AttackMovementMethod.Teleport)
             transform.position = targetPoint;
@@ -29,7 +31,7 @@ public class Attack : MonoBehaviour
         transform.forward = origin.forward;
         if (attackInfo.scale != Vector3.zero)
             transform.localScale = attackInfo.scale;
-        this.team = team;
+        this.team = character.team;
         isGrab = attackInfo.isGrab;
     }
 

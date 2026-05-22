@@ -33,7 +33,7 @@ public class CharacterStat : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K) && doTest) TakeDamage(testHitInfo);
+        //if ( && doTest) TakeDamage(testHitInfo);
     }
 
 
@@ -65,7 +65,7 @@ public class CharacterStat : MonoBehaviour
 
 
         health -= myHit.damage;
-        if (hit.id == 1) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
+        if (hit.isPopup) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
 
         if (health <= 0)
         {
@@ -83,6 +83,11 @@ public class CharacterStat : MonoBehaviour
     public void Dead()
     {
         Debug.Log("YouDie!");
+    }
+
+    public void RestoreHP(float amount)
+    {
+        health = Mathf.Min(health + amount, maxHealth);
     }
 }
 

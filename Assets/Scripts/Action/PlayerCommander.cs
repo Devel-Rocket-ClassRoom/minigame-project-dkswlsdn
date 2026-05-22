@@ -24,6 +24,7 @@ public class PlayerCommander : CharacterCommander
             ConditionInput.F            => p.F,
             ConditionInput.Q            => p.Q,
             ConditionInput.E            => p.E,
+            ConditionInput.Interaction       => p.Pickup,
             _                           => null
         };
 

@@ -32,23 +32,17 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            Debug.Log(mainPath);
-            Debug.Log(CurrentSave.version);
-        }
-    }
+    
 
-    public void SaveRequest(SaveDataVC data)
+    public void SaveRequest()
     {
+        var data = CurrentSave;
+
         try
         {
             var path = Path.Combine(mainPath, fileName[CurrentSlot]);
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(path, json);
-            CurrentSave = data;
         }
         catch (Exception e)
         {

@@ -12,14 +12,14 @@ public class WepponButton : MonoBehaviour
         this.weapon = weapon;
         GetComponent<Button>().onClick.AddListener(SaveCurrentWeapon);
         GetComponent<Image>().sprite = weapon.icon;
-        GetComponent<TextContainer>().ChangeText(weapon.name);
+        GetComponent<TextContainer>().ChangeText(weapon.weaponName);
     }
 
     public void SaveCurrentWeapon()
     {
         var data = SaveManager.instance.CurrentSave;
         data.equipedWeapon = weapon.weaponName;
-        SaveManager.instance.SaveRequest(data);
+        SaveManager.instance.SaveRequest();
         selected = data.equipedWeapon;
     }
 }

@@ -205,6 +205,7 @@ public class SkillCaster : MonoBehaviour
                 {
                     var info = new AttackInfo(attack.info);
                     info.id = character.Id;
+                    info.isPopup = character.isPlayer;
                     info.origin = transform;
                     c.Stat.TakeDamage(info);
                 }
@@ -214,9 +215,9 @@ public class SkillCaster : MonoBehaviour
             else if (attack.type != HitboxType.None)
             {
                 var atk = attack;
-                atk.aimDir = (context.targetPoint - (transform.position + atk.positionOffset)).normalized;
+                atk.aimDir = (context.targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
 
-                var instance = attackManager.RequestAttack(atk, transform, character.team, character.Id, context.targetPoint);
+                var instance = attackManager.RequestAttack(atk, transform, context.targetPoint);
                 if (instance == null) continue;
 
                 spawnedAttacks.Add(instance);

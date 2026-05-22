@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     private InputAction action;
     private PlayerInputAction.PlayerActions playerAction;
     private bool isMenuOpen = false;
+    [SerializeField] private bool isToggle;
     [SerializeField] private bool isMainAlwaysOpen;
 
 
@@ -23,14 +24,21 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (action.IsPressed())
+        if (isToggle)
         {
-            isMenuOpen = true;
-
-            OpenMenu(mainPanel);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            if (action.WasPressedThisFrame())
+            {
+                if (isMenuOpen) CloseMenu();
+                else TitleOpen();
+            }
         }
+        else
+        {
+            if (action.WasPressedThisFrame()) TitleOpen();
+            else if (action.WasReleasedThisFrame()) CloseMenu();
+        }
+
+        CursorLock(!isMenuOpen);
 
         if (isMenuOpen) playerAction.Disable();
         else playerAction.Enable();
@@ -58,6 +66,7 @@ public class MenuManager : MonoBehaviour
         }
         panel.gameObject.SetActive(true);
         current = panel;
+        isMenuOpen = true;
     }
 
     public void CloseMenu()
@@ -65,22 +74,31 @@ public class MenuManager : MonoBehaviour
         prePanels.Clear();
         current.gameObject.SetActive(false);
         current = null;
-        isMenuOpen = false;
+        isMenuOpen = isMainAlwaysOpen;
         
         if (isMainAlwaysOpen)
         {
             current = mainPanel;
             mainPanel.gameObject.SetActive(true);
         }
-        else
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
     }
 
     public void BackMenu()
     {
         OpenMenu(prePanels.Pop(), true);
+    }
+
+    public void CursorLock(bool lockCursor)
+    {
+        if (lockCursor)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }

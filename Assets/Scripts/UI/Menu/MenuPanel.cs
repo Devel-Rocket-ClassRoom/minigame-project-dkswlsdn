@@ -14,8 +14,8 @@ public class MenuPanel : MonoBehaviour
     private void Awake()
     {
         manager = transform.root.GetComponent<MenuManager>();
-        close.onClick.AddListener(manager.CloseMenu);
-        back.onClick.AddListener(manager.BackMenu);
+        if (close != null) close.onClick.AddListener(manager.CloseMenu);
+        if(back != null) back.onClick.AddListener(manager.BackMenu);
 
         foreach (var button in buttons)
         {

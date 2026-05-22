@@ -79,7 +79,7 @@ public class SkillExecuter : MonoBehaviour
             cooldowns[i] -= Time.deltaTime;
         }
 
-        for (int i = 1; i < inputs.Length + 1; i++)
+        for (int i = inputs.Length; i >= 1; i--)
         {
             if (skills[i] == null) continue;
             if (cooldowns[i] > 0) continue;

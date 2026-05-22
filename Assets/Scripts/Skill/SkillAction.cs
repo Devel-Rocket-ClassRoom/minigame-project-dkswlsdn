@@ -114,6 +114,7 @@ public class AttackInfo
     {
         origin = hit.origin;
         id = hit.id;
+        isPopup = hit.isPopup;
         damage = hit.damage;
         reaction = hit.reaction;
         stunDuration = hit.stunDuration;
@@ -129,7 +130,9 @@ public class AttackInfo
     [HideInInspector, NonSerialized]
     public Transform origin;
     [HideInInspector, NonSerialized]
-    public int id = -1;
+    public int id;
+    [HideInInspector, NonSerialized]
+    public bool isPopup;
 
     [Header("데미지")]
     public float damage;

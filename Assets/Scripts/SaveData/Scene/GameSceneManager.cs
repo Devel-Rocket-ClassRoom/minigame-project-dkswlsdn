@@ -37,10 +37,20 @@ public class GameSceneManager : MonoBehaviour
         SceneManager.LoadScene(scenes[(int)scene]);
     }
 
+    public void StartGame(int idx)
+    {
+        LoadScene(SceneName.BaseCamp);
+        SaveManager.instance.LoadRequest(idx);
+    }
+
     public void LoadBaseCamp()
     {
         LoadScene(SceneName.BaseCamp);
-        SaveManager.instance.LoadRequest(1);
+    }
+
+    public void LoadBattleSpace()
+    {
+        LoadScene(SceneName.Battle);
     }
 }
 

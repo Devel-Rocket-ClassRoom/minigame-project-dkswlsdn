@@ -171,7 +171,7 @@ public class StateManager : MonoBehaviour
                 break;
 
             case HitReactionType.Airborne:
-                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill || state == CharacterState.Grapped)
+                if (state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill || state == CharacterState.Grapped)
                     knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 ChangeState(CharacterState.Airborne);
                 break;
