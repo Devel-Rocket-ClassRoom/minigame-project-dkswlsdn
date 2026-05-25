@@ -64,9 +64,11 @@ public class PlayerCamera : MonoBehaviour
     public float VerticalRate()
     {
         var diff = maxVerticalRotation - minVerticalRotation;
-        var offset = diff * 0.33f;
-        var x = 45f - RotationX + offset;
-        return x / (diff + offset);
+        var bottomOffset = diff * 0.4f;
+        var topOffset = diff * 0.1f;
+
+        var x = 45f - RotationX + bottomOffset;
+        return x / (diff + bottomOffset + topOffset);
     }
 
     public void OnUseSkill(SkillAction action)
