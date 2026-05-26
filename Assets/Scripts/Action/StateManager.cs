@@ -51,7 +51,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] private Collider layCollider;
 
     private const float BASE_KNOCKDOWN_DURATION = 2f;
-    private const float BASE_WAKEUP_DURATION    = 0.7f;
+    private const float BASE_WAKEUP_DURATION    = 0.55f;
     private const float KNOCKDOWN_EXTEND_AMOUNT  = 0.1f;
 
     private void Awake()
@@ -133,6 +133,7 @@ public class StateManager : MonoBehaviour
             case CharacterState.WakeUp:
                 wakeUpTimer = BASE_WAKEUP_DURATION + Time.time;
                 onWakeUp?.Invoke();
+                animator.SetTrigger("WakeUp");
                 break;
             case CharacterState.Groggy:
                 onGroggy?.Invoke();
