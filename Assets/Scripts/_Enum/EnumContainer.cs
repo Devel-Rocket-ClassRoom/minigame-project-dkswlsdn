@@ -12,6 +12,7 @@ public enum CharacterState
     Groggy,
     Grapped,
     Dead,
+    Climb,
 }
 
 public enum HitReactionType

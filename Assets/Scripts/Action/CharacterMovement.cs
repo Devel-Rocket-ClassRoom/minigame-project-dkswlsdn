@@ -63,9 +63,16 @@ public abstract class CharacterMovement : MonoBehaviour
         CheckGround();
         if (isFrozen) return;
 
-        if (!isOnGround || verticalVelocity > 0f) verticalVelocity -= activeGravity * Time.fixedDeltaTime;
-
         SetDirection();
+
+        if (state.State == CharacterState.Climb)
+        {
+            ClimbMove();
+            Move();
+            return;
+        }
+
+        if (!isOnGround || verticalVelocity > 0f) verticalVelocity -= activeGravity * Time.fixedDeltaTime;
 
         if (!state.CanNotMove)
         {
@@ -314,6 +321,26 @@ private IEnumerator CoFreeze(AttackInfo hit)
             activeGravity = defaultGravity;
         }
         isFrozen = false;
+    }
+
+    public void EnterClimb(Vector3 ropePosition)
+    {
+        transform.position = new Vector3(ropePosition.x, transform.position.y, ropePosition.z);
+        activeGravity      = 0f;
+        verticalVelocity   = 0f;
+        horizontalVelocity = Vector3.zero;
+        horizontalSpeed    = 0f;
+        isFreeMoveEnabled  = false;
+    }
+
+    private void ClimbMove()
+    {
+        horizontalVelocity = Vector3.zero;
+        horizontalSpeed    = 0f;
+
+        if      (inputDirection.z >  0.01f) verticalVelocity =  5f;
+        else if (inputDirection.z < -0.01f) verticalVelocity = -5f;
+        else                                verticalVelocity  =  0f;
     }
 
     public void OnStunEnd() { isFreeMoveEnabled = true; friction = 0; }

@@ -36,6 +36,7 @@ public class StateManager : MonoBehaviour
     public event Action onGrab;
     public event Action onDead;
     public event Action<float> onFreeze;
+    public event Action onClimb;
 
 
     public bool IsFrozen { get; private set; }
@@ -141,6 +142,9 @@ public class StateManager : MonoBehaviour
                 break;
             case CharacterState.Dead:
                 onDead?.Invoke();
+                break;
+            case CharacterState.Climb:
+                onClimb?.Invoke();
                 break;
         }
     }
