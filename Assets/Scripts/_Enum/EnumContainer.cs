@@ -78,5 +78,5 @@ public enum DestinationTargettingMethod
 
 public enum HitboxType
 {
-    None, Box, Circle,
+    None, Box, Circle, Anchor
 }

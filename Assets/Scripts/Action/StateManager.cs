@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class StateManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class StateManager : MonoBehaviour
     }
 
     public bool CanMove => state == CharacterState.Idle || state == CharacterState.Move;
+    public bool CanUseSkill => CanMove && state != CharacterState.Skill;
     public bool CanRotatePlayer => CanMove || state == CharacterState.WakeUp;
     public bool CanRotateCamera => CanRotatePlayer || state == CharacterState.Knockdown;
     public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Grapped;
@@ -33,7 +35,11 @@ public class StateManager : MonoBehaviour
     public event Action onGroggy;
     public event Action onGrab;
     public event Action onDead;
+    public event Action<float> onFreeze;
 
+
+    public bool IsFrozen { get; private set; }
+    private Coroutine freezeCoroutine;
 
     private bool isGrounded;
     private float stunEndTime;
@@ -147,8 +153,28 @@ public class StateManager : MonoBehaviour
             ChangeState(CharacterState.Knockdown);
     }
 
+    public void FreezeFor(float duration)
+    {
+        if (duration <= 0f) return;
+        IsFrozen = true;
+        if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
+        freezeCoroutine = StartCoroutine(CoFreezeAnimator(duration));
+        onFreeze?.Invoke(duration);
+    }
+
+    private IEnumerator CoFreezeAnimator(float duration)
+    {
+        animator.speed = 0f;
+        yield return new WaitForSeconds(duration);
+        animator.speed = 1f;
+        IsFrozen = false;
+    }
+
     private void OnDamageTaken(AttackInfo hit)
     {
+        float stun = hit.reaction == HitReactionType.Gaurded ? hit.stunForce * 0.2f + hit.fixedStun : hit.fixedStun;
+        FreezeFor(hit.fixedStun);
+
         switch (hit.reaction)
         {
             case HitReactionType.HitStun:

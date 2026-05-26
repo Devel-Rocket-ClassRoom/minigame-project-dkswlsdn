@@ -10,11 +10,11 @@ public class SkillCaster : MonoBehaviour
     private StateManager state;
     private Character character;
     private CharacterAnchor anchor;
-    private AttackManager attackManager;
 
     private SkillContext context;
     public SkillContext Context => context;
 
+    [SerializeField]
     private float actionTimer;
     private float minTransitionTimer;
 
@@ -31,7 +31,6 @@ public class SkillCaster : MonoBehaviour
         state = GetComponent<StateManager>();
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
-        attackManager = GetComponent<AttackManager>();
 
         onActionStart += movement.SkillMove;
         onSkillEnd += movement.SkillEnd;
@@ -41,6 +40,7 @@ public class SkillCaster : MonoBehaviour
         state.onGroggy    += OnCanceled;
         state.onDead      += OnCanceled;
         state.onKnockdown += OnCanceled;
+        state.onFreeze += OnFreeze;
 
         spawnedAttacks = new List<Attack>();
         context = new SkillContext();
@@ -197,7 +197,7 @@ public class SkillCaster : MonoBehaviour
     {
         foreach (var attack in context.current.attack)
         {
-            yield return new WaitForSeconds(attack.preDelay);
+            yield return new WaitForSecondsUnfrozen(attack.preDelay, state);
 
             if (attack.toGrab)
             {
@@ -217,7 +217,7 @@ public class SkillCaster : MonoBehaviour
                 var atk = attack;
                 atk.aimDir = (context.targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
 
-                var instance = attackManager.RequestAttack(atk, transform, context.targetPoint);
+                var instance = AttackManager.instance.RequestAttack(character, atk, context.targetPoint);
                 if (instance == null) continue;
 
                 spawnedAttacks.Add(instance);
@@ -259,10 +259,15 @@ public class SkillCaster : MonoBehaviour
     {
         foreach (var stack in context.current.stack)
         {
-            yield return new WaitForSeconds(stack.preDelay);
+            yield return new WaitForSecondsUnfrozen(stack.preDelay, state);
 
             character.Stack.Request(stack.stack, stack.count);
         }
+    }
+
+    private void OnFreeze(float duration)
+    {
+        actionTimer += duration;
     }
 
     private void ReleaseGrab(CharacterState state)
@@ -282,14 +287,23 @@ public class SkillCaster : MonoBehaviour
     {
         ReleaseGrab(CharacterState.Idle);
 
+        if (context.current != null)
+        {
+            foreach (var stack in context.current.stack)
+            {
+                if (stack.onCanceled)
+                    character.Stack.Request(stack.stack, stack.count);
+            }
+        }
+
         context.current = null;
         StopAllCoroutines();
 
         for (int i = spawnedAttacks.Count - 1; i >= 0; i--)
         {
-            if (spawnedAttacks[i] != null && spawnedAttacks[i].HitInfo.info.isDestroyOnCanceled)
+            if (spawnedAttacks[i] != null && spawnedAttacks[i].method.info.isDestroyOnCanceled)
             {
-                attackManager.DestroyAttack(spawnedAttacks[i]);
+                AttackManager.instance.DestroyAttack(spawnedAttacks[i]);
                 spawnedAttacks.RemoveAt(i);
             }
         }

@@ -39,7 +39,6 @@ public class Character : MonoBehaviour
         team = id;
         Id = id++;
 
-        if (isPlayer)
-            VisibilityManager.instance.Register(this);
+        //if (isPlayer) VisibilityManager.instance.Register(this);
     }
 }

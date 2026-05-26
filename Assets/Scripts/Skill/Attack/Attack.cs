@@ -1,43 +1,58 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class Attack : MonoBehaviour
 {
     private HashSet<int> hitTarget = new HashSet<int>();
-    [HideInInspector] public AttackMethod HitInfo;
-    [HideInInspector] public bool isGrab;
+    private Character character;
+    [HideInInspector] public AttackMethod method;
+    private Vector3 targetPoint;
+
     private int team;
+    private float life;
 
     public bool IsHit { get; private set; }
 
     public event Action<Character> onHit;
     public event Action<Vector3> onTargetHit;
 
-    public void Activate(AttackMethod attackInfo, Transform origin, Character character, Vector3 targetPoint)
+    private bool isReady;
+
+    public void Activate(Character character, AttackMethod method, Vector3 targetPoint)
     {
+        this.character = character;
+        this.targetPoint = targetPoint;
         hitTarget.Clear();
         IsHit = false;
-        HitInfo = attackInfo;
-        HitInfo.info = new AttackInfo(attackInfo.info);
-        HitInfo.info.id = character.Id;
-        HitInfo.info.isPopup = character.isPlayer;
-        HitInfo.info.origin = origin;
-        if (attackInfo.movementType == AttackMovementMethod.Teleport)
+        this.method = method;
+        this.method.info = new AttackInfo(method.info);
+        this.method.info.id = character.Id;
+        this.method.info.isPopup = character.isPlayer;
+        this.method.info.origin = character.transform;
+        life = method.info.activateTime;
+
+        if (method.movementType == AttackMovementMethod.Teleport)
             transform.position = targetPoint;
         else
-            transform.position = origin.position + origin.TransformVector(attackInfo.positionOffset);
-        transform.forward = origin.forward;
-        if (attackInfo.scale != Vector3.zero)
-            transform.localScale = attackInfo.scale;
+            transform.position = character.transform.position + character.transform.TransformVector(method.positionOffset);
+
+        transform.forward = method.movementType != AttackMovementMethod.Linear ? character.transform.forward : (targetPoint - transform.position).normalized;
+        if (method.scale != Vector3.zero)
+            transform.localScale = method.scale;
+
         this.team = character.team;
-        isGrab = attackInfo.isGrab;
+        isReady = true;
+
+        if (method.spawnRules != null && method.spawnRules.Count > 0)
+            onHit += (hitCharacter) =>
+                StartCoroutine(CoSpawn(SpawnTrigger.OnHit, hitCharacter));
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.isTrigger) return;
+        if (!other.isTrigger || !isReady) return;
 
         var character = other.GetComponent<Character>();
         if (character == null || hitTarget.Contains(character.Id) || character.team == team) return;
@@ -45,9 +60,61 @@ public class Attack : MonoBehaviour
         hitTarget.Add(character.Id);
         IsHit = true;
 
-        if (!isGrab)
-            character.Stat.TakeDamage(HitInfo.info);
+        if (!method.isGrab)
+            character.Stat.TakeDamage(method.info);
 
+        life += method.info.reverseStun;
+        this.character.State.FreezeFor(method.info.reverseStun);
         onHit?.Invoke(character);
+    }
+
+    private void Update()
+    {
+        if (!isReady) return;
+
+        if (life <= 0)
+        {
+            isReady = false;
+            StartCoroutine(CoSpawn(SpawnTrigger.OnExpire));
+        }
+
+        AttackMove();
+        life -= Time.deltaTime;
+    }
+
+    private void AttackMove()
+    {
+        switch (method.movementType)
+        {
+            case AttackMovementMethod.FollowCharacter:
+                transform.position = character.transform.position + character.transform.TransformVector(method.positionOffset);
+                break;
+            case AttackMovementMethod.Linear:
+                transform.position += transform.forward * method.info.projectileSpeed * Time.deltaTime;
+                break;
+        }
+    }
+
+    IEnumerator CoSpawn(SpawnTrigger trigger, Character hitCharacter = null)
+    {
+        foreach (var rule in method.spawnRules)
+        {
+            if (rule.trigger != trigger) continue;
+
+            yield return new WaitForSecondsUnfrozen(rule.method.preDelay, character.State);
+
+            Vector3 targetPoint = rule.position switch
+            {
+                SpawnPosition.AtOrigin   => character.transform.position,
+                SpawnPosition.AtTarget   => hitCharacter != null ? hitCharacter.transform.position : character.transform.position,
+                SpawnPosition.AtHitPoint => this.targetPoint,
+                _                        => character.transform.position,
+            };
+
+            AttackManager.instance.RequestAttack(character, rule.method, targetPoint);
+        }
+
+        if (trigger == SpawnTrigger.OnExpire)
+            Destroy(gameObject);
     }
 }

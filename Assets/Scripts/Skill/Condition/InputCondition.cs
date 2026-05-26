@@ -15,6 +15,7 @@ public enum ConditionInput
     Q,
     E,
     Interaction,
+    Item1, Item2, Item3, Item4, Item5,
 }
 
 [CreateAssetMenu(menuName = "SkillSystem/Condition/Input")]

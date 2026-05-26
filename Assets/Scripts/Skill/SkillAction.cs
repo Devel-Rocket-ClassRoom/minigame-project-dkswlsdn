@@ -102,7 +102,7 @@ public struct SpawnRule
 {
     public SpawnTrigger  trigger;
     public SpawnPosition position;
-    public AttackMethod  spawn;
+    public AttackMethod  method;
 }
 
 [Serializable]
@@ -116,11 +116,15 @@ public class AttackInfo
         id = hit.id;
         isPopup = hit.isPopup;
         damage = hit.damage;
+        stack = hit.stack;
+        count = hit.count;
         reaction = hit.reaction;
         stunDuration = hit.stunDuration;
         stunForce = hit.stunForce;
         airborneForce = hit.airborneForce;
         forceDirectionType = hit.forceDirectionType;
+        fixedStun = hit.fixedStun;
+        reverseStun = hit.reverseStun;
         activateTime = hit.activateTime;
         isDestroyOnCanceled = hit.isDestroyOnCanceled;
         isReleaseGrab = hit.isReleaseGrab;
@@ -145,6 +149,8 @@ public class AttackInfo
     public float stunForce;
     public Vector2 airborneForce;
     public ForceDirectionType forceDirectionType;
+    public float fixedStun;
+    public float reverseStun;
 
     [Header("기타")]
     public float activateTime;
@@ -161,4 +167,5 @@ public struct StackMethod
     public SpecialStackData stack;
     public int count;
     public float preDelay;
+    public bool onCanceled;
 }

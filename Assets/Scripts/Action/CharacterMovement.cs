@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -40,6 +41,8 @@ public abstract class CharacterMovement : MonoBehaviour
     private MovementMethod method;
     private float skillEndTime;
 
+    private bool isFrozen;
+
 
     protected virtual void Awake()
     {
@@ -58,6 +61,8 @@ public abstract class CharacterMovement : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         CheckGround();
+        if (isFrozen) return;
+
         if (!isOnGround || verticalVelocity > 0f) verticalVelocity -= activeGravity * Time.fixedDeltaTime;
 
         SetDirection();
@@ -250,6 +255,17 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public void StunMove(AttackInfo hit)
     {
+        StopAllCoroutines();
+        StartCoroutine(CoFreeze(hit));
+    }
+
+private IEnumerator CoFreeze(AttackInfo hit)
+    {
+        isFrozen = true;
+        rigid.linearVelocity = Vector3.zero;
+        if (hit.reaction == HitReactionType.Gaurded) { isFrozen = false; yield break; }
+        yield return new WaitForSeconds(hit.fixedStun);
+
         var dir = Vector3.zero;
         rigid.linearVelocity = dir;
 
@@ -297,6 +313,7 @@ public abstract class CharacterMovement : MonoBehaviour
             isFreeMoveEnabled = false;
             activeGravity = defaultGravity;
         }
+        isFrozen = false;
     }
 
     public void OnStunEnd() { isFreeMoveEnabled = true; friction = 0; }
