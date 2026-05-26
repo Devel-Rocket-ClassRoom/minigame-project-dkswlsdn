@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LAN L 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 1
-  actionTime: 0.3
+  actionTime: 0.2
   useGrab: 0
   movementMethod:
     calcType: 1
@@ -52,6 +52,8 @@ MonoBehaviour:
       stunForce: 2
       airborneForce: {x: 0, y: 0}
       forceDirectionType: 0
+      fixedStun: 0
+      reverseStun: 0.1
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0

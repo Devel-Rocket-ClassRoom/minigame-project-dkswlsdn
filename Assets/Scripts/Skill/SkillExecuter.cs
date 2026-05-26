@@ -4,6 +4,7 @@ using UnityEngine;
 public class SkillExecuter : MonoBehaviour
 {
     private Weapon currentWeapon;
+    public Skill instantQSkill;
     public Weapon CurrentWeapon
     {
         get => currentWeapon;
@@ -114,6 +115,8 @@ public class SkillExecuter : MonoBehaviour
 
     public void CooldownReset(int index)
     {
+        if (index == -1) return;
+
         cooldowns[index] = skills[index].cooldown;
         currentIndex = -1;
     }

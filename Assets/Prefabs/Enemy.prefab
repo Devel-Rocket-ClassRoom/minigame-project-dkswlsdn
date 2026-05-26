@@ -280,6 +280,8 @@ MonoBehaviour:
     stunForce: 0
     airborneForce: {x: 0, y: 0}
     forceDirectionType: 0
+    fixedStun: 0
+    reverseStun: 0
     activateTime: 0
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
@@ -328,7 +330,7 @@ MonoBehaviour:
   moveSpeed: 1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   verticalVelocity: 0
   isOnGround: 0
 --- !u!114 &8372076317205111726

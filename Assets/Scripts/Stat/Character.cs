@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     public CharacterAnchor Anchor { get; private set; }
     public SpecialStackHandler Stack { get; private set; }
     public SightManager Sight { get; private set; }
+    public ItemQuickSlot QuickSlot { get; private set; }
 
 
     private void Awake()
@@ -35,6 +36,7 @@ public class Character : MonoBehaviour
         Anchor = GetComponent<CharacterAnchor>();
         Stack = GetComponent<SpecialStackHandler>();
         Sight = GetComponentInChildren<SightManager>();
+        QuickSlot = GetComponent<ItemQuickSlot>();
 
         team = id;
         Id = id++;

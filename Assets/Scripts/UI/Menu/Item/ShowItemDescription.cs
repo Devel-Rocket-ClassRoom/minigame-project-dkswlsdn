@@ -11,6 +11,7 @@ public class ShowItemDescription : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private TextContainer desc;
     [SerializeField] private ConsumeButton consumeButton;
+    [SerializeField] private ItemShiftButton shiftButton;
 
     public void Init(Item item, Character character, ItemSaveEntry entry, bool isStorage)
     {
@@ -20,6 +21,9 @@ public class ShowItemDescription : MonoBehaviour
         itemName.ChangeText(item.itemName);
         icon.sprite = item.icon;
         desc.ChangeText(item.desc);
+
+        shiftButton.Init(entry, isStorage);
+
         consumeButton.Init(item, character, entry, isStorage);
     }
 

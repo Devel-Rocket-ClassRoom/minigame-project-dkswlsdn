@@ -52,12 +52,14 @@ MonoBehaviour:
       stunForce: 2
       airborneForce: {x: 5, y: 3}
       forceDirectionType: 0
+      fixedStun: 0
+      reverseStun: 0.1
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
     type: 1
-    preDelay: 0.1
+    preDelay: 0.2
     isCheckHit: 0
     isGrab: 0
     toGrab: 0

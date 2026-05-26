@@ -11,7 +11,7 @@ public class ShowWeaponInfo : MonoBehaviour
     [Serializable]
     public class SkillSlot
     {
-        public TextMeshProUGUI nameText;
+        public TextContainer nameText;
         public Image cooldownBar;
     }
 
@@ -38,7 +38,10 @@ public class ShowWeaponInfo : MonoBehaviour
         {
             var skill = executer.GetSkill(i + 1);
             if (slots[i].nameText != null)
-                slots[i].nameText.text = skill != null ? skill.skillName : string.Empty;
+            {
+                var text = skill != null ? skill.skillName : string.Empty;
+                slots[i].nameText.ChangeText(text);
+            }
         }
     }
 

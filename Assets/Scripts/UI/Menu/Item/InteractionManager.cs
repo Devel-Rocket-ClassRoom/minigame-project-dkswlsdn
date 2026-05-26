@@ -19,21 +19,8 @@ public class InteractionManager : MonoBehaviour
     {
         if (commander.GetInput(ConditionInput.Interaction))
         {
-            PickupItem();
             interaction();
         }
-    }
-
-    private void PickupItem()
-    {
-        var hits = Physics.OverlapSphere(transform.position, interactionRadius, itemLayer);
-        if (hits.Length == 0) return;
-
-        var instance = hits[0].GetComponent<ItemInstance>();
-        if (instance == null) return;
-
-        instance.GetItem().OnGet(character);
-        Destroy(hits[0].gameObject);
     }
 
     private void interaction()
@@ -44,6 +31,6 @@ public class InteractionManager : MonoBehaviour
         var instance = hits[0].GetComponent<Interactor>();
         if (instance == null) return;
 
-        instance.OnDetected();
+        instance.OnDetected(character);
     }
 }

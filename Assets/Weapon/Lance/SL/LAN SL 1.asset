@@ -16,7 +16,7 @@ MonoBehaviour:
   actionTime: 0.4
   useGrab: 0
   movementMethod:
-    calcType: 3
+    calcType: 1
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     neutralDistance: 2.5
     backwardDistance: 0
     isFrictionAutoCalc: 1
-    followTerrain: 0
+    followTerrain: 1
     useInputDirection: 0
     isStaticDirection: 0
     useAltitudeModifire: 0

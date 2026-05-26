@@ -14,7 +14,6 @@ public class SkillCaster : MonoBehaviour
     private SkillContext context;
     public SkillContext Context => context;
 
-    [SerializeField]
     private float actionTimer;
     private float minTransitionTimer;
 
@@ -268,6 +267,12 @@ public class SkillCaster : MonoBehaviour
     private void OnFreeze(float duration)
     {
         actionTimer += duration;
+
+        foreach (var target in context.grabTarget)
+        {
+            if (target != null)
+                target.State.FreezeFor(duration);
+        }
     }
 
     private void ReleaseGrab(CharacterState state)

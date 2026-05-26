@@ -11,6 +11,7 @@ public class Rope : Interactor
 
         character.Movement.EnterClimb(transform.position);
         character.State.ChangeState(CharacterState.Climb);
+        character.transform.position = transform.position;
         owner.AddClimber(character);
         return true;
     }

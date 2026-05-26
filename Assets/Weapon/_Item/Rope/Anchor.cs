@@ -4,20 +4,35 @@ using UnityEngine;
 public class Anchor : MonoBehaviour
 {
     [SerializeField] private GameObject ropePrefab;
-    [SerializeField] private int        length     = 20;
-    [SerializeField] private Vector3    exitOffset = new Vector3(0f, 1.5f, 0f);
+    [SerializeField] private int length = 20;
+    [SerializeField] private Vector3 exitOffset = new Vector3(0f, 1.5f, 0f);
+    [SerializeField] private LayerMask layer;
+    [SerializeField] private ItemInstance RopeItem;
+    
 
-    private float   TopY         => transform.position.y;
-    private float   BottomY      => transform.position.y - length;
+    private float TopY => transform.position.y;
+    private float BottomY => transform.position.y - length;
     private Vector3 ExitPosition => transform.position + exitOffset;
 
     private readonly List<Character> climbers = new List<Character>();
 
     private void OnEnable()
     {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, length, layer))
+        {
+            length = Mathf.FloorToInt(transform.position.y - hit.point.y);
+        }
+
+        if (length <= 1)
+        {
+            Instantiate(RopeItem, transform.position, Quaternion.identity);
+            return;
+        }
+
         for (int i = 0; i < length; i++)
         {
-            var go   = Instantiate(ropePrefab,
+            var go = Instantiate(ropePrefab,
                            transform.position + Vector3.down * i,
                            Quaternion.identity);
             go.GetComponent<Rope>().owner = this;

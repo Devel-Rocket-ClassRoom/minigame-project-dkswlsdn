@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class ItemInstance : MonoBehaviour
+public class ItemInstance : Interactor
 {
     [SerializeField] private Item item;
 
-    public Item GetItem()
+    public override bool OnDetected(Character character)
     {
-        return item;
+        character.QuickSlot.GetIntoQuickSlot(item);
+        Destroy(gameObject);
+        return true;
     }
 }

@@ -26,7 +26,7 @@ public class DamagePopupManager : MonoBehaviour
     {
         var g = Instantiate(damagePrefab, canvas.transform);
         g.text = ((int)damage).ToString();
-        var point = cam.WorldToScreenPoint(head + Vector3.up * 5);
+        var point = cam.WorldToScreenPoint(head + Vector3.up);
         point.z = 0f;
         g.transform.position = point;
     }
