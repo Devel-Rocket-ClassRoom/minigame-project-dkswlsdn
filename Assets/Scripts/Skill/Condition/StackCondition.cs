@@ -8,6 +8,6 @@ public class StackCondition : SkillCondition
 
     public override bool IsMet(Character character, SkillContext context)
     {
-        return character.Stack.Has(requireStack) && character.Stack.GetCount(requireStack) >= requireCount;
+        return character.Stack.Has(requireStack) && character.Stack.GetCount(requireStack).amount >= requireCount;
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BH Space 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 1
+  actionTime: 0.5
   useGrab: 0
   movementMethod:
     calcType: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
     directionReverse: 0
     rightSide: 0
     canFreeMove: 1
-    freeMoveSpeed: 6
+    freeMoveSpeed: 4
     distance: 0
     neutralDistance: 0
     backwardDistance: 0
@@ -45,17 +45,22 @@ MonoBehaviour:
   attack:
   - info:
       damage: 5
+      stack: {fileID: 0}
+      count: 0
       reaction: 2
+      range: 0
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: -0.3, y: 2}
+      airborneForce: {x: -1, y: 2}
       forceDirectionType: 1
+      fixedStun: 0.1
+      reverseStun: 0.2
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
     type: 2
-    preDelay: 0
+    preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
@@ -65,19 +70,25 @@ MonoBehaviour:
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
     scale: {x: 2, y: 0.7, z: 2}
     movementType: 1
+    spawnRules: []
   - info:
       damage: 5
+      stack: {fileID: 0}
+      count: 0
       reaction: 2
+      range: 0
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: -0.3, y: 2}
+      airborneForce: {x: -1, y: 2}
       forceDirectionType: 1
+      fixedStun: 0.1
+      reverseStun: 0.2
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    type: 0
-    preDelay: 0.2
+    type: 2
+    preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
@@ -85,21 +96,27 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 0, y: 0, z: 0}
+    scale: {x: 2, y: 0.7, z: 2}
     movementType: 1
+    spawnRules: []
   - info:
       damage: 5
+      stack: {fileID: 0}
+      count: 0
       reaction: 2
+      range: 0
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: -0.3, y: 2}
+      airborneForce: {x: -1, y: 2}
       forceDirectionType: 1
+      fixedStun: 0.1
+      reverseStun: 0.2
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    type: 0
-    preDelay: 0.2
+    type: 2
+    preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
@@ -107,21 +124,27 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 0, y: 0, z: 0}
+    scale: {x: 2, y: 0.7, z: 2}
     movementType: 1
+    spawnRules: []
   - info:
       damage: 5
+      stack: {fileID: 0}
+      count: 0
       reaction: 2
+      range: 0
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: -0.3, y: 2}
+      airborneForce: {x: -1, y: 2}
       forceDirectionType: 1
+      fixedStun: 0.1
+      reverseStun: 0.2
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    type: 0
-    preDelay: 0.2
+    type: 2
+    preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
@@ -129,21 +152,27 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 0, y: 0, z: 0}
+    scale: {x: 2, y: 0.7, z: 2}
     movementType: 1
+    spawnRules: []
   - info:
       damage: 10
+      stack: {fileID: 0}
+      count: 0
       reaction: 2
+      range: 0
       stunDuration: 0
       stunForce: 0
-      airborneForce: {x: 5, y: 5}
+      airborneForce: {x: 6, y: 2}
       forceDirectionType: 0
+      fixedStun: 0.1
+      reverseStun: 0.2
       activateTime: 0.1
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
       projectileSpeed: 0
-    type: 0
-    preDelay: 0.2
+    type: 2
+    preDelay: 0.1
     isCheckHit: 0
     isGrab: 0
     toGrab: 0
@@ -151,8 +180,15 @@ MonoBehaviour:
     aimDir: {x: 0, y: 0, z: 0}
     positionOffset: {x: 0, y: 1, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 0, y: 0, z: 0}
+    scale: {x: 2, y: 0.7, z: 2}
     movementType: 1
+    spawnRules: []
+  stack:
+  - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
+    count: 1
+    life: 0.5
+    preDelay: 0
+    onCanceled: 0
   targetting: 0
   targetLayer:
     serializedVersion: 2

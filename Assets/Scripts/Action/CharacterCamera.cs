@@ -5,7 +5,7 @@ public abstract class CharacterCamera : MonoBehaviour
     protected SkillCaster caster;
     protected StateManager state;
 
-    protected bool canRotateCharacter;
+    [SerializeField] protected bool canRotateCharacter;
 
     protected virtual void Awake()
     {

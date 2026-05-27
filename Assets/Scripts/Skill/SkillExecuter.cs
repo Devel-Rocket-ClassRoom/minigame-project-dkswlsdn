@@ -30,7 +30,6 @@ public class SkillExecuter : MonoBehaviour
 
     private readonly Skill[] skills = new Skill[8];
     private readonly float[] cooldowns = new float[8];
-    private int currentIndex = -1;
 
     private static readonly ConditionInput[] inputs =
     {
@@ -76,7 +75,7 @@ public class SkillExecuter : MonoBehaviour
     {
         for (int i = 0; i < cooldowns.Length; i++)
         {
-            if (i == currentIndex) continue;
+            if (i == caster.Context.currentIndex) continue;
             cooldowns[i] -= Time.deltaTime;
         }
 
@@ -89,7 +88,6 @@ public class SkillExecuter : MonoBehaviour
             if (caster.Cast(skills[i], i))
             {
                 cooldowns[i] = skills[i].cooldown;
-                currentIndex = i;
                 break;
             }
         }
@@ -99,14 +97,12 @@ public class SkillExecuter : MonoBehaviour
             if (caster.Cast(skills[0], 0))
             {
                 cooldowns[0] = skills[0].cooldown;
-                currentIndex = 0;
             }
         }
     }
 
     public Skill GetSkill(int index) => skills[index];
 
-    // 0 = 준비됨, 1 = 쿨타임 최대
     public float GetCooldownRatio(int index)
     {
         if (skills[index] == null || skills[index].cooldown <= 0f) return 0f;
@@ -118,6 +114,19 @@ public class SkillExecuter : MonoBehaviour
         if (index == -1) return;
 
         cooldowns[index] = skills[index].cooldown;
-        currentIndex = -1;
+    }
+
+    public bool IsSkillReady(ConditionInput input)
+    {
+        int idx = GetSkillIndex(input);
+        if (idx < 0) return false;
+        return skills[idx] != null && cooldowns[idx] <= 0f;
+    }
+
+    private int GetSkillIndex(ConditionInput input)
+    {
+        if (input == ConditionInput.SkillL) return 0;
+        int i = System.Array.IndexOf(inputs, input);
+        return i >= 0 ? i + 1 : -1;
     }
 }

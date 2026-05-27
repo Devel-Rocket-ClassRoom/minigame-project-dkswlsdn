@@ -92,11 +92,19 @@ public class AIBrain : MonoBehaviour
 
     IEnumerator CoCombo(Combo combo)
     {
+        // 첫 번째 press 인풋의 스킬 쿨타임이 끝날 때까지 대기
+        foreach (var c in combo.comboInput)
+        {
+            if (!c.isPress) continue;
+            while (!executer.IsSkillReady(c.input))
+                yield return null;
+            break;
+        }
+
         foreach (var c in combo.comboInput)
         {
             if (c.isPress)
             {
-                Debug.Log(c.input);
                 command.PressInput(c.input);
             }
             else
@@ -125,6 +133,10 @@ public class AIBrain : MonoBehaviour
 
     private void OnCancled()
     {
-        currentCombo = null;
+        if (currentCombo != null)
+        {
+            StopCoroutine(currentCombo);
+            currentCombo = null;
+        }
     }
 }

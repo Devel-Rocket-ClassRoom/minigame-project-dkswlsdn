@@ -48,10 +48,13 @@ MonoBehaviour:
       stack: {fileID: 0}
       count: 0
       reaction: 2
+      range: 0
       stunDuration: 0
       stunForce: 0
       airborneForce: {x: 10, y: 7}
       forceDirectionType: 0
+      fixedStun: 0
+      reverseStun: 0
       activateTime: 0.5
       isDestroyOnCanceled: 0
       isReleaseGrab: 0
@@ -70,17 +73,20 @@ MonoBehaviour:
     spawnRules:
     - trigger: 0
       position: 0
-      spawn:
+      method:
         info:
-          damage: 12
+          damage: 10
           stack: {fileID: 0}
           count: 0
           reaction: 2
+          range: 2
           stunDuration: 0
           stunForce: 0
-          airborneForce: {x: 3, y: 6}
-          forceDirectionType: 0
-          activateTime: 0.1
+          airborneForce: {x: 5, y: 5}
+          forceDirectionType: 1
+          fixedStun: 0
+          reverseStun: 0
+          activateTime: 0.2
           isDestroyOnCanceled: 0
           isReleaseGrab: 0
           projectileSpeed: 0
@@ -93,13 +99,15 @@ MonoBehaviour:
         aimDir: {x: 0, y: 0, z: 0}
         positionOffset: {x: 0, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-        scale: {x: 4, y: 4, z: 4}
+        scale: {x: 2, y: 2, z: 2}
         movementType: 2
         spawnRules: []
   stack:
   - stack: {fileID: 11400000, guid: 683f477a63980bb4086baeb223762507, type: 2}
     count: -1
+    life: 0
     preDelay: 0
+    onCanceled: 0
   targetting: 2
   targetLayer:
     serializedVersion: 2

@@ -25,13 +25,22 @@ public enum HitReactionType
     Gaurded,
 }
 
+public enum RangeType
+{
+    None,
+    Short,
+    Long,
+    Middle,
+}
+
 [Flags]
 public enum ArmorType
 {
     None,
-    HitStun = 1,
-    Airborne = 1 << 1,
-    All
+    Short = 1,
+    Long = 1 << 1,
+    Full = 1 << 2,
+    All = Short | Long | Full,
 }
 
 public enum DistanceCalculateType

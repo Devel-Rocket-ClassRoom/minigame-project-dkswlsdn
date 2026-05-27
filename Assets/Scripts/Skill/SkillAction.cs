@@ -119,6 +119,7 @@ public class AttackInfo
         stack = hit.stack;
         count = hit.count;
         reaction = hit.reaction;
+        range = hit.range;
         stunDuration = hit.stunDuration;
         stunForce = hit.stunForce;
         airborneForce = hit.airborneForce;
@@ -145,6 +146,7 @@ public class AttackInfo
 
     [Header("경직")]
     public HitReactionType reaction;
+    public RangeType range;
     public float stunDuration;
     public float stunForce;
     public Vector2 airborneForce;
@@ -166,6 +168,7 @@ public struct StackMethod
 {
     public SpecialStackData stack;
     public int count;
+    public float life;
     public float preDelay;
     public bool onCanceled;
 }

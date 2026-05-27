@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BareHand Space
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   skillName: "\uC120\uD718"
-  cooldown: 15
+  cooldown: 1
   actions:
   - {fileID: 11400000, guid: 3d6a8a664bc18484abd2732a6f802f48, type: 2}
   transitions:

@@ -41,6 +41,7 @@ public abstract class CharacterMovement : MonoBehaviour
     private MovementMethod method;
     private float skillEndTime;
 
+    private Coroutine freezeCoroutine;
     private bool isFrozen;
 
 
@@ -56,12 +57,17 @@ public abstract class CharacterMovement : MonoBehaviour
         onLand += state.OnLand;
         state.onIdle += ReturnToIdle;
         state.onKnockdown += OnKnockdown;
+        state.onFreeze += OnFrozen;
     }
 
     protected virtual void FixedUpdate()
     {
         CheckGround();
-        if (isFrozen) return;
+        if (isFrozen)
+        {
+            rigid.linearVelocity = Vector3.zero;
+            return;
+        }
 
         SetDirection();
 
@@ -449,6 +455,20 @@ private IEnumerator CoFreeze(AttackInfo hit)
     {
         rigid.MovePosition(worldPosition.position);
         rigid.MoveRotation(worldPosition.rotation);
+    }
+
+    public void OnFrozen(float duration)
+    {
+        skillEndTime += duration;
+        if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
+        freezeCoroutine = StartCoroutine(CoOnFrozen(duration));
+    }
+
+    IEnumerator CoOnFrozen(float duration)
+    {
+        isFrozen = true;
+        yield return new WaitForSeconds(duration);
+        isFrozen = false;
     }
 }
 

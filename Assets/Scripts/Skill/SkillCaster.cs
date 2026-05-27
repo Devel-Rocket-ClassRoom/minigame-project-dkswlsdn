@@ -37,6 +37,7 @@ public class SkillCaster : MonoBehaviour
         state.onHitstun   += OnCanceled;
         state.onAirborne  += OnCanceled;
         state.onGroggy    += OnCanceled;
+        state.onGrab    += OnCanceled;
         state.onDead      += OnCanceled;
         state.onKnockdown += OnCanceled;
         state.onFreeze += OnFreeze;
@@ -260,7 +261,7 @@ public class SkillCaster : MonoBehaviour
         {
             yield return new WaitForSecondsUnfrozen(stack.preDelay, state);
 
-            character.Stack.Request(stack.stack, stack.count);
+            character.Stack.Request(stack.stack, stack.count, stack.life);
         }
     }
 
@@ -297,11 +298,11 @@ public class SkillCaster : MonoBehaviour
             foreach (var stack in context.current.stack)
             {
                 if (stack.onCanceled)
-                    character.Stack.Request(stack.stack, stack.count);
+                    character.Stack.Request(stack.stack, stack.count, stack.life);
             }
         }
 
-        context.current = null;
+        context.Clear();
         StopAllCoroutines();
 
         for (int i = spawnedAttacks.Count - 1; i >= 0; i--)

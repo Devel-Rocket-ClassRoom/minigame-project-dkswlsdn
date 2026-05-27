@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bowgun E
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   skillName: "\uC775\uC2A4\uD50C\uB85C\uC2DC\uBE0C!!"
-  cooldown: 90
+  cooldown: 10
   actions:
   - {fileID: 11400000, guid: 548f8062a2283f84995845e827b1d468, type: 2}
   transitions: []

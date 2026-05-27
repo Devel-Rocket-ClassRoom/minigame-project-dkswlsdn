@@ -29,10 +29,10 @@ public class CharacterStat : MonoBehaviour
         anchor = GetComponent<CharacterAnchor>();
     }
 
-    private void Update()
-    {
-        //if ( && doTest) TakeDamage(testHitInfo);
-    }
+    //private void Update()
+    //{
+
+    //}
 
 
     public float GetStatPercent(StatType type) 
@@ -54,12 +54,16 @@ public class CharacterStat : MonoBehaviour
     {
         var myHit = new AttackInfo(hit);
 
-        bool canIgnoreHitStun = (armor & ArmorType.HitStun) != 0 && myHit.reaction == HitReactionType.HitStun;
+        ArmorType requiredArmor = myHit.range switch
+        {
+            RangeType.None => ArmorType.Full,
+            RangeType.Short => ArmorType.Short | ArmorType.Full,
+            RangeType.Long => ArmorType.Long | ArmorType.Full,
+            RangeType.Middle => ArmorType.Full,
+            _ => ArmorType.Full
+        };
 
-        bool canIgnoreAirborne = (armor & ArmorType.Airborne) != 0 &&
-            (myHit.reaction == HitReactionType.Airborne ||
-             myHit.reaction == HitReactionType.Knockdown ||
-             myHit.reaction == HitReactionType.Groggy);
+        bool ignoreReaction = (armor & requiredArmor) != 0;
 
 
         health -= myHit.damage;
@@ -70,7 +74,7 @@ public class CharacterStat : MonoBehaviour
             Dead();
         }
 
-        if (canIgnoreHitStun || canIgnoreAirborne)
+        if (ignoreReaction)
         {
             myHit.reaction = HitReactionType.Gaurded;
         }
@@ -86,6 +90,16 @@ public class CharacterStat : MonoBehaviour
     public void RestoreHP(float amount)
     {
         health = Mathf.Min(health + amount, maxHealth);
+    }
+
+    public void ApplyArmor(ArmorType armor)
+    {
+        this.armor |= armor;
+    }
+
+    public void RemoveArmor(ArmorType armor)
+    {
+        this.armor &= ~armor;
     }
 }
 

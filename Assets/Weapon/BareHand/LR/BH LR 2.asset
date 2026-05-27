@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BH LR 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
+  actionTime: 0.3
+  useGrab: 0
   movementMethod:
     calcType: 0
     gravity: 0
@@ -41,13 +43,18 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack: []
-  targetting:
-    isHighAngle: 0
-    useOnlyCamera: 0
+  stack:
+  - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
+    count: -1
+    life: 0
+    preDelay: 0
+    onCanceled: 0
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aimDistance: 0
-  useGrab: 0
-  actionTime: 0.3
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  transitions: []
   autoTransition: {fileID: 11400000, guid: 5a536496c738f0641aabd713ee4dc088, type: 2}

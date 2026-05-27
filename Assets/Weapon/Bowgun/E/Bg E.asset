@@ -46,7 +46,9 @@ MonoBehaviour:
   stack:
   - stack: {fileID: 11400000, guid: 683f477a63980bb4086baeb223762507, type: 2}
     count: 9
+    life: 30
     preDelay: 1
+    onCanceled: 0
   targetting: 0
   targetLayer:
     serializedVersion: 2
