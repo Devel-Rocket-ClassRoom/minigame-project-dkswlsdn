@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SkillExecuter : MonoBehaviour
 {
+    public bool IsDisableCast { get; set; }
     private Weapon currentWeapon;
     public Skill instantQSkill;
     public Weapon CurrentWeapon
@@ -73,6 +74,8 @@ public class SkillExecuter : MonoBehaviour
 
     private void Update()
     {
+        if (IsDisableCast) return;
+
         for (int i = 0; i < cooldowns.Length; i++)
         {
             if (i == caster.Context.currentIndex) continue;

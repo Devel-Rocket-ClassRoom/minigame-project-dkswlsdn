@@ -355,7 +355,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
 
     protected void CheckGround()
     {
-        if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out RaycastHit hit, 0.5f))
+        if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out RaycastHit hit, 0.5f, groundLayer))
         {
             surfaceNormal = hit.normal;
             if (!isNearGround)

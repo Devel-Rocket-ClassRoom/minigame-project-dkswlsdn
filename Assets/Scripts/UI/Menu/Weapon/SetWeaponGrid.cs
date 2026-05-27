@@ -8,18 +8,21 @@ public class SetWeaponGrid : MonoBehaviour
     [SerializeField] private PlayerSkillExecuter executer;
 
 
-    private void Awake()
+    private void OnEnable()
     {
+        var list = SaveManager.instance.CurrentSave.unlockedWeaponList;
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
         foreach (var weapon in weaponDatabase.weapons)
         {
             var b = Instantiate(weaponButton, transform);
-            b.Init(weapon);
+            var isUnlock = list.Contains(weapon.weaponName);
+            b.Init(weapon, isUnlock);
         }
-    }
-
-    private void OnEnable()
-    {
-        // 세이브데이터와 비교해서 잠금상태 업데이트
     }
 
     private void OnDisable()

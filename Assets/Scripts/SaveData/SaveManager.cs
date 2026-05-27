@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System;
 using UnityEngine;
-using SaveDataVC = SaveDataV1;
+using SaveDataVC = SaveDataV2;
 
 public class SaveManager : MonoBehaviour
 {
@@ -30,6 +30,8 @@ public class SaveManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        LoadRequest(0);
     }
 
     
@@ -66,9 +68,14 @@ public class SaveManager : MonoBehaviour
             }
 
             var json = File.ReadAllText(path);
-            var data = JsonConvert.DeserializeObject<SaveDataVC>(json);
-            CurrentSave = data;
-            return data;
+            SaveData ver = JsonConvert.DeserializeObject<SaveDataVC>(json);
+
+            while (ver.version != currentVersion)
+            {
+                ver = ver.NextVersion();
+            }
+            CurrentSave = ver as SaveDataVC;
+            return CurrentSave;
         }
         catch (Exception e)
         {

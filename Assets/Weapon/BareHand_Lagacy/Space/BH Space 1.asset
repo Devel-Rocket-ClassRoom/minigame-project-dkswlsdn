@@ -186,8 +186,13 @@ MonoBehaviour:
   stack:
   - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
     count: 1
-    life: 0.5
+    life: 2
     preDelay: 0
+    onCanceled: 0
+  - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
+    count: -1
+    life: 0.5
+    preDelay: 0.5
     onCanceled: 0
   targetting: 0
   targetLayer:

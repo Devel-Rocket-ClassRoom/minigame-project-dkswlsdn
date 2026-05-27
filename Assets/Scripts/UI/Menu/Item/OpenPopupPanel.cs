@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OpenExitPanel : Interactor
+public class OpenPopupPanel : Interactor
 {
     [SerializeField] private MenuPanel panel;
 

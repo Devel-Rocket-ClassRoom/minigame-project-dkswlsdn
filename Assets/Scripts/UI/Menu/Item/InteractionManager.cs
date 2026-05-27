@@ -3,11 +3,11 @@ using UnityEngine.TextCore.Text;
 
 public class InteractionManager : MonoBehaviour
 {
-    private Character character;
+    protected Character character;
     private CharacterCommander commander;
-    [SerializeField] private float interactionRadius;
-    [SerializeField] private LayerMask itemLayer;
-    [SerializeField] private LayerMask interactionLayer;
+    [SerializeField] protected float interactionRadius;
+    [SerializeField] protected LayerMask itemLayer;
+    [SerializeField] protected LayerMask interactionLayer;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private void interaction()
+    protected virtual void interaction()
     {
         var hits = Physics.OverlapSphere(transform.position, interactionRadius, interactionLayer);
         if (hits.Length == 0) return;

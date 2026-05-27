@@ -601,6 +601,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5268671981195612778, guid: 758d627419ceb5f48a6c39d8dfcd457b, type: 3}
+      propertyPath: isPlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5591380644818824215, guid: 758d627419ceb5f48a6c39d8dfcd457b, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1510,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 518.8594
+      value: 519.1288
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1546,7 +1550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 269.4297
+      value: 269.5644
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2932,8 +2936,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1423.625, y: -510}
-  m_SizeDelta: {x: 711.8125, y: 1020}
+  m_AnchoredPosition: {x: 1424.3435, y: -510}
+  m_SizeDelta: {x: 712.17175, y: 1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &520443388
 GameObject:
@@ -3486,10 +3490,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 232836937}
-    - target: {fileID: 4886264997926590039, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: canRotateCharacter
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5083150973174929940, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: m_Name
       value: Character
@@ -4255,7 +4255,7 @@ GameObject:
   - component: {fileID: 842959414}
   m_Layer: 7
   m_Name: Cube (3)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5365,7 +5365,7 @@ GameObject:
   - component: {fileID: 1013381689}
   m_Layer: 7
   m_Name: Cube (2)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5949,8 +5949,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 533.8594, y: -510}
-  m_SizeDelta: {x: 1067.7188, y: 1020}
+  m_AnchoredPosition: {x: 534.1288, y: -510}
+  m_SizeDelta: {x: 1068.2576, y: 1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1191596787
 MonoBehaviour:
@@ -6333,7 +6333,7 @@ GameObject:
   - component: {fileID: 1221392788}
   m_Layer: 7
   m_Name: Cube
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6465,7 +6465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 518.8594
+      value: 519.1288
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6501,7 +6501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 798.28906
+      value: 798.6932
       objectReference: {fileID: 0}
     - target: {fileID: 231887391814003945, guid: 28e01598ec7920242a60fcc4b8a3c732, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8037,8 +8037,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 533.8594, y: -437.14282}
-  m_SizeDelta: {x: 1067.7188, y: 874.28564}
+  m_AnchoredPosition: {x: 534.1288, y: -437.14282}
+  m_SizeDelta: {x: 1068.2576, y: 874.28564}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1487595545
 MonoBehaviour:
@@ -9120,7 +9120,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1830434190}
   m_HandleRect: {fileID: 1830434189}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10256,8 +10256,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 533.8594, y: -947.14276}
-  m_SizeDelta: {x: 1067.7188, y: 145.71428}
+  m_AnchoredPosition: {x: 534.1288, y: -947.14276}
+  m_SizeDelta: {x: 1068.2576, y: 145.71428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1830434188
 GameObject:
@@ -10917,7 +10917,7 @@ GameObject:
   - component: {fileID: 1931188208}
   m_Layer: 7
   m_Name: Cube (1)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
