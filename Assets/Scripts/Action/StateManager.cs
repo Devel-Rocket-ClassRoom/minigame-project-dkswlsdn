@@ -175,7 +175,7 @@ public class StateManager : MonoBehaviour
         IsFrozen = false;
     }
 
-    private void OnDamageTaken(AttackInfo hit)
+    private void OnDamageTaken(Character character, AttackInfo hit)
     {
         float stun = hit.reaction == HitReactionType.Gaurded ? hit.stunForce * 0.2f + hit.fixedStun : hit.fixedStun;
         FreezeFor(hit.fixedStun);

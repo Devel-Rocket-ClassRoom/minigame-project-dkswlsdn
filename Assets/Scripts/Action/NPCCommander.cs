@@ -4,13 +4,11 @@ using UnityEngine;
 public class NPCCommander : CharacterCommander
 {
     private Vector2 moveInput;
-    private Vector2 rotateInput;
     private readonly HashSet<ConditionInput> heldInputs = new();
     private readonly HashSet<ConditionInput> pressedThisFrame = new();
     private readonly HashSet<ConditionInput> releasedThisFrame = new();
 
     public override Vector2 MoveInput => moveInput;
-    public override Vector2 RotateInput => rotateInput;
 
     public override bool GetInput(ConditionInput input, bool held)
     {
@@ -19,7 +17,6 @@ public class NPCCommander : CharacterCommander
 
     // AI에서 호출
     public void SetMoveInput(Vector2 input) => moveInput = input;
-    public void SetRotateInput(Vector2 input) => rotateInput = input;
 
     public void PressInput(ConditionInput input)
     {
@@ -33,7 +30,7 @@ public class NPCCommander : CharacterCommander
         releasedThisFrame.Add(input);
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         pressedThisFrame.Clear();
         releasedThisFrame.Clear();

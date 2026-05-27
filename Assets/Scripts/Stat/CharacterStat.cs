@@ -16,19 +16,13 @@ public class CharacterStat : MonoBehaviour
 
     [SerializeField] private ArmorType armor;
 
-    public event Action<AttackInfo> onDamageTake; // 나 이런 공격을 받았어!
+    public event Action<Character, AttackInfo> onDamageTake; // 나 이런 공격을 받았어!
     public event Action<float> onTakeDamage; // 나 이만큼의 데미지를 받았어!
     public event Action onSuperArmorActivate; // 나 슈퍼아머 발동했어!
     public event Action onHealthLack; // 나 체력이 부족해!
     public event Action onHealthEnough; // 나 이제 체력 많아!
     public event Action onStatChanged;
 
-    [Header("Test")]
-    [SerializeField] private bool doTest;
-    [SerializeField] private AttackInfo testHitInfo = new AttackInfo();
-
-    [ContextMenu("Test TakeDamage")]
-    private void TestTakeDamage() => TakeDamage(testHitInfo);
 
     private void Awake()
     {
@@ -56,7 +50,7 @@ public class CharacterStat : MonoBehaviour
         damageTaken = damage;
     }
 
-    public void TakeDamage(AttackInfo hit)
+    public void TakeDamage(Character character, AttackInfo hit)
     {
         var myHit = new AttackInfo(hit);
 
@@ -81,7 +75,7 @@ public class CharacterStat : MonoBehaviour
             myHit.reaction = HitReactionType.Gaurded;
         }
 
-        onDamageTake?.Invoke(myHit);
+        onDamageTake?.Invoke(character, myHit);
     }
 
     public void Dead()

@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class PlayerCommander : CharacterCommander
 {
     public override Vector2 MoveInput   => PlayerMovement.Action.Player.Move.ReadValue<Vector2>();
-    public override Vector2 RotateInput => PlayerMovement.Action.Player.Rotate.ReadValue<Vector2>();
 
     public override bool GetInput(ConditionInput input, bool held)
     {

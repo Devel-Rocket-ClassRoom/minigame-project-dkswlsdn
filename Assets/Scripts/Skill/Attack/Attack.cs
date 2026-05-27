@@ -61,7 +61,7 @@ public class Attack : MonoBehaviour
         IsHit = true;
 
         if (!method.isGrab)
-            character.Stat.TakeDamage(method.info);
+            character.Stat.TakeDamage(this.character, method.info);
 
         life += method.info.reverseStun;
         this.character.State.FreezeFor(method.info.reverseStun);

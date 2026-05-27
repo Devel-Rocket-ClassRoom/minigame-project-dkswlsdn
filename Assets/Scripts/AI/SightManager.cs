@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SightManager : MonoBehaviour
 {
-    private Character self;
+    private Character character;
     private CharacterStat stat;
     private CapsuleCollider sightCollider;
 
@@ -17,7 +17,7 @@ public class SightManager : MonoBehaviour
 
     private void Awake()
     {
-        self = GetComponentInParent<Character>();
+        character = GetComponentInParent<Character>();
         stat = GetComponentInParent<CharacterStat>();
         sightCollider = GetComponent<CapsuleCollider>();
         sightCollider.isTrigger = true;
@@ -38,7 +38,7 @@ public class SightManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var character = other.GetComponent<Character>();
-        if (character == null || character.team == self.team) return;
+        if (character == null || character.team == this.character.team) return;
 
         visibleCharacters.Add(character);
         onDetected?.Invoke(character);
@@ -47,7 +47,7 @@ public class SightManager : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var character = other.GetComponent<Character>();
-        if (character == null || character.team == self.team) return;
+        if (character == null || character.team == this.character.team) return;
 
         visibleCharacters.Remove(character);
         onLost?.Invoke(character);

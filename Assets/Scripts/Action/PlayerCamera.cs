@@ -1,11 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerCamera : MonoBehaviour
+public class PlayerCamera : CharacterCamera
 {
-    private StateManager state;
-    private SkillCaster caster;
-
 
     private float rotationX = 0f;
     public float RotationX
@@ -18,27 +15,15 @@ public class PlayerCamera : MonoBehaviour
     }
     [SerializeField] private float distance;
     [SerializeField] protected Transform playerTransform, lookAtTransform, cam;
-    [SerializeField] private bool reverseY, reverseX, canRotateCharacter;
+    [SerializeField] private bool reverseY, reverseX;
     [SerializeField] private float verticalSpeed, horizontalSpeed, minVerticalRotation, maxVerticalRotation;
     private float vSpeed, hSpeed;
 
 
-    private void Awake()
+    protected override void Awake()
     {
-        state = GetComponent<StateManager>();
-        caster = GetComponent<SkillCaster>();
-
-        state.onIdle += ReturnOrigin;
-        state.onWakeUp += ReturnOrigin;
-        state.onHitstun += OnStun;
-        state.onAirborne += OnStun;
-        state.onKnockdown += OnStun;
-        state.onGroggy += OnStun;
-        state.onGrab += OnStun;
-        state.onDead += OnStun;
-
-        caster.onActionStart += OnUseSkill;
-        caster.onSkillEnd += ReturnOrigin;
+        base.Awake();
+        
     }
 
 
@@ -50,11 +35,11 @@ public class PlayerCamera : MonoBehaviour
         hSpeed = horizontalSpeed;
     }
 
-    private void  LateUpdate()
+    private void LateUpdate()
     {
         if (cam == null) return;
         var mouseInput = PlayerMovement.Action.Player.Rotate.ReadValue<Vector2>();
-        RotationX -= mouseInput.y  * vSpeed * Time.deltaTime;
+        RotationX -= mouseInput.y * vSpeed * Time.deltaTime;
         lookAtTransform.localRotation = Quaternion.Euler(RotationX, 0, 0);
         if (canRotateCharacter) playerTransform.Rotate(new Vector3(0, mouseInput.x, 0) * hSpeed * Time.deltaTime);
         cam.transform.position = lookAtTransform.position - lookAtTransform.forward * distance;
@@ -68,24 +53,24 @@ public class PlayerCamera : MonoBehaviour
         return 0.85f - t * (0.85f - 0.3f);
     }
 
-    public void OnUseSkill(SkillAction action)
+    public override void OnUseSkill(SkillAction action)
     {
-        canRotateCharacter = true;
+        base.OnUseSkill(action);
         hSpeed = action.movementMethod.lookSpeedLimit;
         vSpeed = action.movementMethod.lookSpeedLimit;
     }
 
-    public void ReturnOrigin()
+    public override void ReturnOrigin()
     {
+        base.ReturnOrigin();
         vSpeed = verticalSpeed;
         hSpeed = horizontalSpeed;
-        canRotateCharacter = true;
     }
 
-    public void OnStun()
+    public override void OnStun()
     {
+        base.OnStun();
         vSpeed = 0;
         hSpeed = 0;
-        canRotateCharacter = false;
     }
 }

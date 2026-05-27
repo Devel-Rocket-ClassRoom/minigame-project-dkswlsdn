@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon", menuName = "Scriptable Objects/Weapon")]
@@ -16,4 +18,24 @@ public class Weapon : ScriptableObject
     public Skill QSkill;
     public Skill ESkill;
     public Skill SpaceSkill;
+
+    [Header("콤보")]
+    public List<Combo> combo;
+}
+
+[Serializable]
+public class Combo
+{
+    public SkillCondition condition;
+
+    public List<InputElement> comboInput;
+}
+
+[Serializable]
+public class InputElement
+{
+    public ConditionInput input;
+    public float preDelay;
+    public bool isPress;
+    public SkillCondition condtion;
 }

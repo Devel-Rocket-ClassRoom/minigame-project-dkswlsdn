@@ -206,7 +206,7 @@ public class SkillCaster : MonoBehaviour
                     info.id = character.Id;
                     info.isPopup = character.isPlayer;
                     info.origin = transform;
-                    c.Stat.TakeDamage(info);
+                    c.Stat.TakeDamage(character, info);
                 }
 
                 if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);

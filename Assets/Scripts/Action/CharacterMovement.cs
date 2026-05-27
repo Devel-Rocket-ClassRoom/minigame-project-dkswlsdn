@@ -206,20 +206,21 @@ public abstract class CharacterMovement : MonoBehaviour
                     aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     break;
                 case DistanceCalculateType.UseInput:
-                    if (Mathf.Abs(inputDirection.z) < 0.01f)
-                    {
-                        distance = method.neutralDistance;
-                    }
-                    else if (inputDirection.z < -0.01f)
+                    if (commander.GetInput(ConditionInput.MoveForward)) { }
+                    else if (commander.GetInput(ConditionInput.MoveBackward))
                     {
                         distance = method.backwardDistance;
+                    }
+                    else
+                    {
+                        distance = method.neutralDistance;
                     }
                     break;
                 case DistanceCalculateType.UseAim:
                     distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     break;
                 case DistanceCalculateType.Mixed:
-                    if (inputDirection.z < -0.01f)
+                    if (commander.GetInput(ConditionInput.MoveBackward))
                     {
                         distance = method.backwardDistance;
                     }
@@ -260,7 +261,7 @@ public abstract class CharacterMovement : MonoBehaviour
         }
     }
 
-    public void StunMove(AttackInfo hit)
+    public void StunMove(Character character, AttackInfo hit)
     {
         StopAllCoroutines();
         StartCoroutine(CoFreeze(hit));
