@@ -7,7 +7,7 @@ public class GameSceneManager : MonoBehaviour
 
     private readonly string[] scenes =
     {
-        "TltleScene", "BaseCampScene", "BattleScene"
+        "TltleScene", "BaseCampScene", "BattleScene", "TutorialScene"
     };
 
     private void Awake()
@@ -39,8 +39,16 @@ public class GameSceneManager : MonoBehaviour
 
     public void StartGame(int idx)
     {
-        LoadScene(SceneName.BaseCamp);
         SaveManager.instance.LoadRequest(idx);
+        if (SaveManager.instance.CurrentSave.isTutorialCleared)
+        {
+            LoadScene(SceneName.BaseCamp);
+        }
+        else
+        {
+            SaveManager.instance.ResetSave();
+            LoadScene(SceneName.Tutorial);
+        }
     }
 
     public void LoadBaseCamp()
@@ -59,4 +67,5 @@ public enum SceneName
     TitleScene = 0,
     BaseCamp = 1,
     Battle = 2,
+    Tutorial = 3,
 }

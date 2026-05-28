@@ -7,6 +7,7 @@ public class Weapon : ScriptableObject
 {
     public int id;
     public string weaponName;
+    public bool cannotUse;
     public Sprite icon;
     public GameObject model;
 
@@ -26,7 +27,7 @@ public class Weapon : ScriptableObject
 [Serializable]
 public class Combo
 {
-    public SkillCondition condition;
+    public List<AICondition> conditions;
 
     public List<InputElement> comboInput;
 }
@@ -37,5 +38,5 @@ public class InputElement
     public ConditionInput input;
     public float preDelay;
     public bool isPress;
-    public SkillCondition condtion;
+    public AICondition condtion;
 }

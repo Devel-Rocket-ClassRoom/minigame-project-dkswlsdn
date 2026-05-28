@@ -25,45 +25,45 @@ MonoBehaviour:
   ESkill: {fileID: 11400000, guid: d08aeffc2b95b54409c491726aedd6e7, type: 2}
   SpaceSkill: {fileID: 11400000, guid: c52fddb5c30cebd4ea477688158f33f2, type: 2}
   combo:
-  - condition: {fileID: 11400000, guid: 605c6aaa21f25f742b5d71d8158bbbf4, type: 2}
+  - condition: {fileID: 11400000, guid: aaa6715907d536849be8dd49b97164ca, type: 2}
     comboInput:
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 4
       preDelay: 0.1
       isPress: 1
-      condtion: {fileID: 11400000, guid: c302148ddf1aa3c45bd07a1ed434ec50, type: 2}
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}

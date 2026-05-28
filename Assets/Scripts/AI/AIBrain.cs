@@ -18,6 +18,8 @@ public class AIBrain : MonoBehaviour
     [SerializeField] private float safeDistance;
 
     private Character aggro;
+    private Coroutine chaseCoroutine;
+    [SerializeField] private float maxChaseTime = 3f;
 
     private void Awake()
     {
@@ -42,9 +44,22 @@ public class AIBrain : MonoBehaviour
 
     private void Update()
     {
+        SetAgrro();
         RotateCommand();
         MovementCommand();
         SkillCommand();
+    }
+
+    private void SetAgrro()
+    {
+        if (aggro == null && sight.visibleCharacters.Count > 0)
+        {
+            aggro = sight.FirstEncounter;
+        }
+        else if (sight.visibleCharacters.Count == 0 && chaseCoroutine == null)
+        {
+            chaseCoroutine = StartCoroutine(CoChase(maxChaseTime));
+        }
     }
 
     private void RotateCommand()
@@ -56,7 +71,7 @@ public class AIBrain : MonoBehaviour
 
     private void MovementCommand()
     {
-        if (aggro == null) return;
+        if (aggro == null) { command.SetMoveInput(new Vector2(0, 0)); return; }
 
         var t = transform.position;
         t.y = 0;
@@ -80,27 +95,31 @@ public class AIBrain : MonoBehaviour
 
     private void SkillCommand()
     {
+        if (currentCombo != null) return;
+
         var w = executer.CurrentWeapon;
+        bool canUse = true;
         foreach (var c in w.combo)
         {
-            if (c.condition.IsMet(character, caster.Context) && currentCombo == null)
+            foreach (var condition in c.conditions)
+            {
+                if (!condition.IsMet(character, aggro))
+                {
+                    canUse = false;
+                    break;
+                }
+            }
+
+            if (canUse)
             {
                 currentCombo = StartCoroutine(CoCombo(c));
+                break;
             }
         }
     }
 
     IEnumerator CoCombo(Combo combo)
     {
-        // 첫 번째 press 인풋의 스킬 쿨타임이 끝날 때까지 대기
-        foreach (var c in combo.comboInput)
-        {
-            if (!c.isPress) continue;
-            while (!executer.IsSkillReady(c.input))
-                yield return null;
-            break;
-        }
-
         foreach (var c in combo.comboInput)
         {
             if (c.isPress)
@@ -112,7 +131,7 @@ public class AIBrain : MonoBehaviour
                 command.ReleaseInput(c.input);
             }
 
-            if (c.condtion.IsMet(character, caster.Context))
+            if (c.condtion.IsMet(character, aggro))
             {
                 yield return new WaitForSecondsUnfrozen(c.preDelay, state);
             }
@@ -124,6 +143,13 @@ public class AIBrain : MonoBehaviour
         }
 
         currentCombo = null;
+    }
+
+    IEnumerator CoChase(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        aggro = null;
+        chaseCoroutine = null;
     }
 
     private void ChangeAggro(Character character, AttackInfo info)

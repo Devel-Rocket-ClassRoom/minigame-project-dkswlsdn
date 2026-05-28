@@ -10,7 +10,8 @@ public class SightManager : MonoBehaviour
 
     [SerializeField] private bool autoCenter = true;
 
-    public List<Character> visibleCharacters { get; private set; } = new List<Character>();
+    public HashSet<Character> visibleCharacters { get; private set; } = new HashSet<Character>();
+    public Character FirstEncounter { get; private set; }
 
     public event Action<Character> onDetected;
     public event Action<Character> onLost;
@@ -28,10 +29,10 @@ public class SightManager : MonoBehaviour
 
     private void ApplySightRange()
     {
-        float range = stat.SightRange;
-        sightCollider.radius = range;
+        float radius = stat.SightRange * 0.5f + 1.5f;
+        sightCollider.radius = autoCenter ? radius : stat.SightRange;
         sightCollider.center = autoCenter
-            ? new Vector3(0, 0, range - 3f)
+            ? new Vector3(0, 0, radius - 3f)
             : Vector3.zero;
     }
 
@@ -39,6 +40,9 @@ public class SightManager : MonoBehaviour
     {
         var character = other.GetComponent<Character>();
         if (character == null || character.team == this.character.team) return;
+
+        if (visibleCharacters.Count == 0)
+            FirstEncounter = character;
 
         visibleCharacters.Add(character);
         onDetected?.Invoke(character);
@@ -50,6 +54,9 @@ public class SightManager : MonoBehaviour
         if (character == null || character.team == this.character.team) return;
 
         visibleCharacters.Remove(character);
+        if (visibleCharacters.Count == 0)
+            FirstEncounter = null;
+
         onLost?.Invoke(character);
     }
 }

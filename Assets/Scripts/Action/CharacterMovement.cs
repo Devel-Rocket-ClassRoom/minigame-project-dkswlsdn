@@ -52,12 +52,24 @@ public abstract class CharacterMovement : MonoBehaviour
         stat = GetComponent<CharacterStat>();
         state = GetComponent<StateManager>();
         commander = GetComponent<CharacterCommander>();
+    }
 
+    private void OnEnable()
+    {
         stat.onDamageTake += StunMove;
         onLand += state.OnLand;
         state.onIdle += ReturnToIdle;
         state.onKnockdown += OnKnockdown;
         state.onFreeze += OnFrozen;
+    }
+
+    private void OnDisable()
+    {
+        stat.onDamageTake -= StunMove;
+        onLand -= state.OnLand;
+        state.onIdle -= ReturnToIdle;
+        state.onKnockdown -= OnKnockdown;
+        state.onFreeze -= OnFrozen;
     }
 
     protected virtual void FixedUpdate()
@@ -212,8 +224,8 @@ public abstract class CharacterMovement : MonoBehaviour
                     aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     break;
                 case DistanceCalculateType.UseInput:
-                    if (commander.GetInput(ConditionInput.MoveForward)) { }
-                    else if (commander.GetInput(ConditionInput.MoveBackward))
+                    if (commander.GetInput(ConditionInput.MoveForward, true)) { }
+                    else if (commander.GetInput(ConditionInput.MoveBackward, true))
                     {
                         distance = method.backwardDistance;
                     }
@@ -226,7 +238,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
                     break;
                 case DistanceCalculateType.Mixed:
-                    if (commander.GetInput(ConditionInput.MoveBackward))
+                    if (commander.GetInput(ConditionInput.MoveBackward, true))
                     {
                         distance = method.backwardDistance;
                     }

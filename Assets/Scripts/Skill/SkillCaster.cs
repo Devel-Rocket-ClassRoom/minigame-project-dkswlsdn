@@ -23,6 +23,10 @@ public class SkillCaster : MonoBehaviour
     public event Action onSkillEnd;
     public event Action<int> onCooldownReset;
 
+    private bool enable = true;
+
+    public float CostRatio => Mathf.Clamp01(context.cost / 100f);
+
     private void Awake()
     {
         movement = GetComponent<CharacterMovement>();
@@ -30,24 +34,45 @@ public class SkillCaster : MonoBehaviour
         state = GetComponent<StateManager>();
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
-
-        onActionStart += movement.SkillMove;
-        onSkillEnd += movement.SkillEnd;
-
-        state.onHitstun   += OnCanceled;
-        state.onAirborne  += OnCanceled;
-        state.onGroggy    += OnCanceled;
-        state.onGrab    += OnCanceled;
-        state.onDead      += OnCanceled;
-        state.onKnockdown += OnCanceled;
-        state.onFreeze += OnFreeze;
-
+        
         spawnedAttacks = new List<Attack>();
         context = new SkillContext();
     }
 
+    private void OnEnable()
+    {
+        onActionStart += movement.SkillMove;
+        onSkillEnd += movement.SkillEnd;
+
+        state.onHitstun += OnCanceled;
+        state.onAirborne += OnCanceled;
+        state.onGroggy += OnCanceled;
+        state.onGrab += OnCanceled;
+        state.onDead += OnCanceled;
+        state.onKnockdown += OnCanceled;
+        state.onFreeze += OnFreeze;
+        state.onDead += OnDead;
+    }
+
+    private void OnDisable()
+    {
+        onActionStart -= movement.SkillMove;
+        onSkillEnd -= movement.SkillEnd;
+
+        state.onHitstun -= OnCanceled;
+        state.onAirborne -= OnCanceled;
+        state.onGroggy -= OnCanceled;
+        state.onGrab -= OnCanceled;
+        state.onDead -= OnCanceled;
+        state.onKnockdown -= OnCanceled;
+        state.onFreeze -= OnFreeze;
+        state.onDead -= OnDead;
+    }
+
     private void Update()
     {
+        if (!enable) return;
+
         context.spendTime += Time.deltaTime;
         spawnedAttacks.RemoveAll(atk => atk == null);
 
@@ -68,7 +93,7 @@ public class SkillCaster : MonoBehaviour
 
     public bool Cast(Skill skill, int idx)
     {
-        if (skill == null) return false;
+        if (skill == null || !enable) return false;
 
         if (skill.transitions.Count > 0)
         {
@@ -313,6 +338,12 @@ public class SkillCaster : MonoBehaviour
                 spawnedAttacks.RemoveAt(i);
             }
         }
+    }
+
+    private void OnDead()
+    {
+        OnCanceled();
+        enable = false;
     }
 
     private void CheckHitbox()

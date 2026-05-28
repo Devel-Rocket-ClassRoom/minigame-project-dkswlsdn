@@ -11,7 +11,10 @@ public abstract class CharacterCamera : MonoBehaviour
     {
         state = GetComponent<StateManager>();
         caster = GetComponent<SkillCaster>();
+    }
 
+    private void OnEnable()
+    {
         state.onIdle += ReturnOrigin;
         state.onWakeUp += ReturnOrigin;
         state.onHitstun += OnStun;
@@ -20,6 +23,21 @@ public abstract class CharacterCamera : MonoBehaviour
         state.onGroggy += OnStun;
         state.onGrab += OnStun;
         state.onDead += OnStun;
+
+        caster.onActionStart += OnUseSkill;
+        caster.onSkillEnd += ReturnOrigin;
+    }
+
+    private void OnDisable()
+    {
+        state.onIdle -= ReturnOrigin;
+        state.onWakeUp -= ReturnOrigin;
+        state.onHitstun -= OnStun;
+        state.onAirborne -= OnStun;
+        state.onKnockdown -= OnStun;
+        state.onGroggy -= OnStun;
+        state.onGrab -= OnStun;
+        state.onDead -= OnStun;
 
         caster.onActionStart += OnUseSkill;
         caster.onSkillEnd += ReturnOrigin;

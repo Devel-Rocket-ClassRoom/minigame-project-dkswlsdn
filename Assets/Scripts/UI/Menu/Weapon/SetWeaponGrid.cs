@@ -19,6 +19,8 @@ public class SetWeaponGrid : MonoBehaviour
 
         foreach (var weapon in weaponDatabase.weapons)
         {
+            if (weapon.cannotUse) continue;
+
             var b = Instantiate(weaponButton, transform);
             var isUnlock = list.Contains(weapon.weaponName);
             b.Init(weapon, isUnlock);

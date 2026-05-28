@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class ShowWeaponInfo : MonoBehaviour
 {
-    public static ShowWeaponInfo instance;
-
     [Serializable]
     public class SkillSlot
     {
@@ -17,19 +15,21 @@ public class ShowWeaponInfo : MonoBehaviour
 
     public SkillSlot[] slots = new SkillSlot[7];
 
-    private PlayerSkillExecuter executer;
+    public Image health;
+    public Image cost;
 
-    private void Awake()
-    {
-        if (instance == null) { instance = this; }
-        else Destroy(gameObject);
-    }
+    private PlayerSkillExecuter executer;
+    [SerializeField] private SkillCaster caster;
+    [SerializeField] private CharacterStat stat;
 
     private void Start()
     {
         executer = FindAnyObjectByType<PlayerSkillExecuter>();
-        if (executer != null) Init();
-        executer.onWeaponChanged += Init;
+        if (executer != null)
+        {
+            Init();
+            executer.onWeaponChanged += Init;
+        }
     }
 
     public void Init()
@@ -47,12 +47,35 @@ public class ShowWeaponInfo : MonoBehaviour
 
     private void Update()
     {
+        SetCooldown();
+        SetHPBar();
+        SetCostBar();
+    }
+
+    private void SetCooldown()
+    {
         if (executer == null) return;
 
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].cooldownBar == null) continue;
             slots[i].cooldownBar.fillAmount = executer.GetCooldownRatio(i + 1);
+        }
+    }
+
+    private void SetHPBar()
+    {
+        health.fillAmount = stat.HPRatio;
+    }
+
+    private void SetCostBar()
+    {
+        float ratio = caster.CostRatio;
+        if (ratio <= 0) cost.gameObject.SetActive(false);
+        else
+        {
+            cost.gameObject.SetActive(true);
+            cost.fillAmount = ratio;
         }
     }
 }

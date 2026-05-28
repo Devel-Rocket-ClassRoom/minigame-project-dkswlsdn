@@ -21,7 +21,7 @@ public class SpecialStackHandler : MonoBehaviour
     {
         if (data == null) return;
 
-        Debug.Log($"{data.name}, {amount}, {life}");
+        // Debug.Log($"{data.name}, {amount}, {life}");
 
         if (!stacks.ContainsKey(data))
         {

@@ -57,8 +57,16 @@ public class StateManager : MonoBehaviour
     private void Awake()
     {
         stat = GetComponent<CharacterStat>();
+    }
+
+    private void OnEnable()
+    {
         stat.onDamageTake += OnDamageTaken;
-        
+    }
+
+    private void OnDisable()
+    {
+        stat.onDamageTake -= OnDamageTaken;
     }
 
     private void Update()
@@ -99,6 +107,8 @@ public class StateManager : MonoBehaviour
 
     public void ChangeState(CharacterState state)
     {
+        if (State == CharacterState.Dead) return;
+
         var prev = State;
         State = state;
 

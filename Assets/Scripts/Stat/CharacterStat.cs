@@ -4,6 +4,7 @@ using UnityEngine;
 public class CharacterStat : MonoBehaviour
 {
     private CharacterAnchor anchor;
+    private StateManager state;
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
@@ -15,6 +16,8 @@ public class CharacterStat : MonoBehaviour
     public float SightRange => sightRange;
 
     [SerializeField] private ArmorType armor;
+    public ArmorType Armor => armor;
+    public bool IsImmune { get; private set; }
 
     public event Action<Character, AttackInfo> onDamageTake; // 나 이런 공격을 받았어!
     public event Action<float> onTakeDamage; // 나 이만큼의 데미지를 받았어!
@@ -23,10 +26,13 @@ public class CharacterStat : MonoBehaviour
     public event Action onHealthEnough; // 나 이제 체력 많아!
     public event Action onStatChanged;
 
+    public float HPRatio => Mathf.Clamp01(health / maxHealth);
+
 
     private void Awake()
     {
         anchor = GetComponent<CharacterAnchor>();
+        state = GetComponent<StateManager>();
     }
 
     //private void Update()
@@ -52,6 +58,8 @@ public class CharacterStat : MonoBehaviour
 
     public void TakeDamage(Character character, AttackInfo hit)
     {
+        if (IsImmune) return;
+
         var myHit = new AttackInfo(hit);
 
         ArmorType requiredArmor = myHit.range switch
@@ -69,23 +77,19 @@ public class CharacterStat : MonoBehaviour
         health -= myHit.damage;
         if (hit.isPopup) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
 
-        if (health <= 0)
-        {
-            Dead();
-        }
-
         if (ignoreReaction)
         {
             myHit.reaction = HitReactionType.Gaurded;
         }
 
         onDamageTake?.Invoke(character, myHit);
+
+        if (health <= 0)
+        {
+            state.ChangeState(CharacterState.Dead);
+        }
     }
 
-    public void Dead()
-    {
-        Debug.Log("YouDie!");
-    }
 
     public void RestoreHP(float amount)
     {
