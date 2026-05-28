@@ -15,6 +15,7 @@ MonoBehaviour:
   actionId: 0
   actionTime: 1
   useGrab: 0
+  clip: {fileID: 7400000, guid: e78400a33b6cfae459922a33176f5524, type: 2}
   movementMethod:
     calcType: 0
     gravity: 20
@@ -45,11 +46,16 @@ MonoBehaviour:
   attack:
   - info:
       damage: 0
+      stack: {fileID: 0}
+      count: 0
       reaction: 0
+      range: 0
       stunDuration: 0
       stunForce: 0
       airborneForce: {x: 0, y: 0}
       forceDirectionType: 0
+      fixedStun: 0
+      reverseStun: 0
       activateTime: 0.3
       isDestroyOnCanceled: 1
       isReleaseGrab: 0
@@ -65,6 +71,8 @@ MonoBehaviour:
     rotationOffset: {x: 0, y: 0, z: 0, w: 0}
     scale: {x: 1.2, y: 1.2, z: 1}
     movementType: 1
+    spawnRules: []
+  stack: []
   targetting: 0
   targetLayer:
     serializedVersion: 2
