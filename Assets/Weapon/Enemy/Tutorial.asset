@@ -46,31 +46,31 @@ MonoBehaviour:
       preDelay: 0.1
       isPress: 1
       condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
     - input: 0
       preDelay: 0.1
       isPress: 0
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
       condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}

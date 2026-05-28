@@ -8,6 +8,7 @@ public class SkillAction : ScriptableObject
     public int actionId;
     public float actionTime;
     public bool useGrab;
+    public AnimationClip clip;
 
     public MovementMethod movementMethod;
     public List<AttackMethod> attack;

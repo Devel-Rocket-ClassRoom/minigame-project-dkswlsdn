@@ -3533,7 +3533,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5083150973174929940, guid: b7605f816f60197428ae720408a52e34, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 627783171}
   m_SourcePrefab: {fileID: 100100000, guid: b7605f816f60197428ae720408a52e34, type: 3}
 --- !u!114 &627783133 stripped
 MonoBehaviour:
@@ -3584,6 +3587,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d3889a12353f04a9be59bc00ee1b06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillCaster
+--- !u!114 &627783171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627783134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df823390de30334cac68e88f61f534b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterVisualStateHandler
+  fullArmorColor: {r: 1, g: 1, b: 1, a: 1}
+  longArmorColor: {r: 0, g: 1, b: 0, a: 1}
+  shortArmorColor: {r: 0, g: 0, b: 1, a: 1}
+  outlineWidth: 0.03
+  immuneAlpha: 0.4
 --- !u!1 &637066058
 GameObject:
   m_ObjectHideFlags: 0

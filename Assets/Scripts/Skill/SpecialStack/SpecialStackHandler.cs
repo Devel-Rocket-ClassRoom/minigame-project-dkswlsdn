@@ -66,7 +66,11 @@ public class SpecialStackHandler : MonoBehaviour
         foreach (var pair in stacks)
         {
             pair.Key.Apply(character, pair.Value.amount);
-            pair.Value.life -= Time.deltaTime;
+            if (!pair.Key.useFreeze || !character.State.IsFrozen)
+            {
+                pair.Value.life -= Time.deltaTime;
+            }
+
             if (pair.Value.life < 0)
             {
                 ToRemove.Add(pair.Key);

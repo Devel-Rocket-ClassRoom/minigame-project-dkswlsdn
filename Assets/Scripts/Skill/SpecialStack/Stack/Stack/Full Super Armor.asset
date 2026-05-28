@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Full Super Armor
   m_EditorClassIdentifier: Assembly-CSharp::SuperArmor
   maxStack: 100
+  useFreeze: 1
   armorType: 4
