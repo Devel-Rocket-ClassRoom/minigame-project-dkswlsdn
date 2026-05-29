@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
+  m_Name: BareHand
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  id: 0
+  weaponName: BareHand
+  cannotUse: 0
+  icon: {fileID: 0}
+  model: {fileID: 0}
+  LSkill: {fileID: 11400000, guid: 59dbd2998c1392048a030dfdbd21fb6b, type: 2}
+  RSkill: {fileID: 11400000, guid: f0aba983c5515f24f99cb09148ce5a39, type: 2}
+  LRSkill: {fileID: 11400000, guid: ed23fbca87a4b39409dc8a5e975ec8c4, type: 2}
+  SLSkill: {fileID: 11400000, guid: d517e1af5a824e34b883f5a1e66cf9b0, type: 2}
+  FSkill: {fileID: 11400000, guid: 2fe8ae55cb040de46ad3fb814bca60db, type: 2}
+  QSkill: {fileID: 0}
+  ESkill: {fileID: 11400000, guid: d08aeffc2b95b54409c491726aedd6e7, type: 2}
+  SpaceSkill: {fileID: 11400000, guid: c52fddb5c30cebd4ea477688158f33f2, type: 2}
+  combo:
+  - conditions: []
+    comboInput:
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}

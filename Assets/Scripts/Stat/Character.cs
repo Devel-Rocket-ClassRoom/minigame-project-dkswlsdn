@@ -13,6 +13,7 @@ public class Character : MonoBehaviour
 
     public CharacterStat Stat { get; private set; }
     public SkillCaster Caster { get; private set; }
+    public SkillExecuter Executer { get; private set; }
     public CharacterMovement Movement { get; private set; }
     public PlayerCamera Camera { get; private set; }
     public CharacterAim Aim { get; private set; }
@@ -30,6 +31,7 @@ public class Character : MonoBehaviour
     {
         Stat = GetComponent<CharacterStat>();
         Caster = GetComponent<SkillCaster>();
+        Executer = GetComponent<SkillExecuter>();
         Movement = GetComponent<CharacterMovement>();
         Camera = GetComponent<PlayerCamera>();
         Aim = GetComponent<CharacterAim>();

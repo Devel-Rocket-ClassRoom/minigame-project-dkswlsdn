@@ -98,9 +98,9 @@ public class AIBrain : MonoBehaviour
         if (currentCombo != null) return;
 
         var w = executer.CurrentWeapon;
-        bool canUse = true;
         foreach (var c in w.combo)
         {
+            bool canUse = true;
             foreach (var condition in c.conditions)
             {
                 if (!condition.IsMet(character, aggro))

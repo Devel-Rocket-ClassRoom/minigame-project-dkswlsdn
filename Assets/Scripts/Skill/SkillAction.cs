@@ -7,6 +7,7 @@ public class SkillAction : ScriptableObject
 {
     public int actionId;
     public float actionTime;
+    public float partialCooldown;
     public bool useGrab;
     public AnimationClip clip;
 
@@ -117,8 +118,6 @@ public class AttackInfo
         id = hit.id;
         isPopup = hit.isPopup;
         damage = hit.damage;
-        stack = hit.stack;
-        count = hit.count;
         reaction = hit.reaction;
         range = hit.range;
         stunDuration = hit.stunDuration;
@@ -142,8 +141,6 @@ public class AttackInfo
 
     [Header("데미지")]
     public float damage;
-    public SpecialStackData stack;
-    public int count;
 
     [Header("경직")]
     public HitReactionType reaction;

@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
+  m_Name: Stray
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  id: 0
+  weaponName: 
+  cannotUse: 0
+  icon: {fileID: 0}
+  model: {fileID: 0}
+  LSkill: {fileID: 11400000, guid: dabfa72e32615ec459c0ede823ceb4f4, type: 2}
+  RSkill: {fileID: 11400000, guid: fa81b7114774ac446b68594410823273, type: 2}
+  LRSkill: {fileID: 0}
+  SLSkill: {fileID: 11400000, guid: e91c6d5de8feea84aae7e0a4274704e3, type: 2}
+  FSkill: {fileID: 0}
+  QSkill: {fileID: 0}
+  ESkill: {fileID: 0}
+  SpaceSkill: {fileID: 0}
+  combo:
+  - conditions:
+    - {fileID: 11400000, guid: 91eecb14d2d6ede4ca393ea6b4600814, type: 2}
+    - {fileID: 11400000, guid: 26ad51aaa82989e47b68b409786455f3, type: 2}
+    - {fileID: 11400000, guid: 080df901b2b4f8f4982f4f6e824dcea2, type: 2}
+    comboInput:
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+  - conditions:
+    - {fileID: 11400000, guid: 080df901b2b4f8f4982f4f6e824dcea2, type: 2}
+    - {fileID: 11400000, guid: 483a863237c6243469fc9246c03d47be, type: 2}
+    - {fileID: 11400000, guid: 8be82a22cf2496449b01aa06025270ca, type: 2}
+    comboInput:
+    - input: 1
+      preDelay: 0
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 7
+      preDelay: 0.01
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+  - conditions:
+    - {fileID: 11400000, guid: 2aec201dd85727846adb48b14a662c70, type: 2}
+    - {fileID: 11400000, guid: 0ee63aa30268593449d6bc6a18c089c7, type: 2}
+    - {fileID: 11400000, guid: 8be82a22cf2496449b01aa06025270ca, type: 2}
+    comboInput:
+    - input: 7
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+  - conditions:
+    - {fileID: 11400000, guid: 2aec201dd85727846adb48b14a662c70, type: 2}
+    - {fileID: 11400000, guid: 2ec276df7bd5a004b88d661258c85af5, type: 2}
+    - {fileID: 11400000, guid: 44b610d4d245a374da009c494293aba1, type: 2}
+    - {fileID: 11400000, guid: 8be82a22cf2496449b01aa06025270ca, type: 2}
+    comboInput:
+    - input: 0
+      preDelay: 0
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+    - input: 7
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+  - conditions:
+    - {fileID: 11400000, guid: 0ee63aa30268593449d6bc6a18c089c7, type: 2}
+    - {fileID: 11400000, guid: 91eecb14d2d6ede4ca393ea6b4600814, type: 2}
+    - {fileID: 11400000, guid: 56aa6d9ccbb0f344ba90e8b6fb788bd7, type: 2}
+    comboInput:
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+  - conditions:
+    - {fileID: 11400000, guid: 483a863237c6243469fc9246c03d47be, type: 2}
+    - {fileID: 11400000, guid: 56aa6d9ccbb0f344ba90e8b6fb788bd7, type: 2}
+    comboInput:
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
+  - conditions:
+    - {fileID: 11400000, guid: 2ec276df7bd5a004b88d661258c85af5, type: 2}
+    - {fileID: 11400000, guid: 2aec201dd85727846adb48b14a662c70, type: 2}
+    - {fileID: 11400000, guid: 02689aa76f1ed5d4fa872514515966b2, type: 2}
+    comboInput:
+    - input: 5
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}

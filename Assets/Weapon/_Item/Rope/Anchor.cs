@@ -5,7 +5,7 @@ public class Anchor : MonoBehaviour
 {
     [SerializeField] private GameObject ropePrefab;
     [SerializeField] private int length = 20;
-    [SerializeField] private Vector3 exitOffset = new Vector3(0f, 1.5f, 0f);
+    [SerializeField] private Vector3 exitOffset = new Vector3(0f, -1f, 0f);
     [SerializeField] private LayerMask layer;
     [SerializeField] private ItemInstance RopeItem;
     
@@ -26,15 +26,17 @@ public class Anchor : MonoBehaviour
 
         if (length <= 1)
         {
-            Instantiate(RopeItem, transform.position, Quaternion.identity);
+            var rope = Instantiate(RopeItem, transform);
+            rope.transform.position = transform.position + Vector3.down;
+            rope.transform.rotation = Quaternion.identity;
             return;
         }
 
-        for (int i = 0; i < length; i++)
+        for (int i = 1; i < length + 1; i++)
         {
-            var go = Instantiate(ropePrefab,
-                           transform.position + Vector3.down * i,
-                           Quaternion.identity);
+            var go = Instantiate(ropePrefab, transform);
+            go.transform.position = transform.position + Vector3.down * i;
+            go.transform.rotation = Quaternion.identity;
             go.GetComponent<Rope>().owner = this;
         }
     }
