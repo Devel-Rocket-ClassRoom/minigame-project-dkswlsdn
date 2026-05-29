@@ -211,13 +211,15 @@ public class StateManager : MonoBehaviour
                 break;
 
             case HitReactionType.Airborne:
-                if (state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill || state != CharacterState.Grapped)
+                if (state == CharacterState.Grapped) break;
+                if (state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill)
                     knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 ChangeState(CharacterState.Airborne);
                 break;
 
             case HitReactionType.Knockdown:
-                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill || state != CharacterState.Grapped)
+                if (state == CharacterState.Grapped) break;
+                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill)
                     knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 ChangeState(CharacterState.Knockdown);
                 break;

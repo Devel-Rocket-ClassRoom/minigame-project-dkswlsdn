@@ -287,6 +287,16 @@ public class SkillCaster : MonoBehaviour
         {
             yield return new WaitForSecondsUnfrozen(stack.preDelay, state);
 
+            if (stack.conditions != null && stack.conditions.Count > 0)
+            {
+                bool met = true;
+                foreach (var condition in stack.conditions)
+                {
+                    if (!condition.IsMet(character, context)) { met = false; break; }
+                }
+                if (!met) continue;
+            }
+
             character.Stack.Request(stack.stack, stack.count, stack.life);
         }
     }
