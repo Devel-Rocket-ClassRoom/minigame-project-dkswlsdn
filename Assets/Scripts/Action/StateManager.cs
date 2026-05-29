@@ -187,7 +187,6 @@ public class StateManager : MonoBehaviour
 
     private void OnDamageTaken(Character character, AttackInfo hit)
     {
-        float stun = hit.reaction == HitReactionType.Gaurded ? hit.stunForce * 0.2f + hit.fixedStun : hit.fixedStun;
         FreezeFor(hit.fixedStun);
 
         switch (hit.reaction)
@@ -212,13 +211,13 @@ public class StateManager : MonoBehaviour
                 break;
 
             case HitReactionType.Airborne:
-                if (state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill || state == CharacterState.Grapped)
+                if (state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill || state != CharacterState.Grapped)
                     knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 ChangeState(CharacterState.Airborne);
                 break;
 
             case HitReactionType.Knockdown:
-                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill || state == CharacterState.Grapped)
+                if (state == CharacterState.Idle || state == CharacterState.Move || state == CharacterState.Skill || state != CharacterState.Grapped)
                     knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 ChangeState(CharacterState.Knockdown);
                 break;

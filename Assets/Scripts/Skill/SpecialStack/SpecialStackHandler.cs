@@ -38,12 +38,11 @@ public class SpecialStackHandler : MonoBehaviour
         if (stacks[data].amount == 0)
         {
             stacks.Remove(data);
-            data.OnRemoved(character);
+            data.OnRemoved(character, prev);
         }
-        else if (prev == 0)
-        {
-            data.Apply(character, stacks[data].amount);
-        }
+
+        var gained = stacks.TryGetValue(data, out var cur) ? cur.amount - prev : 0;
+        if (gained > 0) data.OnGained(character, gained);
 
         if (stacks.TryGetValue(data, out StackHandler current) && current.amount != prev)
             onStackChanged?.Invoke(data, current.amount);
@@ -79,7 +78,7 @@ public class SpecialStackHandler : MonoBehaviour
 
         for (int i = ToRemove.Count - 1; i >= 0; i--)
         {
-            ToRemove[i].OnRemoved(character);
+            ToRemove[i].OnRemoved(character, stacks[ToRemove[i]].amount);
             stacks.Remove(ToRemove[i]);
             ToRemove.RemoveAt(i);
         }

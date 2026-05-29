@@ -19,8 +19,9 @@ public class Attack : MonoBehaviour
     public event Action<Vector3> onTargetHit;
 
     private bool isReady;
+    private bool canSpawn;
 
-    public void Activate(Character character, AttackMethod method, Vector3 targetPoint)
+    public void Activate(Character character, AttackMethod method, Vector3 targetPoint, bool canSpawn = true)
     {
         this.character = character;
         this.targetPoint = targetPoint;
@@ -43,9 +44,10 @@ public class Attack : MonoBehaviour
             transform.localScale = method.scale;
 
         this.team = character.team;
+        this.canSpawn = canSpawn;
         isReady = true;
 
-        if (method.spawnRules != null && method.spawnRules.Count > 0)
+        if (canSpawn && method.spawnRules != null && method.spawnRules.Count > 0)
             onHit += (hitCharacter) =>
                 StartCoroutine(CoSpawn(SpawnTrigger.OnHit, hitCharacter));
     }
@@ -75,7 +77,8 @@ public class Attack : MonoBehaviour
         if (life <= 0)
         {
             isReady = false;
-            StartCoroutine(CoSpawn(SpawnTrigger.OnExpire));
+            if (canSpawn) StartCoroutine(CoSpawn(SpawnTrigger.OnExpire));
+            else Destroy(gameObject);
         }
 
         AttackMove();
@@ -101,7 +104,7 @@ public class Attack : MonoBehaviour
         {
             if (rule.trigger != trigger) continue;
 
-            yield return new WaitForSecondsUnfrozen(rule.method.preDelay, character.State);
+            yield return new WaitForSecondsUnfrozen(rule.preDelay, character.State);
 
             Vector3 targetPoint = rule.position switch
             {
@@ -111,7 +114,7 @@ public class Attack : MonoBehaviour
                 _                        => character.transform.position,
             };
 
-            AttackManager.instance.RequestAttack(character, rule.method, targetPoint);
+            AttackManager.instance.RequestAttack(character, rule.method, targetPoint, canSpawn: false);
         }
 
         if (trigger == SpawnTrigger.OnExpire)

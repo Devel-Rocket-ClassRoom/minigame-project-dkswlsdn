@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "SkillAction", menuName = "Scriptable Objects/SkillAction")]
 public class SkillAction : ScriptableObject
@@ -12,7 +13,7 @@ public class SkillAction : ScriptableObject
     public AnimationClip clip;
 
     public MovementMethod movementMethod;
-    public List<AttackMethod> attack;
+    public List<AttackEntry> attack;
     public List<StackMethod> stack;
 
     public DestinationTargettingMethod targetting;
@@ -75,25 +76,10 @@ public struct MovementMethod
 }
 
 [Serializable]
-public struct AttackMethod
+public struct AttackEntry
 {
-    public AttackInfo info;
-    public HitboxType type;
     public float preDelay;
-
-    public bool isCheckHit; // hit한 대상 기록 여부
-    public bool isGrab; // 잡기판정인지 여부
-    public bool toGrab; // 잡은 대상에 대한 공격인지 여부
-
-    public bool useAim;
-    public Vector3 aimDir;
-
-    public Vector3 positionOffset;
-    public Quaternion rotationOffset;
-    public Vector3 scale;
-    public AttackMovementMethod movementType;
-
-    public List<SpawnRule> spawnRules;
+    public AttackMethod method;
 }
 
 public enum SpawnTrigger  { OnHit, OnExpire }
@@ -104,7 +90,8 @@ public struct SpawnRule
 {
     public SpawnTrigger  trigger;
     public SpawnPosition position;
-    public AttackMethod  method;
+    public float         preDelay;
+    public AttackMethod  method; // SO 참조 → 직렬화 순환 없음
 }
 
 [Serializable]
@@ -130,10 +117,13 @@ public class AttackInfo
         isDestroyOnCanceled = hit.isDestroyOnCanceled;
         isReleaseGrab = hit.isReleaseGrab;
         projectileSpeed = hit.projectileSpeed;
+        useGrab = hit.useGrab;
     }
 
     [HideInInspector, NonSerialized]
     public Transform origin;
+    [HideInInspector, NonSerialized]
+    public bool useGrab;
     [HideInInspector, NonSerialized]
     public int id;
     [HideInInspector, NonSerialized]
@@ -165,6 +155,7 @@ public class AttackInfo
 public struct StackMethod
 {
     public SpecialStackData stack;
+    public List<SkillCondition> conditions;
     public int count;
     public float life;
     public float preDelay;

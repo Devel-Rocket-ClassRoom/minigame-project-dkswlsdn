@@ -303,7 +303,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
             case ForceDirectionType.Spread:
                 dir = transform.position - hit.origin.position;
                 dir.y = 0;
-                dir.Normalize();
+                dir = dir == Vector3.zero ? hit.origin.forward : dir.normalized;
                 break;
             case ForceDirectionType.Random:
                 break;

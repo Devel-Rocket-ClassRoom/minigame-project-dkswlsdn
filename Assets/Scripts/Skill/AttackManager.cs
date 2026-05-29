@@ -21,10 +21,10 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public Attack RequestAttack(Character character, AttackMethod method, Vector3 targetPoint)
+    public Attack RequestAttack(Character character, AttackMethod method, Vector3 targetPoint, bool canSpawn = true)
     {
         var instance = Instantiate(hitboxes[(int)method.type]);
-        instance.Activate(character, method, targetPoint);
+        instance.Activate(character, method, targetPoint, canSpawn);
         attackList.Add(instance);
         return instance;
     }

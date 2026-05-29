@@ -5,12 +5,12 @@ public class SuperArmor : SpecialStackData
 {
     [SerializeField] private ArmorType armorType;
 
-    public override void Apply(Character character, int count)
+    public override void OnGained(Character character, int count)
     {
         character.Stat.ApplyArmor(armorType);
     }
 
-    public override void OnRemoved(Character character)
+    public override void OnRemoved(Character character, int count)
     {
         character.Stat.RemoveArmor(armorType);
     }

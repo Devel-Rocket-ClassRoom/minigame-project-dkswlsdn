@@ -224,22 +224,23 @@ public class SkillCaster : MonoBehaviour
         {
             yield return new WaitForSecondsUnfrozen(attack.preDelay, state);
 
-            if (attack.toGrab)
+            if (attack.method.toGrab)
             {
                 foreach (var c in context.grabTarget)
                 {
-                    var info = new AttackInfo(attack.info);
+                    var info = new AttackInfo(attack.method.info);
                     info.id = character.Id;
                     info.isPopup = character.isPlayer;
                     info.origin = transform;
+                    info.useGrab = context.current.useGrab;
                     c.Stat.TakeDamage(character, info);
                 }
 
-                if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
+                if (attack.method.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
             }
-            else if (attack.type != HitboxType.None)
+            else if (attack.method.type != HitboxType.None)
             {
-                var atk = attack;
+                var atk = attack.method;
                 atk.aimDir = (context.targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
 
                 var instance = AttackManager.instance.RequestAttack(character, atk, context.targetPoint);
@@ -248,7 +249,7 @@ public class SkillCaster : MonoBehaviour
                 spawnedAttacks.Add(instance);
 
                 var capturedContext = context;
-                if (attack.isGrab)
+                if (attack.method.isGrab)
                 {
                     instance.onHit += (crt) =>
                     {
@@ -264,14 +265,14 @@ public class SkillCaster : MonoBehaviour
                 {
                     instance.onHit += (crt) => { if (crt.Id != character.Id) capturedContext.isHit = true; };
 
-                    if (attack.isCheckHit) instance.onHit += (crt) =>
+                    if (attack.method.isCheckHit) instance.onHit += (crt) =>
                     {
                         if (crt.Id != character.Id)
                             capturedContext.hitTarget.Add(crt);
                     };
                 }
 
-                if (attack.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
+                if (attack.method.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
             }
             else
             {
