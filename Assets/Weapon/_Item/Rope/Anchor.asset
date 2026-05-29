@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b71cb004a2a96949ab3572c238dc5a0, type: 3}
-  m_Name: 3
+  m_Name: Anchor
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
-    damage: 10
-    reaction: 2
-    range: 1
-    stunDuration: 0.4
-    stunForce: 2
-    airborneForce: {x: 3, y: 7}
+    damage: 0
+    reaction: 0
+    range: 0
+    stunDuration: 0
+    stunForce: 0
+    airborneForce: {x: 0, y: 0}
     forceDirectionType: 0
     fixedStun: 0
-    reverseStun: 0.066
-    activateTime: 0.1
-    isDestroyOnCanceled: 1
-    isReleaseGrab: 1
-    projectileSpeed: 0
-  type: 2
+    reverseStun: 0
+    activateTime: 1
+    isDestroyOnCanceled: 0
+    isReleaseGrab: 0
+    projectileSpeed: 40
+  type: 3
   targetLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   isCheckHit: 0
   isGrab: 0
   toGrab: 0
-  isSingleTarget: 0
-  useAim: 0
-  aimDir: {x: -0.36969703, y: 0.4472135, z: 0.8144471}
-  positionOffset: {x: 0, y: 0.5, z: 1}
-  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 3, y: 2, z: 3}
-  movementType: 1
+  isSingleTarget: 1
+  useAim: 1
+  aimDir: {x: 0.83684325, y: 0.5473775, z: 0.008440309}
+  positionOffset: {x: 0, y: 1.5, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+  scale: {x: 1, y: 1, z: 1}
+  movementType: 3
   spawnRules: []

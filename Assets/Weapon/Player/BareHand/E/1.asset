@@ -27,9 +27,13 @@ MonoBehaviour:
     isReleaseGrab: 0
     projectileSpeed: 0
   type: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
   isCheckHit: 0
   isGrab: 1
   toGrab: 0
+  isSingleTarget: 0
   useAim: 0
   aimDir: {x: 0.77451724, y: 0, z: 0.63255274}
   positionOffset: {x: 0, y: 1, z: 0.75}

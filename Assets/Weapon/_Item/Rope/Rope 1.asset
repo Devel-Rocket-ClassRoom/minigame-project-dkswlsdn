@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
   actionTime: 5
+  partialCooldown: 0
   useGrab: 0
+  clip: {fileID: 0}
   movementMethod:
     calcType: 0
-    gravity: 0
+    gravity: 20
     friction: 0
     isKeepSpeed: 0
     directionReverse: 0

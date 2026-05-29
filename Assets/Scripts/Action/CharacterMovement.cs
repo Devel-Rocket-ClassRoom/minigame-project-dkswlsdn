@@ -291,6 +291,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
         rigid.linearVelocity = Vector3.zero;
         if (hit.reaction == HitReactionType.Gaurded) { isFrozen = false; yield break; }
         yield return new WaitForSeconds(hit.fixedStun);
+        if (state.State == CharacterState.Grapped) yield break;
 
         var dir = Vector3.zero;
         rigid.linearVelocity = dir;

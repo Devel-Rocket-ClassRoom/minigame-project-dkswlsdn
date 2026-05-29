@@ -55,6 +55,7 @@ public class Attack : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.isTrigger || !isReady) return;
+        if (((1 << other.gameObject.layer) & method.targetLayer) == 0) return;
 
         var character = other.GetComponent<Character>();
         if (character == null || hitTarget.Contains(character.Id) || character.team == team) return;
@@ -68,6 +69,7 @@ public class Attack : MonoBehaviour
         life += method.info.reverseStun;
         this.character.State.FreezeFor(method.info.reverseStun);
         onHit?.Invoke(character);
+        if (method.isSingleTarget) Destroy(gameObject);
     }
 
     private void Update()

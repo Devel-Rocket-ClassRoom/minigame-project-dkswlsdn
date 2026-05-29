@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
-    damage: 0
+    damage: 5
     reaction: 2
     range: 1
     stunDuration: 0.4
@@ -27,9 +27,13 @@ MonoBehaviour:
     isReleaseGrab: 0
     projectileSpeed: 0
   type: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
   isCheckHit: 0
   isGrab: 0
   toGrab: 0
+  isSingleTarget: 0
   useAim: 0
   aimDir: {x: 0.7054762, y: 0.70710677, z: -0.04799346}
   positionOffset: {x: 0, y: 0, z: 1}
