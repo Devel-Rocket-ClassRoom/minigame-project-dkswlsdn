@@ -10,18 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: Stray SL 2
+  m_Name: SRD L 1-1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
-  actionId: 4
-  actionTime: 0.3
-  partialCooldown: 0
-  useGrab: 0
-  clip: {fileID: 0}
+  actionId: 0
   movementMethod:
     calcType: 0
-    gravity: 0
+    gravity: 20
     friction: 0
-    isKeepSpeed: 0
+    isKeepSpeed: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -42,22 +38,20 @@ MonoBehaviour:
     minJumpHeight: 0
     regularTime: 0
     yawLimit: 0
-    cameraLocked: 0
+    cameraLocked: 1
     lookSpeedLimit: 0
-  attack:
-  - preDelay: 0
-    method: {fileID: 11400000, guid: 6e42dc7e79214d346b78c7ee1f3c7605, type: 2}
-  stack: []
-  targetting: 0
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  attack: []
+  targetting:
+    isHighAngle: 0
+    useOnlyCamera: 0
   aimDistance: 0
+  useGrab: 0
+  actionTime: 0.4
+  minTransitionTime: 0
+  maxTransitionTime: 0
   transitions:
   - conditions:
     - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
-    nextAction: {fileID: 11400000, guid: 15bd3b1c58f93114cb552b503e7fe061, type: 2}
-    immediateTransition: 0
-  minTransitionTime: 0
-  maxTransitionTime: 0
+    nextAction: {fileID: 11400000, guid: 342a5cf5dd9721446a5010ab06e0eff4, type: 2}
+    immediateTransition: 1
   autoTransition: {fileID: 0}

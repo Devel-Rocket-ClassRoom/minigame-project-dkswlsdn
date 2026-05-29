@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: Stray SL 2
+  m_Name: BH E 1-1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
-  actionId: 4
-  actionTime: 0.3
+  actionId: 0
+  actionTime: 0.4
   partialCooldown: 0
-  useGrab: 0
+  useGrab: 1
   clip: {fileID: 0}
   movementMethod:
     calcType: 0
@@ -26,17 +26,17 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
-    distance: 0
+    distance: 15
     neutralDistance: 0
     backwardDistance: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
     isStaticDirection: 0
-    useAltitudeModifire: 0
+    useAltitudeModifire: 1
     maxAltitude: 0
     minAltitude: 0
-    verticalSpeed: 0
+    verticalSpeed: -10
     isVerticalSpeedAutoCalc: 0
     jumpHeight: 0
     minJumpHeight: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack:
   - preDelay: 0
-    method: {fileID: 11400000, guid: 6e42dc7e79214d346b78c7ee1f3c7605, type: 2}
+    method: {fileID: 11400000, guid: 72c2d0103507be946acdfe93b5a74018, type: 2}
   stack: []
   targetting: 0
   targetLayer:
@@ -55,9 +55,9 @@ MonoBehaviour:
   aimDistance: 0
   transitions:
   - conditions:
-    - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
-    nextAction: {fileID: 11400000, guid: 15bd3b1c58f93114cb552b503e7fe061, type: 2}
+    - {fileID: 11400000, guid: fdf70dc6c34015d4f801acb62e3f7da3, type: 2}
+    nextAction: {fileID: 11400000, guid: a750edb8cffb90b44ada02e1f9022830, type: 2}
     immediateTransition: 0
   minTransitionTime: 0
   maxTransitionTime: 0
-  autoTransition: {fileID: 0}
+  autoTransition: {fileID: 11400000, guid: 913e8125f19be624c924a96b3de8519b, type: 2}

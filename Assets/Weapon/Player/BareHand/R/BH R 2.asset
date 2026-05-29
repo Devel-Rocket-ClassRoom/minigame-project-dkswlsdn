@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: Stray SL 2
+  m_Name: BH R 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
-  actionId: 4
-  actionTime: 0.3
+  actionId: 0
+  actionTime: 5
   partialCooldown: 0
-  useGrab: 0
+  useGrab: 1
   clip: {fileID: 0}
   movementMethod:
     calcType: 0
@@ -26,27 +26,29 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
-    distance: 0
+    distance: 9
     neutralDistance: 0
     backwardDistance: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
     useInputDirection: 0
-    isStaticDirection: 0
+    isStaticDirection: 1
     useAltitudeModifire: 0
     maxAltitude: 0
     minAltitude: 0
     verticalSpeed: 0
     isVerticalSpeedAutoCalc: 0
-    jumpHeight: 0
+    jumpHeight: 3
     minJumpHeight: 0
-    regularTime: 0
-    yawLimit: 0
+    regularTime: 0.8
+    yawLimit: 30
     cameraLocked: 0
-    lookSpeedLimit: 0
+    lookSpeedLimit: 30
   attack:
-  - preDelay: 0
-    method: {fileID: 11400000, guid: 6e42dc7e79214d346b78c7ee1f3c7605, type: 2}
+  - preDelay: 0.5
+    method: {fileID: 11400000, guid: 1ad9199d642f31f4c89fc5c2d2da1f52, type: 2}
+  - preDelay: 0.1
+    method: {fileID: 11400000, guid: 1ad9199d642f31f4c89fc5c2d2da1f52, type: 2}
   stack: []
   targetting: 0
   targetLayer:
@@ -55,9 +57,9 @@ MonoBehaviour:
   aimDistance: 0
   transitions:
   - conditions:
-    - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
-    nextAction: {fileID: 11400000, guid: 15bd3b1c58f93114cb552b503e7fe061, type: 2}
-    immediateTransition: 0
+    - {fileID: 11400000, guid: b30b3ec54f5ecd4448f2e22346bee148, type: 2}
+    nextAction: {fileID: 11400000, guid: 48eda83f037ecd448823e76ddf0609e3, type: 2}
+    immediateTransition: 1
   minTransitionTime: 0
   maxTransitionTime: 0
-  autoTransition: {fileID: 0}
+  autoTransition: {fileID: 11400000, guid: 48eda83f037ecd448823e76ddf0609e3, type: 2}

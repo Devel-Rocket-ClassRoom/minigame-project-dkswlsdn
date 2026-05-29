@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
   actionTime: 0.5
+  partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
   movementMethod:
@@ -44,34 +45,8 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack:
-  - info:
-      damage: 0
-      stack: {fileID: 0}
-      count: 0
-      reaction: 2
-      range: 1
-      stunDuration: 0
-      stunForce: 0
-      airborneForce: {x: 4, y: 4}
-      forceDirectionType: 0
-      fixedStun: 0
-      reverseStun: 0
-      activateTime: 0.1
-      isDestroyOnCanceled: 1
-      isReleaseGrab: 0
-      projectileSpeed: 0
-    type: 2
-    preDelay: 0
-    isCheckHit: 0
-    isGrab: 0
-    toGrab: 0
-    useAim: 0
-    aimDir: {x: 0, y: 0, z: 0}
-    positionOffset: {x: 0, y: 0, z: 0}
-    rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 3, y: 2, z: 3}
-    movementType: 1
-    spawnRules: []
+  - preDelay: 0
+    method: {fileID: 11400000, guid: 7cbc9ac7812537d4f8e3ecf3d3fb9bef, type: 2}
   stack: []
   targetting: 0
   targetLayer:
