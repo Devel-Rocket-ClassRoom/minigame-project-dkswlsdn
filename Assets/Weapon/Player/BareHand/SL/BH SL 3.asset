@@ -16,7 +16,7 @@ MonoBehaviour:
   actionTime: 0.7
   partialCooldown: 6
   useGrab: 0
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: ef14725f489bb2347ac9a3d67e527ac9, type: 2}
   movementMethod:
     calcType: 1
     gravity: 0
@@ -45,9 +45,9 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack:
-  - preDelay: 0
+  - preDelay: 0.1
     method: {fileID: 11400000, guid: a16c7464c32e2ab41a48ae2067a72879, type: 2}
-  - preDelay: 0.3
+  - preDelay: 0.4
     method: {fileID: 11400000, guid: 8a80d1a8e2f48624ca8308c2fceb820d, type: 2}
   stack: []
   targetting: 0

@@ -54,6 +54,6 @@ public class PlayerCommander : CharacterCommander
         };
 
         if (action == null) return false;
-        return action.WasReleasedThisFrame();
+        return !action.IsPressed();
     }
 }

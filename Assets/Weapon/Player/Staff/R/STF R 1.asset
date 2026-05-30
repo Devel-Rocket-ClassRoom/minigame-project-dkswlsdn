@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
+  m_Name: STF R 1
+  m_EditorClassIdentifier: Assembly-CSharp::SkillAction
+  actionId: 0
+  actionTime: 1
+  partialCooldown: 0
+  useGrab: 0
+  clip: {fileID: 0}
+  movementMethod:
+    calcType: 0
+    gravity: 0
+    friction: 0
+    isKeepSpeed: 0
+    directionReverse: 0
+    rightSide: 0
+    canFreeMove: 1
+    freeMoveSpeed: 18
+    distance: 0
+    neutralDistance: 0
+    backwardDistance: 0
+    isFrictionAutoCalc: 0
+    followTerrain: 1
+    useInputDirection: 0
+    isStaticDirection: 0
+    useAltitudeModifire: 0
+    maxAltitude: 0
+    minAltitude: 0
+    verticalSpeed: 0
+    isVerticalSpeedAutoCalc: 0
+    jumpHeight: 0
+    minJumpHeight: 0
+    regularTime: 0
+    yawLimit: 0
+    cameraLocked: 0
+    lookSpeedLimit: 30
+  attack: []
+  stack: []
+  targetting: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  aimDistance: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: ebeebd1d7f2267648b555920d8de2821, type: 2}
+    nextAction: {fileID: 11400000, guid: 6d8b66a93df25434ba37de4e2d09d5b3, type: 2}
+    immediateTransition: 1
+  minTransitionTime: 0.2
+  maxTransitionTime: 0
+  autoTransition: {fileID: 11400000, guid: 6d8b66a93df25434ba37de4e2d09d5b3, type: 2}

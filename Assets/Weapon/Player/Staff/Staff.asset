@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
+  m_Name: Staff
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  id: 0
+  weaponName: Staff
+  cannotUse: 0
+  icon: {fileID: 0}
+  model: {fileID: 0}
+  LSkill: {fileID: 11400000, guid: b3d80aeefca63cc499299243d0abdca5, type: 2}
+  RSkill: {fileID: 11400000, guid: cf7df45285b57ff4e9d3121350ca5353, type: 2}
+  LRSkill: {fileID: 11400000, guid: 011a7e545f2c439409d83fb08fcdf6d4, type: 2}
+  SLSkill: {fileID: 11400000, guid: 0ceb85608a060734096e199c98e77a44, type: 2}
+  FSkill: {fileID: 11400000, guid: bdd6a87ac96fcaa4d94f7b0f55af7bf6, type: 2}
+  QSkill: {fileID: 0}
+  ESkill: {fileID: 0}
+  SpaceSkill: {fileID: 11400000, guid: b0bcad2314de8bd4c804f059e1b1929f, type: 2}
+  combo: []

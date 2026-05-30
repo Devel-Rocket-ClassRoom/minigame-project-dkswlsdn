@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BH R 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.5
+  actionTime: 0.75
   partialCooldown: 0
   useGrab: 1
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: 32d9b798e049e124896dbafb8d5251c5, type: 2}
   movementMethod:
     calcType: 0
     gravity: 20
@@ -45,7 +45,7 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack:
-  - preDelay: 0
+  - preDelay: 0.35
     method: {fileID: 11400000, guid: 2023327bbfe4f6b4fa8f19b17998a0e1, type: 2}
   stack: []
   targetting: 0

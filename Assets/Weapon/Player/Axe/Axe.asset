@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  id: 0
+  weaponName: 
+  cannotUse: 0
+  icon: {fileID: 0}
+  model: {fileID: 0}
+  LSkill: {fileID: 11400000, guid: 03f3fec81694be646966dea549b035d8, type: 2}
+  RSkill: {fileID: 11400000, guid: cc0237705a66a204480a106430d96358, type: 2}
+  LRSkill: {fileID: 11400000, guid: 1d62950e4339785468659ff83822696b, type: 2}
+  SLSkill: {fileID: 11400000, guid: 4403d16aff2e4aa469cc03e55644a2ba, type: 2}
+  FSkill: {fileID: 0}
+  QSkill: {fileID: 0}
+  ESkill: {fileID: 11400000, guid: 9f29ebae010844e4b861e01ba1bb7520, type: 2}
+  SpaceSkill: {fileID: 0}
+  combo: []

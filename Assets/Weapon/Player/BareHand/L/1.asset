@@ -21,7 +21,7 @@ MonoBehaviour:
     airborneForce: {x: 2, y: 3}
     forceDirectionType: 0
     fixedStun: 0
-    reverseStun: 0.066
+    reverseStun: 0.05
     activateTime: 0.1
     isDestroyOnCanceled: 1
     isReleaseGrab: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: -0.15395647, y: -0.09999863, z: 0.98300445}
+  aimDir: {x: 0.35884395, y: -0.2576627, z: 0.8971293}
   positionOffset: {x: 0, y: 1.2, z: 0.75}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1.2, y: 1.2, z: 1.5}

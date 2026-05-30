@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BH E 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.2
+  actionTime: 0
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
@@ -21,7 +21,7 @@ MonoBehaviour:
     calcType: 0
     gravity: 0
     friction: 0
-    isKeepSpeed: 1
+    isKeepSpeed: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -54,4 +54,4 @@ MonoBehaviour:
   transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  autoTransition: {fileID: 11400000, guid: 7f582ea688db1a44c8d46c734cec75a5, type: 2}
+  autoTransition: {fileID: 0}

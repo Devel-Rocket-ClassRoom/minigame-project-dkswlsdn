@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6641b697ad657478c85dc606d83a7b, type: 3}
+  m_Name: BardHand SP
+  m_EditorClassIdentifier: Assembly-CSharp::Skill
+  skillName: "\uB098\uB824\uD0C0\uACE4"
+  cooldown: 1
+  actions:
+  - {fileID: 11400000, guid: b617562ae489ab347bcfb843cc80958f, type: 2}
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: ae4cdc76b4c4e884abbb1b7068675f22, type: 2}
+    - {fileID: 11400000, guid: 81b8bbc5002524d47b5ac258989bf496, type: 2}
+    nextAction: {fileID: 11400000, guid: b617562ae489ab347bcfb843cc80958f, type: 2}
+    immediateTransition: 0
+  - conditions:
+    - {fileID: 11400000, guid: ae4cdc76b4c4e884abbb1b7068675f22, type: 2}
+    nextAction: {fileID: 11400000, guid: b553de4469212ef43a2190840f690f73, type: 2}
+    immediateTransition: 0

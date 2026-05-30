@@ -334,7 +334,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
         }
         else
         {
-            transform.Translate(Vector3.up * 0.5f);
+            transform.Translate(Vector3.up * 0.1f);
             rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
             verticalVelocity = hit.airborneForce.y;
             isFreeMoveEnabled = false;

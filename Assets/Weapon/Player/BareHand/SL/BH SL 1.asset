@@ -16,7 +16,7 @@ MonoBehaviour:
   actionTime: 0.4
   partialCooldown: 3
   useGrab: 0
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: d0d79e7c0875f3444b931a9c76512bf7, type: 2}
   movementMethod:
     calcType: 1
     gravity: 0

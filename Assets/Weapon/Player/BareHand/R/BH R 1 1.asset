@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BH R 1 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.3
+  actionTime: 0.5
+  partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: 0a84888614c583243b077e14ce6125e3, type: 2}
   movementMethod:
     calcType: 0
     gravity: 0
@@ -25,11 +26,11 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
-    distance: 0
+    distance: 3
     neutralDistance: 0
     backwardDistance: 0
-    isFrictionAutoCalc: 0
-    followTerrain: 0
+    isFrictionAutoCalc: 1
+    followTerrain: 1
     useInputDirection: 0
     isStaticDirection: 0
     useAltitudeModifire: 0

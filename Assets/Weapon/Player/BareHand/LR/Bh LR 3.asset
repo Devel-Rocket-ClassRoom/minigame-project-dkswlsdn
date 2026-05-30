@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Bh LR 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.5
+  actionTime: 0.6
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: fe87dd1a80987534490c6ea651512486, type: 2}
   movementMethod:
     calcType: 1
     gravity: 20
@@ -47,7 +47,7 @@ MonoBehaviour:
   attack:
   - preDelay: 0.1
     method: {fileID: 11400000, guid: 623cfa4b3b5199f4c867973fbbb5315c, type: 2}
-  - preDelay: 0.1
+  - preDelay: 0.3
     method: {fileID: 11400000, guid: 623cfa4b3b5199f4c867973fbbb5315c, type: 2}
   stack: []
   targetting: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BH L 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 1
-  actionTime: 0.4
+  actionTime: 0.3
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 7400000, guid: ce90aaa271fef724c8d1f430776ef7bc, type: 2}
