@@ -23,6 +23,7 @@ public class StateManager : MonoBehaviour
     public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Grapped;
 
     private CharacterStat stat;
+    private CharacterMovement movement;
     [SerializeField] private Animator animator;
 
     public event Action onIdle;
@@ -57,6 +58,7 @@ public class StateManager : MonoBehaviour
     private void Awake()
     {
         stat = GetComponent<CharacterStat>();
+        movement = GetComponent<CharacterMovement>();
     }
 
     private void OnEnable()
@@ -72,6 +74,10 @@ public class StateManager : MonoBehaviour
     private void Update()
     {
         CheckTransition();
+
+        // 에어본 중 수직 속도(raw)를 애니메이터로 전달 → 올라감/정점/내려감 BlendTree 구동
+        if (state == CharacterState.Airborne)
+            animator.SetFloat("VerticalVelocity", movement.VerticalVelocity, 0.1f, Time.deltaTime);
     }
 
     private void CheckTransition()
@@ -137,7 +143,7 @@ public class StateManager : MonoBehaviour
                 break;
             case CharacterState.Knockdown:
                 onKnockdown?.Invoke();
-                animator.SetTrigger("Airborne");
+                animator.SetTrigger("Knockdown");
                 SetColliderState(false);
                 break;
             case CharacterState.WakeUp:
@@ -205,6 +211,7 @@ public class StateManager : MonoBehaviour
                 }
                 else
                 {
+                    animator.SetTrigger("HitStun");
                     ChangeState(CharacterState.HitStun);
                     stunEndTime = hit.stunDuration + Time.time;
                 }

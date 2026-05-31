@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9791dbfee3df2ab4ea2c9a97e6005110, type: 3}
+  m_Name: Dagger
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  id: 0
+  weaponName: Dagger
+  cannotUse: 0
+  icon: {fileID: 0}
+  model: {fileID: 0}
+  LSkill: {fileID: 11400000, guid: 2596f9b0fca5be641bb83167a5dd46e3, type: 2}
+  RSkill: {fileID: 11400000, guid: 9e32ccb2d054a214f9d82cb554b01046, type: 2}
+  LRSkill: {fileID: 11400000, guid: 9ee01b394b99ea84e8f584a8472fc8a2, type: 2}
+  SLSkill: {fileID: 11400000, guid: 5822025d51518cd4c8017adbc06d6fa7, type: 2}
+  FSkill: {fileID: 0}
+  QSkill: {fileID: 0}
+  ESkill: {fileID: 0}
+  SpaceSkill: {fileID: 0}
+  combo: []

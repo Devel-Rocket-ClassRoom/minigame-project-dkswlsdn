@@ -26,6 +26,7 @@ public abstract class CharacterMovement : MonoBehaviour
     private Vector3 staticLocalDirection;
     private Vector3 horizontalVelocity;
     [SerializeField] private float verticalVelocity;
+    public float VerticalVelocity => verticalVelocity;
     private float horizontalSpeed;
     protected Vector3 surfaceNormal;
     protected bool isFreeMoveEnabled = true;
