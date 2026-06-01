@@ -150,6 +150,8 @@ public class SkillCaster : MonoBehaviour
         StartCoroutine(nameof(CoSkillAttack));
         StopCoroutine(nameof(CoGetStack));
         StartCoroutine(nameof(CoGetStack));
+        StopCoroutine(nameof(CoPlayEffect));
+        StartCoroutine(nameof(CoPlayEffect));
 
         onActionStart.Invoke(action);
     }
@@ -280,7 +282,6 @@ public class SkillCaster : MonoBehaviour
             }
         }
     }
-
     IEnumerator CoGetStack()
     {
         foreach (var stack in context.current.stack)
@@ -298,6 +299,45 @@ public class SkillCaster : MonoBehaviour
             }
 
             character.Stack.Request(stack.stack, stack.count, stack.life);
+        }
+    }
+    IEnumerator CoPlayEffect()
+    {
+        foreach (var effect in context.current.effects)
+        {
+            yield return new WaitForSecondsUnfrozen(effect.preDelay, state);
+
+            //if (effect.conditions != null && effect.conditions.Count > 0)
+            //{
+            //    bool met = true;
+            //    foreach (var condition in effect.conditions)
+            //    {
+            //        if (!condition.IsMet(character, context)) { met = false; break; }
+            //    }
+            //    if (!met) continue;
+            //}
+
+            Transform parent = null;
+
+            switch (effect.method)
+            {
+                case InstantiateMethod.Aim:
+                    break;
+                case InstantiateMethod.Weapon:
+                    parent = effect.isLeft ? anchor.leftWeapon : anchor.rightWeapon;
+                    break;
+                case InstantiateMethod.Hand:
+                    parent = effect.isLeft ? anchor.leftHand : anchor.rightHand;
+                    break;
+                case InstantiateMethod.Foot:
+                    parent = effect.isLeft ? anchor.leftFoot : anchor.rightFoot;
+                    break;
+                case InstantiateMethod.Character:
+                    parent = transform;
+                    break;
+            }
+
+            EffectManager.instance.Play(effect.effect, parent);
         }
     }
 

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BH E 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0
+  actionTime: 0.3
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
   movementMethod:
-    calcType: 0
+    calcType: 1
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -26,8 +26,8 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
-    distance: 0
-    neutralDistance: 0
+    distance: 2
+    neutralDistance: 1
     backwardDistance: 0
     isFrictionAutoCalc: 0
     followTerrain: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack: []
   stack: []
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2
@@ -54,4 +55,4 @@ MonoBehaviour:
   transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  autoTransition: {fileID: 0}
+  autoTransition: {fileID: 11400000, guid: 07de5fe065cc1ba4081fd27b6297ac7e, type: 2}

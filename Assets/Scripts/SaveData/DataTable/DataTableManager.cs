@@ -1,16 +1,39 @@
 using UnityEngine;
 
-public class DataTableManager : MonoBehaviour
+public static class DataTableManager
 {
-    private const string iconFormatPath = "Icons/Weapons/Icon/{0}";
+    public static StringTable StringTable; 
+    public static SpriteTable SpriteTable;
+    public static DialogTable DialogTable;
 
-    // Weapon SO
-    public string id; // 이미 있음, 추가 없음
-
-    // 로드
-    
-    public static Sprite GetIcon (string iconName)
+    static DataTableManager()
     {
-        return Resources.Load<Sprite>(string.Format(iconFormatPath, iconName));
+        Init();
+    }
+
+    private static void Init()
+    {
+        StringTable = new StringTable();
+        SpriteTable = new SpriteTable();
+        DialogTable = new DialogTable();
+        LoadAll();
+    }
+
+    private static void LoadAll()
+    {
+        StringTable.Load(LoadCSV("Tables/StringTable"));
+        SpriteTable.Load(LoadCSV("Tables/SpriteTable"));
+        DialogTable.Load(LoadCSV("Tables/DialogTable"));
+    }
+
+    private static string LoadCSV(string path)
+    {
+        TextAsset csv = Resources.Load<TextAsset>(path);
+        if (csv == null)
+        {
+            Debug.LogError($"[DataTableManager] CSV not found: {path}");
+            return string.Empty;
+        }
+        return csv.text;
     }
 }

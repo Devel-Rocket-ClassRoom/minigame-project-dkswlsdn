@@ -90,3 +90,23 @@ public enum HitboxType
 {
     None, Box, Circle, Anchor
 }
+
+public enum InstantiateMethod
+{
+    Aim, Weapon, Hand, Foot, Attack, Character,
+}
+
+public enum StringCategory
+{
+    Character,
+    Item,
+    Weapon,
+    Dialogue
+}
+
+public enum Languages
+{
+    Korean,
+    English,
+    Japanese,
+}

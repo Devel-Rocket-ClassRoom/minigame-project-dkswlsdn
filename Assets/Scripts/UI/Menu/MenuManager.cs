@@ -8,17 +8,22 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private MenuPanel mainPanel;
     private Stack<MenuPanel> prePanels = new Stack<MenuPanel>();
-    private MenuPanel current = null;
-    private InputAction action;
+    private MenuPanel currentMenu = null;
+    [SerializeField] private DialogContainer dialogPanel;
+    private InputAction menuOpen;
+    private InputAction dialogNext;
     private PlayerInputAction.PlayerActions playerAction;
     private bool isMenuOpen = false;
+    private bool isDialogOpen = false;
+
     [SerializeField] private bool isToggle;
     [SerializeField] private bool isMainAlwaysOpen;
 
 
     private void Awake()
     {
-        action = PlayerMovement.Action.Menu.MenuToggle;
+        menuOpen = PlayerMovement.Action.Menu.MenuToggle;
+        dialogNext = PlayerMovement.Action.Menu.DialogNext;
         playerAction = PlayerMovement.Action.Player;
     }
 
@@ -26,7 +31,7 @@ public class MenuManager : MonoBehaviour
     {
         if (isToggle)
         {
-            if (action.WasPressedThisFrame())
+            if (menuOpen.WasPressedThisFrame())
             {
                 if (isMenuOpen) CloseMenu();
                 else TitleOpen();
@@ -34,15 +39,28 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            if (action.WasPressedThisFrame()) TitleOpen();
-            else if (action.WasReleasedThisFrame()) CloseMenu();
+            if (menuOpen.WasPressedThisFrame()) TitleOpen();
+            else if (menuOpen.WasReleasedThisFrame()) CloseMenu();
         }
 
-        CursorLock(!isMenuOpen);
+        if (dialogPanel.isReady && dialogNext.WasPressedThisFrame())
+        {
+            if (dialogPanel != null && !dialogPanel.Next())
+            {
+                isDialogOpen = false;
+            }
+        }
 
-        if (isMenuOpen) playerAction.Disable();
+        CursorLock(!isMenuOpen && !isDialogOpen);
+
+        if (isMenuOpen || isDialogOpen) playerAction.Disable();
         else playerAction.Enable();
     }
+
+
+
+
+
 
     public void TitleOpen()
     {
@@ -51,41 +69,60 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMenu(MenuPanel panel, bool isBack = false)
     {
-        if (current != null)
+        if (isDialogOpen) return;
+
+        if (currentMenu != null)
         {
-            if (!isBack) prePanels.Push(current);
+            if (!isBack) prePanels.Push(currentMenu);
 
             if (isMainAlwaysOpen)
             {
-                if (!current.Equals(mainPanel)) current.gameObject.SetActive(false);
+                if (!currentMenu.Equals(mainPanel)) currentMenu.gameObject.SetActive(false);
             }
             else
             {
-                current.gameObject.SetActive(false);
+                currentMenu.gameObject.SetActive(false);
             }
         }
         panel.gameObject.SetActive(true);
-        current = panel;
+        currentMenu = panel;
         isMenuOpen = true;
+    }
+
+    public void OpenPopup(MenuPanel panel)
+    {
+        panel.gameObject.SetActive(true);
+        currentMenu = panel;
+        isMenuOpen = true;
+    }
+
+    public void OpenDialog(string key)
+    {
+        dialogPanel.gameObject.SetActive(true);
+        dialogPanel.StartDialog(key);
+        isDialogOpen = true;
     }
 
     public void CloseMenu()
     {
         prePanels.Clear();
-        current.gameObject.SetActive(false);
-        current = null;
+        currentMenu.gameObject.SetActive(false);
+        currentMenu = null;
         isMenuOpen = isMainAlwaysOpen;
         
         if (isMainAlwaysOpen)
         {
-            current = mainPanel;
+            currentMenu = mainPanel;
             mainPanel.gameObject.SetActive(true);
         }
     }
 
     public void BackMenu()
     {
-        OpenMenu(prePanels.Pop(), true);
+        if (prePanels.Count > 0)
+        {
+            OpenMenu(prePanels.Pop(), true);
+        }
     }
 
     public void CursorLock(bool lockCursor)

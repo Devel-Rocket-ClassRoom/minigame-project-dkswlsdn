@@ -54,7 +54,53 @@ public class SaveDataV2 : SaveDataV1
 
     public override SaveData NextVersion()
     {
-        throw new NotImplementedException();
+        return new SaveDataV3();
     }
 }
 
+
+public class SaveDataV3 : SaveData
+{
+    public SaveDataV3()
+    {
+        version = 3;
+        unlockedCharacterList = new List<string>();
+        unlockedSubWeaponList = new List<string>();
+        itemInStorage = new List<ItemSaveEntry>();
+        itemInCharacter = new List<ItemSaveEntry>();
+        currentParty = new List<string>();
+    }
+
+    public SaveDataV3(List<ItemSaveEntry> IIS, List<ItemSaveEntry> IIC)
+    {
+        version = 3;
+        unlockedCharacterList = new List<string>();
+        unlockedSubWeaponList = new List<string>();
+        itemInStorage = new List<ItemSaveEntry>(IIS);
+        itemInCharacter = new List<ItemSaveEntry>(IIC);
+        currentParty = new List<string>();
+
+        maxInventorySpace = 10;
+        maxStorageSpace = 140;
+    }
+
+    public float playTime;
+    public bool isTutorialCleared;
+
+    public string currentCharacterId;
+
+    public List<string> unlockedSubWeaponList;
+    public List<string> unlockedCharacterList;
+    public List<string> currentParty;
+
+    public List<ItemSaveEntry> itemInStorage;
+    public List<ItemSaveEntry> itemInCharacter;
+
+    public int maxStorageSpace;
+    public int maxInventorySpace;
+
+    public override SaveData NextVersion()
+    {
+        throw new NotImplementedException();
+    }
+}

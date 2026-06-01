@@ -15,6 +15,7 @@ public class SkillAction : ScriptableObject
     public MovementMethod movementMethod;
     public List<AttackEntry> attack;
     public List<StackMethod> stack;
+    public List<EffectEntry> effects;
 
     public DestinationTargettingMethod targetting;
     public LayerMask targetLayer;
@@ -142,11 +143,13 @@ public class AttackInfo
     public float fixedStun;
     public float reverseStun;
 
+    [Header("이펙트")]
+    public List<EffectEntry> effects;
+
     [Header("기타")]
     public float activateTime;
     public bool isDestroyOnCanceled;
     public bool isReleaseGrab;
-
     public float projectileSpeed;
 }
 
@@ -160,4 +163,13 @@ public struct StackMethod
     public float life;
     public float preDelay;
     public bool onCanceled;
+}
+
+[Serializable]
+public class EffectEntry
+{
+    public EffectData effect;
+    public float preDelay;
+    public InstantiateMethod method;
+    public bool isLeft;
 }

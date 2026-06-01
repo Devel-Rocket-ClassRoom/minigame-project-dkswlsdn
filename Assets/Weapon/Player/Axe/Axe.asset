@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   id: 0
-  weaponName: 
+  weaponName: Axe
   cannotUse: 0
   icon: {fileID: 0}
   model: {fileID: 0}

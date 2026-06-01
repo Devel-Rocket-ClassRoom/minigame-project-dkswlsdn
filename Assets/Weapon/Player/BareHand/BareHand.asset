@@ -23,7 +23,7 @@ MonoBehaviour:
   SLSkill: {fileID: 11400000, guid: d517e1af5a824e34b883f5a1e66cf9b0, type: 2}
   FSkill: {fileID: 11400000, guid: 2fe8ae55cb040de46ad3fb814bca60db, type: 2}
   QSkill: {fileID: 0}
-  ESkill: {fileID: 11400000, guid: d08aeffc2b95b54409c491726aedd6e7, type: 2}
+  ESkill: {fileID: 11400000, guid: 3fc1f9ef5a5eebb44a4c947ef2c22b06, type: 2}
   SpaceSkill: {fileID: 11400000, guid: dd41bbded2065dc499609ef28a49037c, type: 2}
   combo:
   - conditions: []

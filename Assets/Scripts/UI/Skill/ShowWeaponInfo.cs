@@ -18,6 +18,9 @@ public class ShowWeaponInfo : MonoBehaviour
     public Image health;
     public Image cost;
 
+    public Color hpFull;
+    public Color hpZero;
+
     private PlayerSkillExecuter executer;
     [SerializeField] private SkillCaster caster;
     [SerializeField] private CharacterStat stat;
@@ -39,7 +42,8 @@ public class ShowWeaponInfo : MonoBehaviour
             var skill = executer.GetSkill(i + 1);
             if (slots[i].nameText != null)
             {
-                var text = skill != null ? skill.skillName : string.Empty;
+                var text = skill != null ? skill.skillId : string.Empty;
+                slots[i].nameText.transform.parent.gameObject.SetActive(skill != null);
                 slots[i].nameText.ChangeText(text);
             }
         }
@@ -66,6 +70,7 @@ public class ShowWeaponInfo : MonoBehaviour
     private void SetHPBar()
     {
         health.fillAmount = stat.HPRatio;
+        health.color = Color.Lerp(hpZero, hpFull, stat.HPRatio);
     }
 
     private void SetCostBar()

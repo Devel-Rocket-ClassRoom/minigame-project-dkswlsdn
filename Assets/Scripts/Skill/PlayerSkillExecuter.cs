@@ -13,7 +13,10 @@ public class PlayerSkillExecuter : SkillExecuter
 
     public void LoadWeapon()
     {
-        CurrentWeapon = weaponDatabase.weapons.Find((w) => w.weaponName == SaveManager.instance.CurrentSave.equipedWeapon);
+        var character = SaveManager.instance.CurrentSave.currentCharacterId;
+        var weapon = DataTableManager.StringTable.Get($"{character}_WEAPON");
+
+        CurrentWeapon = weaponDatabase.weapons.Find((w) => w.weaponName == weapon);
         onWeaponChanged?.Invoke();
     }
 }

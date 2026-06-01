@@ -46,6 +46,15 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack: []
   stack: []
+  effects:
+  - effect:
+      effect: {fileID: 1210069404974878, guid: fbab27c98b168764eb295cfff1e9f61f, type: 3}
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotationOffset: {x: 0, y: 0, z: 0, w: 0}
+      scaleOffset: {x: 0, y: 0, z: 0}
+    preDelay: 0
+    method: 1
+    isLeft: 1
   targetting: 0
   targetLayer:
     serializedVersion: 2

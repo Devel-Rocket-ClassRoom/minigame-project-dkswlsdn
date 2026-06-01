@@ -549,6 +549,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DialogNext"",
+                    ""type"": ""Button"",
+                    ""id"": ""37ed81e4-5c89-415c-9352-148c548aa52f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -560,6 +569,50 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MenuToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e41d69c7-dc30-4a61-8341-186b4f7af45a"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f554468-8027-441d-98fe-f87e004a91cf"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8420b390-2da9-4cea-b359-f89aeeab5e09"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee6a1b38-6518-4142-aa3f-d02e6b9b8ac3"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -617,6 +670,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_MenuToggle = m_Menu.FindAction("MenuToggle", throwIfNotFound: true);
+        m_Menu_DialogNext = m_Menu.FindAction("DialogNext", throwIfNotFound: true);
         // Cheat
         m_Cheat = asset.FindActionMap("Cheat", throwIfNotFound: true);
         m_Cheat_Newaction = m_Cheat.FindAction("New action", throwIfNotFound: true);
@@ -964,6 +1018,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Menu;
     private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
     private readonly InputAction m_Menu_MenuToggle;
+    private readonly InputAction m_Menu_DialogNext;
     /// <summary>
     /// Provides access to input actions defined in input action map "Menu".
     /// </summary>
@@ -979,6 +1034,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Menu/MenuToggle".
         /// </summary>
         public InputAction @MenuToggle => m_Wrapper.m_Menu_MenuToggle;
+        /// <summary>
+        /// Provides access to the underlying input action "Menu/DialogNext".
+        /// </summary>
+        public InputAction @DialogNext => m_Wrapper.m_Menu_DialogNext;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1008,6 +1067,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @MenuToggle.started += instance.OnMenuToggle;
             @MenuToggle.performed += instance.OnMenuToggle;
             @MenuToggle.canceled += instance.OnMenuToggle;
+            @DialogNext.started += instance.OnDialogNext;
+            @DialogNext.performed += instance.OnDialogNext;
+            @DialogNext.canceled += instance.OnDialogNext;
         }
 
         /// <summary>
@@ -1022,6 +1084,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @MenuToggle.started -= instance.OnMenuToggle;
             @MenuToggle.performed -= instance.OnMenuToggle;
             @MenuToggle.canceled -= instance.OnMenuToggle;
+            @DialogNext.started -= instance.OnDialogNext;
+            @DialogNext.performed -= instance.OnDialogNext;
+            @DialogNext.canceled -= instance.OnDialogNext;
         }
 
         /// <summary>
@@ -1285,6 +1350,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMenuToggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DialogNext" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDialogNext(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Cheat" which allows adding and removing callbacks.

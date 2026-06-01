@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6641b697ad657478c85dc606d83a7b, type: 3}
   m_Name: BareHand SL
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillName: "\uBC1F\uAE30"
+  skillId: BH_SL
   cooldown: 6
   actions:
   - {fileID: 11400000, guid: a632fdb420829a54d81b4e460b5faa92, type: 2}

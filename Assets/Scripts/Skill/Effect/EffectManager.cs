@@ -1,0 +1,69 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Pool;
+
+public class EffectManager : MonoBehaviour
+{
+    public static EffectManager instance;
+
+    // 프리팹별로 풀을 따로 관리
+    private Dictionary<GameObject, ObjectPool<GameObject>> pools = new();
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
+
+    public void Play(EffectData data, Transform parent)
+    {
+        if (data.effect == null) return;
+
+        var pool = GetOrCreatePool(data.effect);
+        GameObject go = pool.Get();
+
+        if (parent != null) go.transform.SetParent(parent);
+        go.transform.localPosition = data.positionOffset;
+        go.transform.localRotation = data.rotationOffset;
+        go.transform.localScale = data.scaleOffset == Vector3.zero ? Vector3.one : data.scaleOffset;
+
+        if (go.TryGetComponent<ParticleSystem>(out var ps))
+        {
+            ps.Play();
+            float duration = ps.main.duration + ps.main.startLifetime.constantMax;
+            StartCoroutine(ReturnToPool(go, pool, duration));
+        }
+    }
+
+    private ObjectPool<GameObject> GetOrCreatePool(GameObject prefab)
+    {
+        if (!pools.ContainsKey(prefab))
+        {
+            pools[prefab] = new ObjectPool<GameObject>(
+                createFunc: () => Instantiate(prefab),
+                actionOnGet: go => go.SetActive(true),
+                actionOnRelease: go => go.SetActive(false),
+                actionOnDestroy: go => Destroy(go)
+            );
+        }
+        return pools[prefab];
+    }
+
+    private IEnumerator ReturnToPool(GameObject go, ObjectPool<GameObject> pool, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        pool.Release(go);
+    }
+}
+
+[Serializable]
+public class EffectData
+{
+    public GameObject effect;
+    public Vector3 positionOffset;
+    public Quaternion rotationOffset;
+    public Vector3 scaleOffset;
+    //public bool useFreeze;
+}
