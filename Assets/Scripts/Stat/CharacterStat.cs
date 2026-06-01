@@ -45,8 +45,7 @@ public class CharacterStat : MonoBehaviour
     {
         return type switch
         {
-            StatType.HP => maxHealth > 0 ? health / maxHealth : 1f,
-            StatType.MP => maxMp > 0 ? mp / maxMp : 1f,
+            StatType.Health => maxHealth > 0 ? health / maxHealth : 1f,
             _ => 1f
         };
     }

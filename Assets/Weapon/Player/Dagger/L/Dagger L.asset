@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6641b697ad657478c85dc606d83a7b, type: 3}
   m_Name: Dagger L
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillName: 
+  skillId: DG_L
   cooldown: 0.25
   actions:
   - {fileID: 11400000, guid: 19a4064a7d683234a813c58ba407db26, type: 2}

@@ -16,12 +16,13 @@ MonoBehaviour:
     damage: 5
     reaction: 1
     range: 1
-    stunDuration: 0.4
+    stunDuration: 0.7
     stunForce: 2
-    airborneForce: {x: 2, y: 3}
+    airborneForce: {x: 2, y: 4}
     forceDirectionType: 0
     fixedStun: 0
     reverseStun: 0.05
+    effects: []
     activateTime: 0.1
     isDestroyOnCanceled: 1
     isReleaseGrab: 0
@@ -35,7 +36,7 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: 0.35884395, y: -0.2576627, z: 0.8971293}
+  aimDir: {x: 0.18380055, y: -0.25766283, z: 0.9485922}
   positionOffset: {x: 0, y: 1.2, z: 0.75}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1.2, y: 1.2, z: 1.5}

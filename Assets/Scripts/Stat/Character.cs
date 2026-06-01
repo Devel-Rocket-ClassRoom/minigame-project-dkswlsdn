@@ -48,10 +48,3 @@ public class Character : MonoBehaviour
         //if (isPlayer) VisibilityManager.instance.Register(this);
     }
 }
-
-public class CharacterData
-{
-    public string characterName;
-    public string weaponId;
-    public string desc;
-}

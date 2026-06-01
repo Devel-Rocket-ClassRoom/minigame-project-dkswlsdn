@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6641b697ad657478c85dc606d83a7b, type: 3}
   m_Name: Axe SL
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillName: "\uC7A5\uC791 \uCABC\uAC1C\uAE30"
+  skillId: AX_SL
   cooldown: 1
   actions:
   - {fileID: 11400000, guid: d4d0b41cf01f8e64385266a39fee2072, type: 2}

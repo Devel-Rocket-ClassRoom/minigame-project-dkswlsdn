@@ -12,9 +12,16 @@ public class SetItemGrid : MonoBehaviour
 
 
 
+
     private void OnEnable()
     {
         Load();
+        SaveManager.onSaveModified += Load;
+    }
+
+    private void OnDisable()
+    {
+        SaveManager.onSaveModified -= Load;
     }
 
     public void Load()

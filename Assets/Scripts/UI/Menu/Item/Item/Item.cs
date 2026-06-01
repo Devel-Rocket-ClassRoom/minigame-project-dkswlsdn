@@ -4,9 +4,10 @@ using UnityEngine;
 public abstract class Item : ScriptableObject
 {
     public string itemName;
-    public int id;
-    public Sprite icon;
-    public string desc;
+    public string id;
+
+    public bool canUseInBattle;
+    public bool canUseInBaseCamp;
 
     public abstract void OnUse(Character character);
 

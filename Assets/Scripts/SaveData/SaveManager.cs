@@ -7,7 +7,8 @@ using SaveDataVC = SaveDataV3;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
-    public int currentVersion;
+    private int currentVersion = 3;
+    public static event Action onSaveModified;
 
     public int CurrentSlot { get; private set; }
     public SaveDataVC CurrentSave { get; private set; }
@@ -44,6 +45,7 @@ public class SaveManager : MonoBehaviour
             var path = Path.Combine(mainPath, fileName[CurrentSlot]);
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(path, json);
+            onSaveModified?.Invoke();
         }
         catch (Exception e)
         {

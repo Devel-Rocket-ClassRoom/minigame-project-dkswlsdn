@@ -25,6 +25,17 @@ public class ShowWeaponInfo : MonoBehaviour
     [SerializeField] private SkillCaster caster;
     [SerializeField] private CharacterStat stat;
 
+    // 화면 슬롯에 표시할 skills 인덱스 (L=기본공격 제외, 기존 순서에서 Q만 빠짐)
+    private static readonly int[] slotSkillIndex =
+    {
+        (int)SkillKey.R,     // 1
+        (int)SkillKey.SL,    // 2
+        (int)SkillKey.LR,    // 3
+        (int)SkillKey.E,     // 4
+        (int)SkillKey.F,     // 5
+        (int)SkillKey.Space, // 6
+    };
+
     private void Start()
     {
         executer = FindAnyObjectByType<PlayerSkillExecuter>();
@@ -39,7 +50,7 @@ public class ShowWeaponInfo : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            var skill = executer.GetSkill(i + 1);
+            var skill = i < slotSkillIndex.Length ? executer.GetSkill(slotSkillIndex[i]) : null;
             if (slots[i].nameText != null)
             {
                 var text = skill != null ? skill.skillId : string.Empty;
@@ -63,7 +74,9 @@ public class ShowWeaponInfo : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].cooldownBar == null) continue;
-            slots[i].cooldownBar.fillAmount = executer.GetCooldownRatio(i + 1);
+            slots[i].cooldownBar.fillAmount = i < slotSkillIndex.Length
+                ? executer.GetCooldownRatio(slotSkillIndex[i])
+                : 0f;
         }
     }
 

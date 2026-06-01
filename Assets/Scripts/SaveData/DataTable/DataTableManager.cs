@@ -5,6 +5,8 @@ public static class DataTableManager
     public static StringTable StringTable; 
     public static SpriteTable SpriteTable;
     public static DialogTable DialogTable;
+    public static CharacterTable CharacterTable;
+    public static SkillTable SkillTable;
 
     static DataTableManager()
     {
@@ -16,6 +18,8 @@ public static class DataTableManager
         StringTable = new StringTable();
         SpriteTable = new SpriteTable();
         DialogTable = new DialogTable();
+        CharacterTable = new CharacterTable();
+        SkillTable = new SkillTable();
         LoadAll();
     }
 
@@ -24,6 +28,8 @@ public static class DataTableManager
         StringTable.Load(LoadCSV("Tables/StringTable"));
         SpriteTable.Load(LoadCSV("Tables/SpriteTable"));
         DialogTable.Load(LoadCSV("Tables/DialogTable"));
+        CharacterTable.Load(LoadCSV("Tables/CharacterTable"));
+        SkillTable.Load(LoadCSV("Tables/SkillTable"));
     }
 
     private static string LoadCSV(string path)

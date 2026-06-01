@@ -18,7 +18,7 @@ public class ItemButton : MonoBehaviour
         this.entry = entry;
         this.isStorage = isStorage;
         GetComponent<Button>().onClick.AddListener(SetDescription);
-        GetComponent<Image>().sprite = item.icon;
+        //GetComponent<Image>().sprite = item.icon;
         GetComponent<TextContainer>().ChangeText(item.itemName);
     }
 

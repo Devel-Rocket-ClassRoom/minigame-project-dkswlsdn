@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private MenuPanel mainPanel;
     private Stack<MenuPanel> prePanels = new Stack<MenuPanel>();
     private MenuPanel currentMenu = null;
+    private MenuPanel currentPopup = null;
     [SerializeField] private DialogContainer dialogPanel;
     private InputAction menuOpen;
     private InputAction dialogNext;
@@ -91,8 +92,9 @@ public class MenuManager : MonoBehaviour
 
     public void OpenPopup(MenuPanel panel)
     {
+        if (currentPopup != null) currentPopup.gameObject.SetActive(false);
         panel.gameObject.SetActive(true);
-        currentMenu = panel;
+        currentPopup = panel;
         isMenuOpen = true;
     }
 
@@ -109,6 +111,8 @@ public class MenuManager : MonoBehaviour
         currentMenu.gameObject.SetActive(false);
         currentMenu = null;
         isMenuOpen = isMainAlwaysOpen;
+
+        if (currentPopup != null) currentPopup.gameObject.SetActive(false);
         
         if (isMainAlwaysOpen)
         {
@@ -123,6 +127,12 @@ public class MenuManager : MonoBehaviour
         {
             OpenMenu(prePanels.Pop(), true);
         }
+    }
+
+    public void ClosePopup()
+    {
+        currentPopup.gameObject.SetActive(false);
+        currentPopup = null;
     }
 
     public void CursorLock(bool lockCursor)

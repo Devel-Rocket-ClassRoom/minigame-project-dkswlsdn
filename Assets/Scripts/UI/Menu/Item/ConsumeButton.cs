@@ -34,13 +34,5 @@ public class ConsumeButton : MonoBehaviour
         item.OnUse(character);
         SaveManager.instance.SaveRequest();
         button.onClick.RemoveAllListeners();
-        ReLoad();
-    }
-
-    private void ReLoad()
-    {
-        storageGrid.Load();
-        characterGrid.Load();
-        desc.Clear();
     }
 }

@@ -23,6 +23,31 @@ public class CharacterPanelController : MonoBehaviour
 
     private void OnEnable()
     {
+        Load();
+
+        SaveManager.onSaveModified += ReLoad;
+    }
+
+    private void OnDisable()
+    {
+        Exit();
+
+        SaveManager.onSaveModified -= ReLoad;
+    }
+
+    public void Init(string id)
+    {
+        thisCharacterId = id;
+    }
+
+    private void ReLoad()
+    {
+        Exit();
+        Load();
+    }
+
+    private void Load()
+    {
         var list = SaveManager.instance.CurrentSave.unlockedCharacterList;
 
         if (list.Contains(thisCharacterId))
@@ -49,7 +74,7 @@ public class CharacterPanelController : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void Exit()
     {
         statusButton.onClick?.RemoveAllListeners();
         subWeaponButton.onClick?.RemoveAllListeners();
