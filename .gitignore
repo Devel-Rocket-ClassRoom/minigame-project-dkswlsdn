@@ -105,47 +105,8 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
-# Imported (머티리얼, 프리팹만 추적)
-/Assets/Imported/**/*.zip
-/Assets/Imported/**/*.zip.meta
-/Assets/Imported/**/*.unity
-/Assets/Imported/**/*.unity.meta
-/Assets/Imported/**/*.png
-/Assets/Imported/**/*.png.meta
-/Assets/Imported/**/*.jpg
-/Assets/Imported/**/*.jpg.meta
-/Assets/Imported/**/*.jpeg
-/Assets/Imported/**/*.jpeg.meta
-/Assets/Imported/**/*.tga
-/Assets/Imported/**/*.tga.meta
-/Assets/Imported/**/*.tif
-/Assets/Imported/**/*.tif.meta
-/Assets/Imported/**/*.tiff
-/Assets/Imported/**/*.tiff.meta
-/Assets/Imported/**/*.psd
-/Assets/Imported/**/*.psd.meta
-/Assets/Imported/**/*.fbx
-/Assets/Imported/**/*.fbx.meta
-/Assets/Imported/**/*.FBX
-/Assets/Imported/**/*.FBX.meta
-/Assets/Imported/**/*.obj
-/Assets/Imported/**/*.obj.meta
-/Assets/Imported/**/*.blend
-/Assets/Imported/**/*.blend.meta
-/Assets/Imported/**/*.mp3
-/Assets/Imported/**/*.mp3.meta
-/Assets/Imported/**/*.wav
-/Assets/Imported/**/*.wav.meta
-/Assets/Imported/**/*.ogg
-/Assets/Imported/**/*.ogg.meta
-/Assets/Imported/**/*.anim
-/Assets/Imported/**/*.anim.meta
-/Assets/Imported/**/*.controller
-/Assets/Imported/**/*.controller.meta
-/Assets/Imported/**/*.overrideController
-/Assets/Imported/**/*.overrideController.meta
-/Assets/Imported/**/*.mask
-/Assets/Imported/**/*.mask.meta
+# Imported
+/Assets/Imported
 
 # Resources
 /Assets/Resources/Sprites
