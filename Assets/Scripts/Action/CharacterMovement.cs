@@ -381,6 +381,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
         {
             surfaceNormal = Vector3.up;
             isNearGround = false;
+            isOnGround = false;
         }
 
         bool isGrounded = isNearGround && isOnGround;
