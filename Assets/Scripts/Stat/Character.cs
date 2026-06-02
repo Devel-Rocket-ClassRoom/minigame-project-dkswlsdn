@@ -24,7 +24,6 @@ public class Character : MonoBehaviour
     public SightManager Sight { get; private set; }
     public ItemQuickSlot QuickSlot { get; private set; }
 
-    public Node CurrentNode { get; private set; }
 
 
     private void Awake()

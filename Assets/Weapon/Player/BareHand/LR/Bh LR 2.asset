@@ -48,6 +48,15 @@ MonoBehaviour:
   - preDelay: 0.05
     method: {fileID: 11400000, guid: c626fe9ac8da0f8438257a2c0483e2ae, type: 2}
   stack: []
+  effects:
+  - effect:
+      effect: {fileID: 1872147318604286, guid: 5bea49531fc500c408823a2e2863106f, type: 3}
+      positionOffset: {x: 0, y: 1, z: 0.8}
+      rotationOffset: {x: 0, y: 5, z: 180}
+      scaleOffset: {x: 0.05, y: 0.05, z: 1}
+    preDelay: 0.1
+    method: 5
+    isLeft: 1
   targetting: 0
   targetLayer:
     serializedVersion: 2

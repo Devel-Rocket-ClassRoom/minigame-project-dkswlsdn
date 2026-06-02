@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd824bc69007f5840a7323143f4259ea, type: 3}
   m_Name: Rope
   m_EditorClassIdentifier: Assembly-CSharp::Rope
-  itemName: Rope
-  id: 2
-  icon: {fileID: 0}
-  desc: "\uB192\uC740 \uACF3\uC5D0 \uC62C\uB77C\uAC08 \uC218 \uC788\uB2E4."
+  itemName: ROPE
+  weight: 1
+  canUseInBattle: 1
+  canUseInBaseCamp: 0
   skill: {fileID: 11400000, guid: 892639d2955a37a4b9a6b7f10557230b, type: 2}

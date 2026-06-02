@@ -47,10 +47,12 @@ public class SetItemGrid : MonoBehaviour
 
     private void CreateItemButton(Item item, ItemSaveEntry entry)
     {
+        if (item == null)
+        {
+            return;
+        }
+
         var b = Instantiate(button, transform);
-
-        if (item == null) return;
-
         b.Init(item, desc, character, entry, isStorage);
     }
 }

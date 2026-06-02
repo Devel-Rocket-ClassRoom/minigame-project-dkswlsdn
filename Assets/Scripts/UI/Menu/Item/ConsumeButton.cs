@@ -3,13 +3,12 @@ using UnityEngine.UI;
 
 public class ConsumeButton : MonoBehaviour
 {
+    [SerializeField] private bool isInBattle;
+
     private Item item;
     private Character character;
     private ItemSaveEntry entry;
     private Button button;
-    [SerializeField] private SetItemGrid storageGrid;
-    [SerializeField] private SetItemGrid characterGrid;
-    [SerializeField] private ShowItemDescription desc;
     private bool isStorage;
 
     private void Awake()
@@ -19,12 +18,27 @@ public class ConsumeButton : MonoBehaviour
 
     public void Init(Item item, Character character, ItemSaveEntry entry, bool isStorage)
     {
-        this.item = item;
-        this.character = character;
-        this.entry = entry;
-        this.isStorage = isStorage;
+        if ((GameSceneManager.IsInBattle && item.canUseInBattle) || (!GameSceneManager.IsInBattle && item.canUseInBaseCamp))
+        {
+            gameObject.SetActive(true);
 
-        button.onClick.AddListener(Consume);
+            this.item = item;
+            this.character = character;
+            this.entry = entry;
+            this.isStorage = isStorage;
+
+            button.onClick.AddListener(Consume);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+    }
+
+    private void OnDisable()
+    {
+        button.onClick.RemoveAllListeners();
     }
 
     private void Consume()
@@ -32,7 +46,7 @@ public class ConsumeButton : MonoBehaviour
         var inventory = isStorage ? SaveManager.instance.CurrentSave.itemInStorage : SaveManager.instance.CurrentSave.itemInCharacter;
         inventory.Remove(entry);
         item.OnUse(character);
-        SaveManager.instance.SaveRequest();
+        if (!GameSceneManager.IsInBattle) SaveManager.instance.SaveRequest();
         button.onClick.RemoveAllListeners();
     }
 }

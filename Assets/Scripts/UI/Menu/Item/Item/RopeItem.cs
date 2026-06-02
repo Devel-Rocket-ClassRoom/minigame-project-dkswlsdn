@@ -7,6 +7,7 @@ public class RopeItem : Item
 
     public override void OnUse(Character character)
     {
+        base.OnUse(character);
         character.Caster.Cast(skill, -1);
     }
 }

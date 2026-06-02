@@ -38,6 +38,12 @@ public class SaveManager : MonoBehaviour
 
     public void SaveRequest()
     {
+        if (CurrentSave == null)
+        {
+            Debug.LogError("[SaveManager] CurrentSave가 null — 저장 불가");
+            return;
+        }
+
         var data = CurrentSave;
 
         try
@@ -49,7 +55,7 @@ public class SaveManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"저장 실패: {e.Message} / {fileName[CurrentSlot]}");
+            Debug.LogError($"저장 실패: {e.Message} / {fileName[CurrentSlot]}\n{e.StackTrace}");
         }
     }
 
@@ -66,7 +72,7 @@ public class SaveManager : MonoBehaviour
             if (!File.Exists(path))
             {
                 Debug.Log($"[Save] 파일 없음, 새 저장 데이터 생성: {path}");
-                CurrentSave = new SaveDataVC();
+                CurrentSave = new SaveDataVC().Init();
                 return CurrentSave;
             }
 
@@ -124,7 +130,7 @@ public class SaveManager : MonoBehaviour
             if (e.InnerException != null)
                 Debug.LogError($"[Save] 내부 원인: {e.InnerException.Message}\n{e.InnerException.StackTrace}");
 
-            CurrentSave = new SaveDataVC();
+            CurrentSave = new SaveDataVC().Init();
             SaveRequest();
             return CurrentSave;
         }
@@ -141,6 +147,6 @@ public class SaveManager : MonoBehaviour
 
     public void ResetSave()
     {
-        CurrentSave = new SaveDataVC();
+        CurrentSave = new SaveDataVC().Init();
     }
 }

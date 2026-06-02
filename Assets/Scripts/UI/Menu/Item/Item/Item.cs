@@ -3,17 +3,21 @@ using UnityEngine;
 
 public abstract class Item : ScriptableObject
 {
+    public static event Action onUse;
+    public static event Action onGet;
+
     public string itemName;
-    public string id;
+    public float weight;
 
     public bool canUseInBattle;
     public bool canUseInBaseCamp;
 
-    public abstract void OnUse(Character character);
+    public virtual void OnUse(Character character) { onUse?.Invoke(); }
 
     public virtual void OnGet(Character character)
     {
         SaveManager.instance.CurrentSave.itemInCharacter.Add(new ItemSaveEntry(itemName, DateTime.Now));
+        onGet?.Invoke();
     }
 }
 

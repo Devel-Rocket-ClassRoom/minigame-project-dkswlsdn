@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e8775abdb55bc4bace1b5ba83287bd, type: 3}
   m_Name: Hp Up
   m_EditorClassIdentifier: Assembly-CSharp::HpUp
-  itemName: "\uCCB4\uB825 \uD68C\uBCF5"
-  id: 0
-  icon: {fileID: 0}
-  desc: "\uCCB4\uB825\uC744 100 \uD68C\uBCF5\uD55C\uB2E4"
+  itemName: HEAL
+  weight: 0.7
+  canUseInBattle: 0
+  canUseInBaseCamp: 1

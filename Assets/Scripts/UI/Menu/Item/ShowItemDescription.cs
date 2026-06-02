@@ -30,9 +30,10 @@ public class ShowItemDescription : MonoBehaviour
         this.entry = entry;
         itemName.ChangeText(item.itemName);
         //icon.sprite = item.icon;
-        //desc.ChangeText(item.desc);
+        if (DataTableManager.ItemTable.TryGet(item.itemName, out ItemData data))
+            desc.ChangeText(data.description);
 
-        shiftButton.Init(entry, isStorage);
+        if (shiftButton != null) shiftButton.Init(entry, isStorage);
 
         consumeButton.Init(item, character, entry, isStorage);
     }

@@ -26,7 +26,7 @@ public class EffectManager : MonoBehaviour
 
         if (parent != null) go.transform.SetParent(parent);
         go.transform.localPosition = data.positionOffset;
-        go.transform.localRotation = data.rotationOffset;
+        go.transform.localRotation = Quaternion.Euler(data.rotationOffset);
         go.transform.localScale = data.scaleOffset == Vector3.zero ? Vector3.one : data.scaleOffset;
 
         if (go.TryGetComponent<ParticleSystem>(out var ps))
@@ -63,7 +63,7 @@ public class EffectData
 {
     public GameObject effect;
     public Vector3 positionOffset;
-    public Quaternion rotationOffset;
+    public Vector3 rotationOffset;
     public Vector3 scaleOffset;
     //public bool useFreeze;
 }

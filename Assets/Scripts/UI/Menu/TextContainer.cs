@@ -8,6 +8,7 @@ public class TextContainer : MonoBehaviour
 
     public void ChangeText(string text)
     {
+        this.text = text;
         var t = DataTableManager.StringTable.Get(text);
         if (t == default) tmp.text = text;
         else tmp.text = t;

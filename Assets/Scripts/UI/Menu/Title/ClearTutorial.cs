@@ -6,7 +6,7 @@ public class ClearTutorial : Interactor
     {
         SaveManager.instance.CurrentSave.isTutorialCleared = true;
         SaveManager.instance.SaveRequest();
-        GameSceneManager.instance.LoadBaseCamp();
+        GameSceneManager.LoadBaseCamp();
         return true;
     }
 }

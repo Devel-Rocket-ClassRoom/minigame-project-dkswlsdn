@@ -20,6 +20,8 @@ public class NPCCommander : CharacterCommander
 
     public void PressInput(ConditionInput input)
     {
+        if (input == ConditionInput.Q) Debug.Log("Q버튼 눌림");
+
         pressedThisFrame.Add(input);
         heldInputs.Add(input);
     }

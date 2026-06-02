@@ -1,29 +1,24 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameSceneManager : MonoBehaviour
+public static class GameSceneManager
 {
-    public static GameSceneManager instance;
+    public static bool IsInBattle { get; private set; }
 
-    private readonly string[] scenes =
+    private static readonly string[] scenes =
     {
         "TltleScene", "BaseCampScene", "BattleScene", "TutorialScene"
     };
 
-    private void Awake()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void InitOnLoad()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        var current = SceneManager.GetActiveScene().name;
+        IsInBattle = current != scenes[(int)SceneName.TitleScene]
+                  && current != scenes[(int)SceneName.BaseCamp];
     }
 
-    public void Quit()
+    public static void Quit()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;  // 에디터에서 플레이 중지
@@ -32,32 +27,36 @@ public class GameSceneManager : MonoBehaviour
 #endif
     }
 
-    public void LoadScene(SceneName scene)
+    public static void LoadScene(SceneName scene)
     {
+        IsInBattle = scene != SceneName.TitleScene && scene != SceneName.BaseCamp;
         SceneManager.LoadScene(scenes[(int)scene]);
     }
 
-    public void StartGame(int idx)
+    public static void StartGame(int idx)
     {
         SaveManager.instance.LoadRequest(idx);
         if (SaveManager.instance.CurrentSave.isTutorialCleared)
         {
+            IsInBattle = false;
             LoadScene(SceneName.BaseCamp);
         }
         else
         {
+            IsInBattle = true;
             SaveManager.instance.ResetSave();
             LoadScene(SceneName.Tutorial);
         }
     }
 
-    public void LoadBaseCamp()
+    public static void LoadBaseCamp()
     {
         LoadScene(SceneName.BaseCamp);
     }
 
-    public void LoadBattleSpace()
+    public static void LoadBattleSpace()
     {
+        IsInBattle = true;
         LoadScene(SceneName.Battle);
     }
 }

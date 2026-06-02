@@ -46,6 +46,7 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack: []
   stack: []
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

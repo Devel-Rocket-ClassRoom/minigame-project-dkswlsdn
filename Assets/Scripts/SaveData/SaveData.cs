@@ -75,24 +75,36 @@ public class SaveDataV3 : SaveData
     public SaveDataV3()
     {
         version = 3;
-        unlockedCharacterList = new List<string>();
+
+        // null로 두어야 Json.NET이 역직렬화 시 기존 리스트에 추가하지 않고 교체함
+        // 새 게임일 때만 아래 Init()을 호출해서 초기값을 채울 것
+        unlockedCharacterList = null;
+        unlockedSubWeaponList = null;
+        characterData = null;
+        itemInStorage = null;
+        itemInCharacter = null;
+        currentParty = null;
+    }
+
+    // 새 게임 시작 시 호출
+    public SaveDataV3 Init()
+    {
+        unlockedCharacterList = new List<string> { implementedCharacter[0] };
         unlockedSubWeaponList = new List<string>();
 
         characterData = new Dictionary<string, CharacterEntry>();
         foreach (var id in implementedCharacter)
-        {
             characterData.Add(id, new CharacterEntry());
-        }
 
         itemInStorage = new List<ItemSaveEntry>();
         itemInCharacter = new List<ItemSaveEntry>();
         currentParty = new List<string>();
 
-        unlockedCharacterList.Add(implementedCharacter[0]);
         currentCharacterId = implementedCharacter[0];
-
         maxInventorySpace = 10;
         maxStorageSpace = 140;
+
+        return this;
     }
 
     public float playTime;
@@ -111,6 +123,7 @@ public class SaveDataV3 : SaveData
 
     public int maxStorageSpace;
     public int maxInventorySpace;
+    public int anchCount;
 
     public override SaveData NextVersion()
     {
@@ -134,4 +147,9 @@ public class CharacterEntry
     public int[] consumedToken;
     public bool[] magicOpenedSkill;
     public bool isMagicOpened;
+}
+
+public enum ImplementedCharacter
+{
+    BardHand, Axe, Dagger, Handgun, Magic
 }

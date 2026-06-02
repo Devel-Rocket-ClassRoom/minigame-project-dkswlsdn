@@ -8,6 +8,7 @@ public class ImageContainer : MonoBehaviour
 
     public void ChangeSprite(string text)
     {
+        key = text;
         var t = DataTableManager.SpriteTable.Get(text);
         if (t == default) img = null;
         else img.sprite = t;

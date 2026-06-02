@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
+using System.Collections;
 
 public class Anchor : MonoBehaviour
 {
@@ -8,13 +11,29 @@ public class Anchor : MonoBehaviour
     [SerializeField] private Vector3 exitOffset = new Vector3(0f, -1f, 0f);
     [SerializeField] private LayerMask layer;
     [SerializeField] private ItemInstance RopeItem;
-    
 
     private float TopY => transform.position.y;
-    private float BottomY => transform.position.y - length;
+    private float BottomY => transform.position.y - length - 0.5f; 
     private Vector3 ExitPosition => transform.position + exitOffset;
 
     private readonly List<Character> climbers = new List<Character>();
+    private readonly HashSet<Character> visitors = new HashSet<Character>();
+    private NavMeshLink navMeshLink;
+
+    public bool HasVisited(Character character) => visitors.Contains(character);
+
+    public void Clear()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
+        Destroy(gameObject);
+    }
+
+    private IEnumerator RemoveVisitorDelayed(Character character, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        visitors.Remove(character);
+    }
 
     private void OnEnable()
     {
@@ -39,12 +58,44 @@ public class Anchor : MonoBehaviour
             go.transform.rotation = Quaternion.identity;
             go.GetComponent<Rope>().owner = this;
         }
+
+        ResizeCollider();
+        CreateNavMeshLink();
+    }
+
+    private void ResizeCollider()
+    {
+        var col = GetComponent<BoxCollider>();
+        if (col == null) return;
+        col.center = new Vector3(0f, -length * 0.5f, 0f);
+        col.size = new Vector3(col.size.x, length, col.size.z);
+    }
+
+    private void CreateNavMeshLink()
+    {
+        navMeshLink = gameObject.AddComponent<NavMeshLink>();
+        navMeshLink.startPoint = Vector3.zero;
+        navMeshLink.endPoint = Vector3.down * length;
+        navMeshLink.bidirectional = true;
+        navMeshLink.activated = true;
+    }
+
+    private void OnDisable()
+    {
+        if (navMeshLink != null)
+        {
+            Destroy(navMeshLink);
+            navMeshLink = null;
+        }
     }
 
     public void AddClimber(Character character)
     {
         if (!climbers.Contains(character))
+        {
             climbers.Add(character);
+            visitors.Add(character);
+        }
     }
 
     private void Update()
@@ -63,14 +114,18 @@ public class Anchor : MonoBehaviour
 
             if (y <= BottomY)
             {
+                visitors.Add(c);
                 c.State.ChangeState(CharacterState.Idle);
                 climbers.RemoveAt(i);
+                StartCoroutine(RemoveVisitorDelayed(c, 2f));
             }
             else if (y >= TopY)
             {
+                visitors.Add(c);
                 c.Movement.MoveTo(ExitPosition);
                 c.State.ChangeState(CharacterState.Idle);
                 climbers.RemoveAt(i);
+                StartCoroutine(RemoveVisitorDelayed(c, 2f));
             }
         }
     }

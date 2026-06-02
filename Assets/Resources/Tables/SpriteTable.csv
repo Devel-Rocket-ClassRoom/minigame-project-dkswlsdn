@@ -26,4 +26,8 @@ HP, Key/HP
 COST_BAR, Key/Cost Bar
 COST, Key/Cost
 
-#
+#Item
+ROPE, Item/Rope
+ANCH, Item/Anch
+ANCH_N, Item/Anch
+HEAL, Item/Heal
