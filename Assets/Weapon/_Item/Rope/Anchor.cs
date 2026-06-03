@@ -38,15 +38,15 @@ public class Anchor : MonoBehaviour
     private void OnEnable()
     {
         Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, length, layer))
+        if (Physics.Raycast(ray, out RaycastHit hit, length + 1, layer))
         {
-            length = Mathf.FloorToInt(transform.position.y - hit.point.y);
+            length = Mathf.FloorToInt(transform.position.y - hit.point.y) - 1;
         }
 
         if (length <= 1)
         {
             var rope = Instantiate(RopeItem, transform);
-            rope.transform.position = transform.position + Vector3.down;
+            rope.transform.position = transform.position;
             rope.transform.rotation = Quaternion.identity;
             return;
         }

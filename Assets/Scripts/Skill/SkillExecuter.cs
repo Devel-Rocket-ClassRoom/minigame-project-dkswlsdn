@@ -131,6 +131,14 @@ public class SkillExecuter : MonoBehaviour
         cooldowns[index] = skills[index].cooldown;
     }
 
+    // 풀 재사용/부활 시 초기화. 캐스트락 해제 + 모든 쿨다운 초기화.
+    public void ResetState()
+    {
+        IsDisableCast = false;
+        for (int i = 0; i < cooldowns.Length; i++)
+            cooldowns[i] = 0f;
+    }
+
     public bool IsSkillReady(ConditionInput input)
     {
         int idx = GetSkillIndex(input);

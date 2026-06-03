@@ -8,8 +8,6 @@ public class CharacterStat : MonoBehaviour
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
-    [SerializeField] private float maxMp;
-    [SerializeField] private float mp;
     [SerializeField] private float attack;
     [SerializeField] private float sightRange;
 
@@ -34,11 +32,6 @@ public class CharacterStat : MonoBehaviour
         anchor = GetComponent<CharacterAnchor>();
         state = GetComponent<StateManager>();
     }
-
-    //private void Update()
-    //{
-
-    //}
 
 
     public float GetStatPercent(StatType type) 
@@ -93,6 +86,12 @@ public class CharacterStat : MonoBehaviour
     public void RestoreHP(float amount)
     {
         health = Mathf.Min(health + amount, maxHealth);
+    }
+
+    // 풀 재사용/부활 시 초기화. 일단은 체력만 최대로 채운다.
+    public void ResetState()
+    {
+        health = maxHealth;
     }
 
     public void ApplyArmor(ArmorType armor)

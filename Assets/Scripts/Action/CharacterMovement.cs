@@ -398,9 +398,24 @@ private IEnumerator CoFreeze(AttackInfo hit)
     }
 
 
+    // 위로 향하는 정도(코사인). 0.5 ≈ 약 60도 이내 경사까지 바닥으로 인정, 그보다 가파르면 벽 취급
+    private const float groundNormalThreshold = 0.5f;
+
+    // Ground 콜라이더와의 접점 중 '발밑 바닥'(위로 향하는 법선)이 있는지 검사. 측면(벽) 접촉은 제외
+    private bool HasFloorContact(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Ground")) return false;
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if (collision.GetContact(i).normal.y >= groundNormalThreshold)
+                return true;
+        }
+        return false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground") && isNearGround && verticalVelocity < 0)
+        if (HasFloorContact(collision) && verticalVelocity < 0f)
         {
             verticalVelocity = 0f;
             isOnGround = true;
@@ -408,9 +423,9 @@ private IEnumerator CoFreeze(AttackInfo hit)
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground") && isNearGround && verticalVelocity < 0)
+        if (HasFloorContact(collision) && verticalVelocity <= 0f)
         {
-            verticalVelocity = 0f;
+            if (verticalVelocity < 0f) verticalVelocity = 0f;
             isOnGround = true;
         }
     }
@@ -437,6 +452,19 @@ private IEnumerator CoFreeze(AttackInfo hit)
         activeGravity = defaultGravity;
         horizontalVelocity = Vector3.zero;
         isFreeMoveEnabled = true;
+    }
+
+    // 풀 재사용/부활 시 초기화. 속도·중력·이동 상태를 기본값으로 되돌린다.
+    public void ResetState()
+    {
+        if (rigid != null) rigid.linearVelocity = Vector3.zero;
+        verticalVelocity = 0f;
+        horizontalVelocity = Vector3.zero;
+        horizontalSpeed = 0f;
+        activeGravity = defaultGravity;
+        friction = 0f;
+        isFreeMoveEnabled = true;
+        isFrozen = false;
     }
 
     public void OnKnockdown()

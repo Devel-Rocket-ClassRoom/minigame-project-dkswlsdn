@@ -5,7 +5,9 @@ public abstract class CharacterCamera : MonoBehaviour
     protected SkillCaster caster;
     protected StateManager state;
 
-    [SerializeField] protected bool canRotateCharacter = true;
+    // 순수 런타임 플래그(OnStun/ReturnOrigin/OnUseSkill로만 제어). 직렬화하지 않아
+    // 프리팹에서 실수로 false로 박혀 회전이 막히는 일을 방지한다.
+    protected bool canRotateCharacter = true;
 
     protected virtual void Awake()
     {

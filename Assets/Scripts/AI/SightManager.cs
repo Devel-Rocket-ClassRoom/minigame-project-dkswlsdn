@@ -59,4 +59,12 @@ public class SightManager : MonoBehaviour
 
         onLost?.Invoke(character);
     }
+
+    // 풀 재사용/부활 시 초기화. 비활성 중엔 OnTriggerExit가 안 불려
+    // 감지 목록이 stale 해질 수 있으므로 강제로 비운다.
+    public void ResetState()
+    {
+        visibleCharacters.Clear();
+        FirstEncounter = null;
+    }
 }

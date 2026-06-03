@@ -42,6 +42,8 @@ public class StateManager : MonoBehaviour
 
     public bool IsFrozen { get; private set; }
     private Coroutine freezeCoroutine;
+    private float freezeEndTime;   // 현재 프리즈가 끝나는 시각(갈아끼우기 기준)
+    private bool snapVerticalVelocity;  // true면 다음 에어본 갱신을 블렌드 없이 즉시 반영
 
     private bool isGrounded;
     private float stunEndTime;
@@ -76,8 +78,8 @@ public class StateManager : MonoBehaviour
         CheckTransition();
 
         // 에어본 중 수직 속도(raw)를 애니메이터로 전달 → 올라감/정점/내려감 BlendTree 구동
-        if (state == CharacterState.Airborne)
-            animator.SetFloat("VerticalVelocity", movement.VerticalVelocity, 0.1f, Time.deltaTime);
+        if (movement != null && state == CharacterState.Airborne)
+            animator.SetFloat("VerticalVelocity", movement.VerticalVelocity);
     }
 
     private void CheckTransition()
@@ -166,6 +168,15 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    // 풀 재사용/부활 시 초기화.
+    // Dead 상태에선 ChangeState가 막히므로 먼저 State로 직접 Idle을 풀어준 뒤
+    // 정식 전이를 호출해 onIdle/콜라이더/애니메이션까지 복구한다.
+    public void ResetState()
+    {
+        State = CharacterState.Idle;
+        ChangeState(CharacterState.Idle);
+    }
+
     public void SetGrounded(bool grounded) { isGrounded = grounded; }
 
     public void OnLand()
@@ -177,10 +188,21 @@ public class StateManager : MonoBehaviour
     public void FreezeFor(float duration)
     {
         if (duration <= 0f) return;
+
+        float newEnd = Time.time + duration;
+
+        // 덮어쓰기: 진행 중이던 프리즈를 무시하고 항상 '지금부터 duration'으로 교체한다.
+        // 늘거나 줄어든 차이(delta, 음수 가능)만 구독자에 전달 → actionTimer/skillEndTime이
+        // 누적되지 않고 최신 값으로 갱신됨. (같은 프레임 다중 타격은 delta=0이라 한 번만 적용)
+        float referenceEnd = Mathf.Max(freezeEndTime, Time.time);
+        float delta = newEnd - referenceEnd;
+        freezeEndTime = newEnd;
+
         IsFrozen = true;
         if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
-        freezeCoroutine = StartCoroutine(CoFreezeAnimator(duration));
-        onFreeze?.Invoke(duration);
+        freezeCoroutine = StartCoroutine(CoFreezeAnimator(newEnd - Time.time)); // 남은 전체 길이로 재시작
+
+        onFreeze?.Invoke(delta);
     }
 
     private IEnumerator CoFreezeAnimator(float duration)

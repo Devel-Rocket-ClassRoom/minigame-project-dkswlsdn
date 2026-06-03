@@ -48,9 +48,6 @@ public class AIBrain : MonoBehaviour
         sight     = GetComponentInChildren<SightManager>();
         agent     = GetComponent<NavMeshAgent>();
 
-        agent.updatePosition = false;
-        agent.updateRotation = false;
-
         stat.onDamageTake  += ChangeAggro;
         state.onAirborne   += OnCancelled;
         state.onDead       += OnCancelled;
@@ -62,9 +59,26 @@ public class AIBrain : MonoBehaviour
         sight.onLost       += OnLost;
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        agent.updatePosition = false;
+        agent.updateRotation = true;
+
+        if (NavMesh.SamplePosition(transform.position, out var hit, 2f, NavMesh.AllAreas))
+            agent.Warp(hit.position);
+
+        // 생성 직후(프리팹 위치 = NavMesh 밖)엔 아직 위치/순찰이 세팅되기 전이므로 패트롤 시작을 보류한다.
+        // 스포너가 위치를 잡고 다시 SetActive 하면 Warp 성공 → 여기서 정상적으로 Patrol 시작.
+        if (!agent.isOnNavMesh) return;
+
         ChangeState(AIState.Patrol);
+    }
+
+    // 스포너가 활성화 '전에' 순찰 경로를 주입한다.
+    // (C안: 이후 SetActive 시 OnEnable이 이 경로로 Warp + Patrol을 시작)
+    public void SetPatrol(List<Node> patrol)
+    {
+        patrolNodes = patrol;
     }
 
     // ── 메인 루프 ─────────────────────────────────────────────

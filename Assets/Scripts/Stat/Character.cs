@@ -41,9 +41,19 @@ public class Character : MonoBehaviour
         Sight = GetComponentInChildren<SightManager>();
         QuickSlot = GetComponent<ItemQuickSlot>();
 
-        team = id;
         Id = id++;
+    }
 
-        //if (isPlayer) VisibilityManager.instance.Register(this);
+    private void OnEnable()
+    {
+        // 풀 재사용/활성화 시 깨끗한 상태로 복귀. 없는 컴포넌트는 ?. 로 건너뜀("null이면 동작 안 함").
+        // 순서 주의: Stat(체력) → State(Dead 해제) → 나머지.
+        Stat?.ResetState();       // 체력 최대로
+        State?.ResetState();      // Dead 해제 → Idle (콜라이더/애니 복구)
+        Movement?.ResetState();   // 속도/중력 초기화
+        Caster?.ResetState();     // 진행중 스킬 정리 + 캐스팅 재활성
+        Executer?.ResetState();   // 쿨다운/캐스트락 초기화
+        Stack?.ResetState();      // 스택 효과 되돌리고 비우기
+        Sight?.ResetState();      // 감지 목록 비우기
     }
 }

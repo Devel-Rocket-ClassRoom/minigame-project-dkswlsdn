@@ -55,6 +55,19 @@ public class SpecialStackHandler : MonoBehaviour
         return stacks.TryGetValue(data, out StackHandler count) ? count : null;
     }
 
+    // 풀 재사용/부활 시 초기화. 그냥 비우면 적용된 효과가 안 풀리므로
+    // 각 스택의 OnRemoved를 호출해 효과를 되돌린 뒤 비운다.
+    public void ResetState()
+    {
+        foreach (var kv in new List<KeyValuePair<SpecialStackData, StackHandler>>(stacks))
+        {
+            kv.Key.OnRemoved(character, kv.Value.amount);
+            onStackChanged?.Invoke(kv.Key, 0);
+        }
+        stacks.Clear();
+        ToRemove.Clear();
+    }
+
     public bool Has(SpecialStackData data)
     {
         return stacks.ContainsKey(data);

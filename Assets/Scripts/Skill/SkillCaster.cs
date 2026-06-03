@@ -397,6 +397,11 @@ public class SkillCaster : MonoBehaviour
         enable = false;
     }
 
+    public void ResetState()
+    {
+        enable = true;
+    }
+
     private void CheckHitbox()
     {
 
