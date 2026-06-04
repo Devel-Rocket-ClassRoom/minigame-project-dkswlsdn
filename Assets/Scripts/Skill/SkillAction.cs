@@ -119,6 +119,7 @@ public class AttackInfo
         isReleaseGrab = hit.isReleaseGrab;
         projectileSpeed = hit.projectileSpeed;
         useGrab = hit.useGrab;
+        isBreakable = hit.isBreakable;
     }
 
     [HideInInspector, NonSerialized]
@@ -151,6 +152,7 @@ public class AttackInfo
     public bool isDestroyOnCanceled;
     public bool isReleaseGrab;
     public float projectileSpeed;
+    public bool isBreakable;
 }
 
 

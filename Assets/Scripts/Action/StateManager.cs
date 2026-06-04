@@ -41,6 +41,11 @@ public class StateManager : MonoBehaviour
 
 
     public bool IsFrozen { get; private set; }
+
+    // 죽음 연출 정보: 죽인 타격이 파괴판정이었는지, 죽기 직전 상태가 무엇이었는지
+    public bool DeathByBreak { get; private set; }
+    public CharacterState DeathPrevState { get; private set; }
+
     private Coroutine freezeCoroutine;
     private float freezeEndTime;   // 현재 프리즈가 끝나는 시각(갈아끼우기 기준)
     private bool snapVerticalVelocity;  // true면 다음 에어본 갱신을 블렌드 없이 즉시 반영
@@ -113,6 +118,36 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    // 사망 진입 전용. 죽인 타격의 파괴판정과 직전 상태를 기록한 뒤 Dead로 전이한다.
+    // (CharacterDeath가 이 정보로 연출 분기를 결정한다)
+    public void Die(bool breakable)
+    {
+        if (State == CharacterState.Dead) return;
+        DeathByBreak = breakable;
+        DeathPrevState = State;
+        ChangeState(CharacterState.Dead);
+    }
+
+    // 죽음 연출: 그로기 모션 재생(노멀 속도로). 애니메이터 트리거명은 추후 연결.
+    public void DeathGroggy()
+    {
+        if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
+        IsFrozen = false;
+        if (animator != null)
+        {
+            animator.speed = 1f;
+            animator.SetTrigger("Groggy");
+        }
+    }
+
+    // 죽음 연출: 현재(마지막) 포즈를 그대로 정지시킨다.
+    public void DeathFreezePose()
+    {
+        if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
+        IsFrozen = false;
+        if (animator != null) animator.speed = 0f;
+    }
+
     public void ChangeState(CharacterState state)
     {
         if (State == CharacterState.Dead) return;
@@ -173,6 +208,10 @@ public class StateManager : MonoBehaviour
     // 정식 전이를 호출해 onIdle/콜라이더/애니메이션까지 복구한다.
     public void ResetState()
     {
+        if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
+        IsFrozen = false;
+        DeathByBreak = false;
+        if (animator != null) animator.speed = 1f;   // 죽음 정지 포즈 해제
         State = CharacterState.Idle;
         ChangeState(CharacterState.Idle);
     }

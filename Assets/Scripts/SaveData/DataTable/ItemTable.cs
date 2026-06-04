@@ -19,7 +19,7 @@ public class ItemTable : DataTable<ItemData>
             if (line.StartsWith("#")) continue;
             if (!headerSkipped) { headerSkipped = true; continue; }
 
-            var cols = line.Split(',');
+            var cols = CsvUtil.SplitLine(line);
             if (cols.Length < 3) continue;
 
             string key = cols[0].Trim();

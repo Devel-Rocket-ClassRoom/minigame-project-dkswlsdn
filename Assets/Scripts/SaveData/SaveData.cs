@@ -129,6 +129,16 @@ public class SaveDataV3 : SaveData
     }
 }
 
+
+
+
+
+
+
+
+
+
+
 public class CharacterEntry
 {
     public CharacterEntry()

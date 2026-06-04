@@ -7,7 +7,7 @@ public static class GameSceneManager
 
     private static readonly string[] scenes =
     {
-        "TltleScene", "BaseCampScene", "BattleScene", "TutorialScene"
+        "TitleScene", "BaseCampScene", "BattleScene", "TutorialScene"
     };
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]

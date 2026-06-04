@@ -22,7 +22,7 @@ public class SkillTable : DataTable<SkillData>
             if (line.StartsWith("#")) continue;            // 주석 스킵
             if (!headerSkipped) { headerSkipped = true; continue; } // 헤더 스킵
 
-            var cols = line.Split(',');
+            var cols = CsvUtil.SplitLine(line);
             if (cols.Length < 3) continue;
 
             string key = cols[0].Trim();

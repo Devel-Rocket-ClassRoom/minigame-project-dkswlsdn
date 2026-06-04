@@ -37,6 +37,27 @@ public class EffectManager : MonoBehaviour
         }
     }
 
+    // 부모 없이 월드 좌표에 재생. 캐릭터가 파괴돼도 이펙트가 함께 사라지지 않는다.
+    public void Play(EffectData data, Vector3 worldPosition)
+    {
+        if (data.effect == null) return;
+
+        var pool = GetOrCreatePool(data.effect);
+        GameObject go = pool.Get();
+
+        go.transform.SetParent(null);
+        go.transform.position = worldPosition + data.positionOffset;
+        go.transform.rotation = Quaternion.Euler(data.rotationOffset);
+        go.transform.localScale = data.scaleOffset == Vector3.zero ? Vector3.one : data.scaleOffset;
+
+        if (go.TryGetComponent<ParticleSystem>(out var ps))
+        {
+            ps.Play();
+            float duration = ps.main.duration + ps.main.startLifetime.constantMax;
+            StartCoroutine(ReturnToPool(go, pool, duration));
+        }
+    }
+
     private ObjectPool<GameObject> GetOrCreatePool(GameObject prefab)
     {
         if (!pools.ContainsKey(prefab))

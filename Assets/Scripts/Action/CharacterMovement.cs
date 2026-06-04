@@ -20,6 +20,11 @@ public abstract class CharacterMovement : MonoBehaviour
     private float friction = 0;
     [SerializeField] private LayerMask groundLayer;
 
+    // 캐릭터 간 막힘 판정 (물리 충돌은 끄고, 이동만 막는다 → 밀림 없음)
+    [SerializeField] private LayerMask characterBlockLayer; // 다른 캐릭터들이 속한 레이어
+    [SerializeField] private CapsuleCollider bodyCollider;  // 막힘 판정에 쓸 본체 캡슐
+    private const float blockSkin = 0.02f;                  // 살짝 띄워서 끼임 방지
+
     // 현재 물리 정보
     protected Vector3 inputDirection;
     private Vector3 localDirection;
@@ -53,6 +58,7 @@ public abstract class CharacterMovement : MonoBehaviour
         stat = GetComponent<CharacterStat>();
         state = GetComponent<StateManager>();
         commander = GetComponent<CharacterCommander>();
+        if (bodyCollider == null) bodyCollider = GetComponentInChildren<CapsuleCollider>();
     }
 
     private void OnEnable()
@@ -101,6 +107,7 @@ public abstract class CharacterMovement : MonoBehaviour
         }
 
         ApplyFriction();
+        BlockAgainstCharacters();
         Move();
     }
 
@@ -113,6 +120,43 @@ public abstract class CharacterMovement : MonoBehaviour
     private void Move()
     {
         rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
+    }
+
+    // 다른 캐릭터를 향해 가는 수평 속도 성분만 깎아낸다.
+    // 물리 충돌(레이어)은 꺼져 있어 밀림은 없고, 이동만 벽처럼 막히며 표면을 따라 미끄러진다.
+    private void BlockAgainstCharacters()
+    {
+        if (bodyCollider == null || characterBlockLayer == 0) return;
+
+        Vector3 horiz = new Vector3(horizontalVelocity.x, 0f, horizontalVelocity.z);
+        if (horiz.sqrMagnitude < 0.0001f) return;
+
+        // 캡슐의 월드 양 끝점 계산
+        float height = Mathf.Max(bodyCollider.height, bodyCollider.radius * 2f);
+        float radius = bodyCollider.radius;
+        Vector3 center = bodyCollider.transform.TransformPoint(bodyCollider.center);
+        Vector3 up = bodyCollider.transform.up;
+        float half = Mathf.Max(0f, height * 0.5f - radius);
+        Vector3 p1 = center + up * half;
+        Vector3 p2 = center - up * half;
+
+        Vector3 dir = horiz.normalized;
+        float dist = horiz.magnitude * Time.fixedDeltaTime + blockSkin;
+
+        if (Physics.CapsuleCast(p1, p2, radius, dir, out RaycastHit hit, dist,
+                                characterBlockLayer, QueryTriggerInteraction.Ignore))
+        {
+            Vector3 n = hit.normal;
+            n.y = 0f;
+            if (n.sqrMagnitude < 0.0001f) return;
+            n.Normalize();
+
+            float into = Vector3.Dot(horiz, n);
+            if (into < 0f) horiz -= n * into; // 벽으로 파고드는 성분 제거 → 접선 방향만 남아 미끄러짐
+
+            horizontalVelocity.x = horiz.x;
+            horizontalVelocity.z = horiz.z;
+        }
     }
 
     protected void FreeMove()
@@ -320,7 +364,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
                     horizontalSpeed = horizontalVelocity.magnitude;
                     isFreeMoveEnabled = false;
                     activeGravity = defaultGravity; 
-                    friction = 4f;
+                    friction = 8f;
                     break;
                 case HitReactionType.Airborne:
                     transform.Translate(Vector3.up * 1f);
@@ -467,11 +511,22 @@ private IEnumerator CoFreeze(AttackInfo hit)
         friction = 0f;
         isFreeMoveEnabled = true;
         isFrozen = false;
+        enabled = true;   // StopImmediately로 꺼졌을 수 있으니 재활성
     }
 
     public void OnKnockdown()
     {
         horizontalVelocity = Vector3.zero;
+    }
+
+    // 죽음 연출용 즉시 정지. 속도를 0으로 만들고 이동 갱신을 멈춘다.
+    public void StopImmediately()
+    {
+        horizontalVelocity = Vector3.zero;
+        verticalVelocity = 0f;
+        horizontalSpeed = 0f;
+        if (rigid != null) rigid.linearVelocity = Vector3.zero;
+        enabled = false;
     }
 
     public bool GetOnGrounded()

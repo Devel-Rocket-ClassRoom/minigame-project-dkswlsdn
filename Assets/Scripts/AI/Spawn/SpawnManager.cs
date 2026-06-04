@@ -118,6 +118,7 @@ public class SpawnManager : MonoBehaviour
         c.GetComponent<StateManager>()?.ResetState();
         c.GetComponent<CharacterMovement>()?.ResetState();
         c.GetComponent<CharacterStat>()?.ResetState();
+        c.GetComponent<CharacterDeath>()?.SetOwnedByPool(true);   // 자가 Destroy 방지(소멸은 corpseDelay로)
 
         Action handler = () => OnDead(c);
         deathHandlers[c] = handler;

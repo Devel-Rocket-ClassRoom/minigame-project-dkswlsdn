@@ -2,7 +2,17 @@ key, icon, name, dialog
 Greeting_000, null, 대장장이, 안녕
 Greeting_001, null, 대장장이, 무슨 일이야?
 
-Tutorial_Anch_000, null, 방랑자, 이건 뭐지? 이상하게 생겼네.
-Tutorial_Anch_001, null, 방랑자, 일단 챙겨둘까?
-Tutorial_End_000, null, 방랑자, 일단 챙겨둘까?
-Tutorial_End_001, null, 방랑자, 일단 챙겨둘까?
+Tutorial_Anch_1_000, null, 방랑자, 여긴 대체 뭐하는 곳이람... 사람 사는 곳 같지는 않은데. 온통 하얗고...
+Tutorial_Anch_2_000, null, 도움말, 이상한 장신구를 획득했다 .
+Tutorial_Anch_2_001, null, 방랑자, 아쉽게도 순금은 아니군. 
+Tutorial_Anch_2_002, null, 도움말, 정면의 문이 열리는 소리가 들려왔다. 
+Tutorial_Anch_2_003, null, 방랑자, ......
+Tutorial_Anch_2_004, null, 방랑자, 열어주었으니 갈 수밖에 없나.
+Tutorial_Rope_001, null, 방랑자, "어휴, 놀래라. 그러게 왜 갑자기 덤벼들고 그래."
+Tutorial_Rope_002, null, 방랑자, "이걸 쓰면 위쪽 벽으로 올라갈 수 있을 것 같네."
+Tutorial_Rope_003, null, 도움말, 밧줄을 사용 시 설치 모드로 진입합니다. 설치모드에서 일반공격 버튼을 누를 시 밧줄을 발사합니다.
+Tutorial_Rock_001, null, 방랑자, 산 넘어 산이로군. 막힌 벽이라니.
+Tutorial_Rock_002, null, 방랑자, "설마 옆의 낭떠러지로 떨어지라는 것은 아닐테고, 이걸 부수라는건가?"
+Tutorial_Rock_003, null, 방랑자, "하아... 어쩔 수 없지. 하는 수밖에"
+Tutorial_Rock_004, null, 도움말, 파괴 판정을 지닌 공격은 어떤 벽도 한번에 파괴할 수 있습니다.
+Tutorial_Rock_004, null, 도움말, 현재 방랑자의 궁극기만이 파괴판정을 보유하고 있습니다.

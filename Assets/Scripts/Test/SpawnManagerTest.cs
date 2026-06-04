@@ -108,6 +108,7 @@ public class SpawnManagerTest : MonoBehaviour
         spawnedEver++;
 
         c.gameObject.SetActive(true);
+        c.GetComponent<CharacterDeath>()?.SetOwnedByPool(true);   // 자가 Destroy 방지(소멸은 corpseDelay로)
 
         // 사망 시 반납 (State는 활성화 후 유효, 핸들 보관해 재사용 대비 해제 가능하게)
         Action handler = () => OnDead(c);

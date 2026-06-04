@@ -21,7 +21,7 @@ public class RecipeTable : DataTable<RecipeData>
             if (trimmed.StartsWith("#")) continue;
             if (!headerSkipped) { headerSkipped = true; continue; }
 
-            var cols = trimmed.Split(',');
+            var cols = CsvUtil.SplitLine(trimmed);
             if (cols.Length < 3) continue;
 
             string id = cols[0].Trim();

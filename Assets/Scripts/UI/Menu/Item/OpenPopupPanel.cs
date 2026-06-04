@@ -6,8 +6,7 @@ public class OpenPopupPanel : Interactor
 
     public override bool OnDetected(Character character)
     {
-        var manager = panel.transform.root.GetComponent<MenuManager>();
-        manager.OpenPopup(panel);
+        MenuManager.instance.OpenPopup(panel);
         return true;
     }
 }

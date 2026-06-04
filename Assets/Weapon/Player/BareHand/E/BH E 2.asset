@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BH E 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.8
+  actionTime: 1.7
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
@@ -44,7 +44,9 @@ MonoBehaviour:
     yawLimit: 0
     cameraLocked: 0
     lookSpeedLimit: 0
-  attack: []
+  attack:
+  - preDelay: 0.4
+    method: {fileID: 11400000, guid: 0e1fcfa9e5f422b4193933b21cc1fcae, type: 2}
   stack: []
   effects: []
   targetting: 0

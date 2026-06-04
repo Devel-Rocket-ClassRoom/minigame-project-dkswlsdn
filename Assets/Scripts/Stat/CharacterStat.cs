@@ -17,6 +17,7 @@ public class CharacterStat : MonoBehaviour
     [SerializeField] private int grabImmuneLevel;
     public ArmorType Armor => armor;
     public bool IsImmune { get; private set; }
+    [SerializeField] private bool isObstacle;
 
     public event Action<Character, AttackInfo> onDamageTake; // 나 이런 공격을 받았어!
     public event Action<float> onTakeDamage; // 나 이만큼의 데미지를 받았어!
@@ -75,12 +76,26 @@ public class CharacterStat : MonoBehaviour
             myHit.reaction = HitReactionType.Gaurded;
         }
 
+        // 파괴판정으로 죽는 타격은 피격 반응(에어본/넉백)을 적용하지 않는다.
+        // onDamageTake(반응 적용)를 건너뛰고 곧장 사망 처리해, 맞은 순간의 포즈 그대로 정지시킨다.
+        bool willDie = health <= 0 || (isObstacle && myHit.isBreakable);
+        if (willDie && myHit.isBreakable)
+        {
+            if (isObstacle) health = 0;
+            state.Die(true);
+            return;
+        }
+
         onDamageTake?.Invoke(character, myHit);
+
+        if (isObstacle && myHit.isBreakable) { health = 0; }
 
         if (health <= 0)
         {
-            state.ChangeState(CharacterState.Dead);
+            // 죽인 타격이 파괴판정(isBreakable)이면 죽음 연출에서 모션을 건너뛰도록 전달
+            state.Die(myHit.isBreakable);
         }
+
     }
 
 
