@@ -90,9 +90,6 @@ public class SkillExecuter : MonoBehaviour
             if (cooldowns[i] > 0) continue;
             if (!commander.GetInput(inputs[i], false)) continue;
 
-            // L을 누른 채 R을 누르면 LR 콤보 의도이므로 단독 R을 보류한다.
-            // (LR 컴포지트 입력은 R 단독 입력보다 한 프레임 늦게 판정될 수 있어,
-            //  보류하지 않으면 R이 LR보다 먼저 발동되어 버린다.)
             if (inputs[i] == ConditionInput.SkillR
                 && skills[(int)SkillKey.LR] != null && cooldowns[(int)SkillKey.LR] <= 0f
                 && commander.GetInput(ConditionInput.SkillL, true))
@@ -105,10 +102,13 @@ public class SkillExecuter : MonoBehaviour
             }
         }
 
-        // L (기본 공격) 별도 처리
-        const int lIndex = (int)SkillKey.L; // 0
+        const int lIndex = (int)SkillKey.L;
         if (skills[lIndex] != null && cooldowns[lIndex] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
         {
+            if (commander.GetInput(ConditionInput.SkillR))
+            {
+
+            }
             if (caster.Cast(skills[lIndex], lIndex))
             {
                 cooldowns[lIndex] = skills[lIndex].cooldown;

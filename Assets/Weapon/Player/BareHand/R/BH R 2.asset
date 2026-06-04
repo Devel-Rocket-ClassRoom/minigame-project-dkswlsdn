@@ -49,7 +49,14 @@ MonoBehaviour:
     method: {fileID: 11400000, guid: 1ad9199d642f31f4c89fc5c2d2da1f52, type: 2}
   - preDelay: 0.1
     method: {fileID: 11400000, guid: 1ad9199d642f31f4c89fc5c2d2da1f52, type: 2}
-  stack: []
+  stack:
+  - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
+    conditions: []
+    count: 1
+    life: 5
+    preDelay: 0
+    onCanceled: 1
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

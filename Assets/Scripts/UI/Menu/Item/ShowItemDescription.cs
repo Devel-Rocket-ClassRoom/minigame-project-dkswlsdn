@@ -23,17 +23,16 @@ public class ShowItemDescription : MonoBehaviour
         SaveManager.onSaveModified -= Clear;
     }
 
-    public void Init(Item item, Character character, ItemSaveEntry entry, bool isStorage)
+    public void Init(Item item, Character character, bool isStorage)
     {
         this.item = item;
         this.character = character;
-        this.entry = entry;
         itemName.ChangeText(item.itemName);
         //icon.sprite = item.icon;
         if (DataTableManager.ItemTable.TryGet(item.itemName, out ItemData data))
             desc.ChangeText(data.description);
 
-        if (shiftButton != null) shiftButton.Init(entry, isStorage);
+        if (shiftButton != null) shiftButton.Init(item.itemName, isStorage);
 
         consumeButton.Init(item, character, entry, isStorage);
     }

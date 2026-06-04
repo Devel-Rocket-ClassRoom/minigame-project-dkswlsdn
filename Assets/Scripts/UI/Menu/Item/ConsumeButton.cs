@@ -43,10 +43,9 @@ public class ConsumeButton : MonoBehaviour
 
     private void Consume()
     {
-        var inventory = isStorage ? SaveManager.instance.CurrentSave.itemInStorage : SaveManager.instance.CurrentSave.itemInCharacter;
-        inventory.Remove(entry);
+        SaveManager.InventoryIO(item.itemName, -1, isStorage);
         item.OnUse(character);
-        if (!GameSceneManager.IsInBattle) SaveManager.instance.SaveRequest();
+        if (!GameSceneManager.IsInBattle) SaveManager.SaveRequest();
         button.onClick.RemoveAllListeners();
     }
 }

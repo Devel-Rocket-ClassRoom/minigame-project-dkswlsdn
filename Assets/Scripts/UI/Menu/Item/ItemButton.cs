@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,22 +8,23 @@ public class ItemButton : MonoBehaviour
     private Item item;
     private ShowItemDescription desc;
     private Character character;
-    private ItemSaveEntry entry;
     private bool isStorage;
+    [SerializeField] private TextMeshProUGUI itemAmount;
 
-    public void Init(Item item, ShowItemDescription desc, Character character, ItemSaveEntry entry, bool isStorage)
+    public void Init(Item item, int amount, ShowItemDescription desc, Character character, bool isStorage)
     {
         this.item = item;
         this.desc = desc;
         this.character = character;
-        this.entry = entry;
         this.isStorage = isStorage;
         GetComponent<Button>().onClick.AddListener(SetDescription);
         GetComponent<ImageContainer>().ChangeSprite(item.itemName);
+        itemAmount.text = amount.ToString();
+        
     }
 
     public void SetDescription()
     {
-        desc.Init(item, character, entry, isStorage);
+        desc.Init(item, character, isStorage);
     }
 }

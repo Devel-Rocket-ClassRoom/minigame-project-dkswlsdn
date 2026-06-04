@@ -14,6 +14,7 @@ public class CharacterStat : MonoBehaviour
     public float SightRange => sightRange;
 
     [SerializeField] private ArmorType armor;
+    [SerializeField] private int grabImmuneLevel;
     public ArmorType Armor => armor;
     public bool IsImmune { get; private set; }
 
@@ -102,6 +103,16 @@ public class CharacterStat : MonoBehaviour
     public void RemoveArmor(ArmorType armor)
     {
         this.armor &= ~armor;
+    }
+
+    public void ApplyImmune(bool useImmune)
+    {
+        IsImmune = useImmune;
+    }
+
+    public void ApplyGrabImmune(int level)
+    {
+
     }
 }
 

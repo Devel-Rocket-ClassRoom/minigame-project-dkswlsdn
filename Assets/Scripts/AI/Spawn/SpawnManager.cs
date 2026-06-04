@@ -22,8 +22,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float checkInterval = 1f;
 
     [Header("Death")]
-    [Tooltip("사망 후 풀로 반납하기까지 지연(사망 연출 시간)")]
     [SerializeField] private float corpseDelay = 2f;
+
+    [Header("Death")]
+    [SerializeField] private List<ItemDropRate> dropRateList;
 
     private ObjectPool<Character> pool;
     private readonly List<Character> alive = new();
@@ -94,20 +96,29 @@ public class SpawnManager : MonoBehaviour
         if (spawnPoint == null || spawnPoint.Length == 0) return;
 
         var node = spawnPoint[UnityEngine.Random.Range(0, spawnPoint.Length)];
-        var c = pool.Get();   // 비활성 상태로 나옴
+        var c = pool.Get();
 
-        // C안: 활성화 '전에' 위치/팀/순찰을 세팅
-        //  → SetActive 시 Character.OnEnable(리셋) + AIBrain.OnEnable(올바른 위치/노드로 Warp + Patrol)
         c.transform.SetPositionAndRotation(node.transform.position, node.transform.rotation);
         c.team = spawnTeam;
         c.GetComponent<AIBrain>()?.SetPatrol(patrolList);
-
         alive.Add(c);
         spawnedEver++;
 
-        c.gameObject.SetActive(true);
+        var drop = c.GetComponent<NPCItemQuickSlot>();
 
-        // 사망 시 반납 (State는 활성화 후 유효, 핸들 보관해 재사용 대비 해제 가능하게)
+        foreach (var item in dropRateList)
+        {
+            if (UnityEngine.Random.Range(0f, 100f) <= item.rate)
+            {
+                drop.SetItem(item.item);
+            }
+        }
+
+        c.gameObject.SetActive(true);
+        c.GetComponent<StateManager>()?.ResetState();
+        c.GetComponent<CharacterMovement>()?.ResetState();
+        c.GetComponent<CharacterStat>()?.ResetState();
+
         Action handler = () => OnDead(c);
         deathHandlers[c] = handler;
         c.State.onDead += handler;
@@ -138,4 +149,11 @@ public class SpawnManager : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
+}
+
+[Serializable]
+public class ItemDropRate
+{
+    public Item item;
+    public float rate;
 }

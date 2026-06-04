@@ -4,13 +4,13 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadBaseCamp()
     {
-        SaveManager.instance.SaveRequest();
+        SaveManager.SaveRequest();
         GameSceneManager.LoadScene(SceneName.BaseCamp);
     }
 
     public void LoadBattleSpace()
     {
-        SaveManager.instance.SaveRequest();
+        SaveManager.SaveRequest();
         GameSceneManager.LoadScene(SceneName.Battle);
     }
 }

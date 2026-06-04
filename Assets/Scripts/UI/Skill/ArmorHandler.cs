@@ -3,63 +3,96 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterStat))]
 public class CharacterVisualStateHandler : MonoBehaviour
 {
-    [Header("Outline Colors")]
-    [SerializeField] private Color fullArmorColor = Color.white;
-    [SerializeField] private Color longArmorColor = Color.green;
-    [SerializeField] private Color shortArmorColor = Color.blue;
-    [SerializeField] private float outlineWidth = 0.03f;
+    private static readonly int OutlineColorID = Shader.PropertyToID("_OutlineColor");
+
+    [Header("Outline")]
+    [SerializeField] private Renderer[] outlineRenderers; // Outline 오브젝트의 Renderer들
+    [SerializeField] private Color fullSuperArmorColor  = Color.white;
+    [SerializeField] private Color longSuperArmorColor  = Color.green;
+    [SerializeField] private Color shortSuperArmorColor = Color.blue;
 
     [Header("Immune - Transparency")]
-    [SerializeField] private float immuneAlpha = 0.4f;
+    [SerializeField] private float immuneAlpha     = 0.4f;
+    [SerializeField] private float immuneFadeSpeed = 8f;
 
     private CharacterStat stat;
     private Renderer[] renderers;
-    private MaterialPropertyBlock block;
+    private WallFadeTarget[] fadeTargets;
+    private Material[] outlineMats;
 
-    private ArmorType prevArmor;
-    private bool prevImmune;
+    private ArmorType prevArmor  = (ArmorType)(-1);
+    private bool      prevImmune = false;
 
     private void Awake()
     {
-        stat = GetComponent<CharacterStat>();
+        stat      = GetComponent<CharacterStat>();
         renderers = GetComponentsInChildren<Renderer>(includeInactive: true);
-        block = new MaterialPropertyBlock();
+
+        // 무적 페이드용 WallFadeTarget
+        fadeTargets = new WallFadeTarget[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            var ft = renderers[i].GetComponent<WallFadeTarget>();
+            if (ft == null) ft = renderers[i].gameObject.AddComponent<WallFadeTarget>();
+            ft.Configure(immuneAlpha, immuneFadeSpeed);
+            fadeTargets[i] = ft;
+        }
+
+        // 아웃라인 머티리얼 인스턴스
+        outlineMats = new Material[outlineRenderers.Length];
+        for (int i = 0; i < outlineRenderers.Length; i++)
+        {
+            if (outlineRenderers[i] == null) continue;
+            outlineMats[i] = outlineRenderers[i].material;
+            outlineRenderers[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var m in outlineMats)
+            if (m != null) Destroy(m);
     }
 
     private void Update()
     {
-        ArmorType currentArmor = stat.Armor;
-        bool currentImmune = stat.IsImmune;
+        ArmorType currentArmor  = stat.Armor;
+        bool      currentImmune = stat.IsImmune;
 
         if (currentArmor == prevArmor && currentImmune == prevImmune) return;
 
-        prevArmor = currentArmor;
+        prevArmor  = currentArmor;
         prevImmune = currentImmune;
 
-        ApplyBlock(currentArmor, currentImmune);
+        ApplyOutline(currentArmor);
+        ApplyImmuneFade(currentImmune);
     }
 
-    private void ApplyBlock(ArmorType armor, bool immune)
+    private void ApplyOutline(ArmorType armor)
     {
         Color outlineColor = GetOutlineColor(armor);
-        float width = outlineColor == Color.clear ? 0f : outlineWidth;
-        float alpha = immune ? immuneAlpha : 1f;
+        bool hasArmor = outlineColor != Color.clear;
 
-        foreach (var r in renderers)
+        for (int i = 0; i < outlineRenderers.Length; i++)
         {
-            r.GetPropertyBlock(block);
-            block.SetColor("_OutlineColor", outlineColor);
-            block.SetFloat("_OutlineWidth", width);
-            block.SetColor("_Color", new Color(1f, 1f, 1f, alpha));
-            r.SetPropertyBlock(block);
+            if (outlineRenderers[i] == null) continue;
+            outlineRenderers[i].gameObject.SetActive(hasArmor);
+            if (hasArmor && outlineMats[i] != null)
+                outlineMats[i].SetColor(OutlineColorID, outlineColor);
         }
+    }
+
+    private void ApplyImmuneFade(bool immune)
+    {
+        foreach (var ft in fadeTargets)
+            ft.SetHidden(immune);
     }
 
     private Color GetOutlineColor(ArmorType armor)
     {
-        if ((armor & ArmorType.Full) != 0) return fullArmorColor;
-        if ((armor & ArmorType.Long) != 0) return longArmorColor;
-        if ((armor & ArmorType.Short) != 0) return shortArmorColor;
+        if ((armor & ArmorType.Full)  != 0) return fullSuperArmorColor;
+        if ((armor & ArmorType.Long)  != 0) return longSuperArmorColor;
+        if ((armor & ArmorType.Short) != 0) return shortSuperArmorColor;
         return Color.clear;
     }
 }

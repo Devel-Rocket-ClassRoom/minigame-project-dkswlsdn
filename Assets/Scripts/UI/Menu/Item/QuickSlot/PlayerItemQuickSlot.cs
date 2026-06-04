@@ -11,19 +11,23 @@ public class PlayerItemQuickSlot : ItemQuickSlot
     {
         if (commander.GetInput(ConditionInput.Item1) && itemTypeList.Count > 0 && enable)
         {
-            var list = SaveManager.instance.CurrentSave.itemInCharacter;
-            var selected = list.Find(entry => entry.itemName == itemTypeList[0]);
-            if (selected != null)
+            var dict = SaveManager.CurrentSave.itemInCharacter;
+            if (dict.ContainsKey(itemTypeList[0]))
             {
                 var item = database.items.Find(itm => itm.itemName == itemTypeList[0]);
                 item?.OnUse(character);
-                list.Remove(selected);
+
+                SaveManager.InventoryIO(item.itemName, -1, false);
+                if (dict[itemTypeList[0]] <= 0)
+                {
+                    dict.Remove(itemTypeList[0]);
+                }
             }
         }
     }
 
     public override void GetItem(Item item)
     {
-        SaveManager.instance.CurrentSave.itemInCharacter.Add(new ItemSaveEntry(item.itemName, DateTime.Now));
+        SaveManager.InventoryIO(item.itemName, 1, false);
     }
 }

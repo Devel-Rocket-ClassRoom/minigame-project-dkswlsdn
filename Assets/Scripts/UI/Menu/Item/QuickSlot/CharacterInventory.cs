@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterInventory : MonoBehaviour
@@ -17,19 +18,22 @@ public class CharacterInventory : MonoBehaviour
 
     private void AutoConsumeItems()
     {
-        var inventory = SaveManager.instance.CurrentSave.itemInCharacter;
+        var inventory = new Dictionary<string, int>(SaveManager.CurrentSave.itemInCharacter);
 
-        for (int i = inventory.Count - 1; i >= 0; i--)
+        foreach (var item in inventory)
         {
-            var entry = inventory[i];
-            var item = database.items.Find(x => x.itemName == entry.itemName);
-
-            if (item == null || item.canUseInBattle || item.canUseInBaseCamp) continue;
-
-            item.OnUse(character);
-            inventory.RemoveAt(i);
+            var itm = database.items.Find(i => i.itemName == item.Key);
+            if (itm == null) { Debug.Log(itm.itemName); continue;  }
+            if (itm.useWhenReturn)
+            {
+                for (int i = 0; i < inventory[item.Key]; i++)
+                {
+                    SaveManager.InventoryIO(item.Key, -1, false);
+                    itm.OnUse(character);
+                }
+            }
         }
 
-        SaveManager.instance.SaveRequest();
+        SaveManager.SaveRequest();
     }
 }

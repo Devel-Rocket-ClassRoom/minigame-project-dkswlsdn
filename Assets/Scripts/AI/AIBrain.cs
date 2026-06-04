@@ -79,6 +79,7 @@ public class AIBrain : MonoBehaviour
     public void SetPatrol(List<Node> patrol)
     {
         patrolNodes = patrol;
+        aggro = null;
     }
 
     // ── 메인 루프 ─────────────────────────────────────────────

@@ -48,7 +48,7 @@ public class CharacterPanelController : MonoBehaviour
 
     private void Load()
     {
-        var list = SaveManager.instance.CurrentSave.unlockedCharacterList;
+        var list = SaveManager.CurrentSave.unlockedCharacterList;
 
         if (list.Contains(thisCharacterId))
         {
@@ -105,11 +105,11 @@ public class CharacterPanelController : MonoBehaviour
 
     public void DeployCharacter()
     {
-        SaveManager.instance.CurrentSave.currentCharacterId = thisCharacterId;
+        SaveManager.CurrentSave.currentCharacterId = thisCharacterId;
     }
 
     public void JoinCharacter()
     {
-        if (!SaveManager.instance.CurrentSave.currentParty.Contains(thisCharacterId)) SaveManager.instance.CurrentSave.currentParty.Add(thisCharacterId);
+        if (!SaveManager.CurrentSave.currentParty.Contains(thisCharacterId)) SaveManager.CurrentSave.currentParty.Add(thisCharacterId);
     }
 }

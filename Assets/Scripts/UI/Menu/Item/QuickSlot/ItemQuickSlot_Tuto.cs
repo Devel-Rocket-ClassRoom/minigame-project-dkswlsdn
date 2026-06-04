@@ -6,12 +6,16 @@ public class ItemQuickSlot_Tuto : PlayerItemQuickSlot
     {
         if (commander.GetInput(ConditionInput.Item1) && itemTypeList.Count > 0 && enable)
         {
-            var list = SaveManager.instance.CurrentSave.itemInCharacter;
-            var selected = list.Find(entry => entry.itemName == itemTypeList[0]);
-            if (selected != null)
+            var dict = SaveManager.CurrentSave.itemInCharacter;
+            if (dict.ContainsKey(itemTypeList[0]))
             {
                 var item = database.items.Find(itm => itm.itemName == itemTypeList[0]);
                 item?.OnUse(character);
+
+                if (dict[itemTypeList[0]] <= 0)
+                {
+                    dict.Remove(itemTypeList[0]);
+                }
             }
         }
     }

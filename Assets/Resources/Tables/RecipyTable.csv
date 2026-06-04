@@ -1,0 +1,5 @@
+id,(name,amount)
+#
+ROPE, LEATHER, 10
+HEAL, GOLD, 2
+ANCH, GOLD, 3, IRON, 3, WATER, 3

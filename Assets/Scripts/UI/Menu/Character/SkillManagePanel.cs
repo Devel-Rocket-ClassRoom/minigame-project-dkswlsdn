@@ -116,7 +116,7 @@ public class SkillManagePanel : MenuPanel
         if (!entry.isMagicOpened) return; // 마법 미개방 시 방어 (버튼도 비활성)
 
         entry.magicOpenedSkill[selectedSkill.MagicIndex] = !entry.magicOpenedSkill[selectedSkill.MagicIndex];
-        SaveManager.instance.SaveRequest();
+        SaveManager.SaveRequest();
     }
 
     // 스킬 테이블에서 설명과 캐릭터의 의견을 받아와 표시 (마법 전환 상태면 _M 키 사용)
@@ -145,7 +145,7 @@ public class SkillManagePanel : MenuPanel
 
     private CharacterEntry GetEntry()
     {
-        var dict = SaveManager.instance.CurrentSave.characterData;
+        var dict = SaveManager.CurrentSave.characterData;
         if (!dict.TryGetValue(currentId, out CharacterEntry entry))
         {
             throw new Exception("해당 캐릭터의 데이터 없음");

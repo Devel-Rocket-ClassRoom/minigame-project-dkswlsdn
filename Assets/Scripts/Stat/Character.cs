@@ -4,7 +4,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     private static int id = 0;
-    public int Id;
+    [HideInInspector] public int Id;
     public int team;
     public bool isPlayer;
 
@@ -15,7 +15,7 @@ public class Character : MonoBehaviour
     public SkillCaster Caster { get; private set; }
     public SkillExecuter Executer { get; private set; }
     public CharacterMovement Movement { get; private set; }
-    public PlayerCamera Camera { get; private set; }
+    public CharacterCamera Camera { get; private set; }
     public CharacterAim Aim { get; private set; }
     public StateManager State { get; private set; }
     public CharacterCommander Commander { get; private set; }
@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
         Caster = GetComponent<SkillCaster>();
         Executer = GetComponent<SkillExecuter>();
         Movement = GetComponent<CharacterMovement>();
-        Camera = GetComponent<PlayerCamera>();
+        Camera = GetComponent<CharacterCamera>();
         Aim = GetComponent<CharacterAim>();
         State = GetComponent<StateManager>();
         Commander = GetComponent<CharacterCommander>();

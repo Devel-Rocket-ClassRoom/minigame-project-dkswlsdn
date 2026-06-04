@@ -21,7 +21,7 @@ public class PlayerSkillExecuter : SkillExecuter
 
     public void LoadWeapon()
     {
-        var character = SaveManager.instance.CurrentSave.currentCharacterId;
+        var character = SaveManager.CurrentSave.currentCharacterId;
 
         if (character != loadedCharacterId)
         {
@@ -46,7 +46,7 @@ public class PlayerSkillExecuter : SkillExecuter
 
         if (string.IsNullOrEmpty(loadedCharacterId)) return;
 
-        var dict = SaveManager.instance.CurrentSave.characterData;
+        var dict = SaveManager.CurrentSave.characterData;
         if (!dict.TryGetValue(loadedCharacterId, out CharacterEntry entry)) return;
         if (!entry.isMagicOpened) return;
 

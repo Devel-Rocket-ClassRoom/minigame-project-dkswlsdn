@@ -28,6 +28,8 @@ public abstract class CharacterCamera : MonoBehaviour
 
         caster.onActionStart += OnUseSkill;
         caster.onSkillEnd += ReturnOrigin;
+
+        canRotateCharacter = true;
     }
 
     private void OnDisable()

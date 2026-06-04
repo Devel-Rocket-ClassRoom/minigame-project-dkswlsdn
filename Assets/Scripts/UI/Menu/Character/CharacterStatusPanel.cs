@@ -34,7 +34,7 @@ public class CharacterStatusPanel : MenuPanel
 
     private void Load()
     {
-        var dict = SaveManager.instance.CurrentSave.characterData;
+        var dict = SaveManager.CurrentSave.characterData;
 
         CharacterData originalStat = null;
         originalStat = DataTableManager.CharacterTable.Get(currentId);

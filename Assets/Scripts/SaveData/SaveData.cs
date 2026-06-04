@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class SaveData
 {
     public int version;
-    public readonly string[] implementedCharacter =
+    public static readonly string[] implementedCharacter =
     {
         "BAREHAND",
         "AXE",
@@ -63,8 +63,6 @@ public class SaveDataV2 : SaveDataV1
     public override SaveData NextVersion()
     {
         var data = new SaveDataV3();
-        data.itemInStorage = itemInStorage;
-        data.itemInCharacter = itemInCharacter;
         return data;
     }
 }
@@ -96,8 +94,8 @@ public class SaveDataV3 : SaveData
         foreach (var id in implementedCharacter)
             characterData.Add(id, new CharacterEntry());
 
-        itemInStorage = new List<ItemSaveEntry>();
-        itemInCharacter = new List<ItemSaveEntry>();
+        itemInStorage = new();
+        itemInCharacter = new();
         currentParty = new List<string>();
 
         currentCharacterId = implementedCharacter[0];
@@ -118,8 +116,8 @@ public class SaveDataV3 : SaveData
 
     public Dictionary<string, CharacterEntry> characterData;
 
-    public List<ItemSaveEntry> itemInStorage;
-    public List<ItemSaveEntry> itemInCharacter;
+    public Dictionary<string, int> itemInStorage;
+    public Dictionary<string, int> itemInCharacter;
 
     public int maxStorageSpace;
     public int maxInventorySpace;

@@ -15,6 +15,11 @@ public class NPCItemQuickSlot : ItemQuickSlot
         }
     }
 
+    public void SetItem(Item item)
+    {
+        dropItemList.Add(item);
+    }
+
     public override void GetItem(Item item)
     {
         dropItemList.Add(item);
@@ -28,5 +33,6 @@ public class NPCItemQuickSlot : ItemQuickSlot
             var i = Instantiate(itemInstance, transform.position, Quaternion.identity);
             i.Init(item);
         }
+        dropItemList.Clear();
     }
 }

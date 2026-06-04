@@ -35,8 +35,8 @@ public static class GameSceneManager
 
     public static void StartGame(int idx)
     {
-        SaveManager.instance.LoadRequest(idx);
-        if (SaveManager.instance.CurrentSave.isTutorialCleared)
+        SaveManager.LoadRequest(idx);
+        if (SaveManager.CurrentSave.isTutorialCleared)
         {
             IsInBattle = false;
             LoadScene(SceneName.BaseCamp);
@@ -44,7 +44,7 @@ public static class GameSceneManager
         else
         {
             IsInBattle = true;
-            SaveManager.instance.ResetSave();
+            SaveManager.ResetSave();
             LoadScene(SceneName.Tutorial);
         }
     }

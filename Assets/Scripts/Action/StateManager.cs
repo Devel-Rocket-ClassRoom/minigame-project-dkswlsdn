@@ -78,7 +78,7 @@ public class StateManager : MonoBehaviour
         CheckTransition();
 
         // 에어본 중 수직 속도(raw)를 애니메이터로 전달 → 올라감/정점/내려감 BlendTree 구동
-        if (movement != null && state == CharacterState.Airborne)
+        if (animator != null && movement != null && state == CharacterState.Airborne)
             animator.SetFloat("VerticalVelocity", movement.VerticalVelocity);
     }
 
@@ -124,7 +124,7 @@ public class StateManager : MonoBehaviour
         {
             case CharacterState.Idle:
                 onIdle?.Invoke();
-                animator.SetTrigger("ReturnToIdle");
+                if (animator != null) animator.SetTrigger("ReturnToIdle");
                 SetColliderState(true);
                 break;
             case CharacterState.Move:
@@ -140,18 +140,18 @@ public class StateManager : MonoBehaviour
             case CharacterState.Airborne:
                 if (prev == CharacterState.Grapped) knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 onAirborne?.Invoke();
-                animator.SetTrigger("Airborne");
+                if (animator != null) animator.SetTrigger("Airborne");
                 SetColliderState(false);
                 break;
             case CharacterState.Knockdown:
                 onKnockdown?.Invoke();
-                animator.SetTrigger("Knockdown");
+                if (animator != null) animator.SetTrigger("Knockdown");
                 SetColliderState(false);
                 break;
             case CharacterState.WakeUp:
                 wakeUpTimer = BASE_WAKEUP_DURATION + Time.time;
                 onWakeUp?.Invoke();
-                animator.SetTrigger("WakeUp");
+                if (animator != null) animator.SetTrigger("WakeUp");
                 break;
             case CharacterState.Groggy:
                 onGroggy?.Invoke();
@@ -207,9 +207,9 @@ public class StateManager : MonoBehaviour
 
     private IEnumerator CoFreezeAnimator(float duration)
     {
-        animator.speed = 0f;
+        if (animator != null) animator.speed = 0f;
         yield return new WaitForSeconds(duration);
-        animator.speed = 1f;
+        if (animator != null) animator.speed = 1f;
         IsFrozen = false;
     }
 
@@ -233,7 +233,7 @@ public class StateManager : MonoBehaviour
                 }
                 else
                 {
-                    animator.SetTrigger("HitStun");
+                    if (animator != null) animator.SetTrigger("HitStun");
                     ChangeState(CharacterState.HitStun);
                     stunEndTime = hit.stunDuration + Time.time;
                 }
@@ -265,7 +265,7 @@ public class StateManager : MonoBehaviour
 
     private void SetColliderState(bool isStand)
     {
-        standCollider.enabled = isStand;
-        layCollider.enabled = !isStand;
+        if (standCollider != null) standCollider.enabled = isStand;
+        if (layCollider != null) layCollider.enabled = !isStand;
     }
 }

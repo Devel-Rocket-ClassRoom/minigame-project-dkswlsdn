@@ -47,7 +47,14 @@ MonoBehaviour:
   attack:
   - preDelay: 1
     method: {fileID: 11400000, guid: 2c03f42af6bf5484694091b4880e766d, type: 2}
-  stack: []
+  stack:
+  - stack: {fileID: 11400000, guid: eb37b74b619642449924d3eae2386b77, type: 2}
+    conditions: []
+    count: 1
+    life: 1.7
+    preDelay: 0
+    onCanceled: 0
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

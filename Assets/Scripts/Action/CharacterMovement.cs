@@ -112,10 +112,7 @@ public abstract class CharacterMovement : MonoBehaviour
 
     private void Move()
     {
-        if (!state.CanNotMove)
-            rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
-        else
-            rigid.linearVelocity = new Vector3(rigid.linearVelocity.x, verticalVelocity, rigid.linearVelocity.z);
+        rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
     }
 
     protected void FreeMove()
@@ -124,7 +121,7 @@ public abstract class CharacterMovement : MonoBehaviour
         {
             horizontalSpeed = moveSpeed;
         }
-        else if (inputDirection.z < -0.01f)
+        else if (Mathf.Abs(inputDirection.x) < 0.01f && inputDirection.z < -0.01f)
         {
             horizontalSpeed = moveSpeed * 0.3f;
         }
@@ -319,14 +316,16 @@ private IEnumerator CoFreeze(AttackInfo hit)
             switch (hit.reaction)
             {
                 case HitReactionType.HitStun:
-                    rigid.AddForce(dir * hit.stunForce, ForceMode.Impulse);
+                    horizontalVelocity = dir * hit.stunForce;
+                    horizontalSpeed = horizontalVelocity.magnitude;
                     isFreeMoveEnabled = false;
-                    activeGravity = defaultGravity;
-                    friction = 6f;
+                    activeGravity = defaultGravity; 
+                    friction = 4f;
                     break;
                 case HitReactionType.Airborne:
                     transform.Translate(Vector3.up * 1f);
-                    rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
+                    horizontalVelocity = dir * hit.airborneForce.x;
+                    horizontalSpeed = horizontalVelocity.magnitude;
                     verticalVelocity = hit.airborneForce.y;
                     isFreeMoveEnabled = false;
                     activeGravity = defaultGravity;
@@ -336,7 +335,8 @@ private IEnumerator CoFreeze(AttackInfo hit)
         else
         {
             transform.Translate(Vector3.up * 0.1f);
-            rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
+            horizontalVelocity = dir * hit.airborneForce.x;
+            horizontalSpeed = horizontalVelocity.magnitude;
             verticalVelocity = hit.airborneForce.y;
             isFreeMoveEnabled = false;
             activeGravity = defaultGravity;

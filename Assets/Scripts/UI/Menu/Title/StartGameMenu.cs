@@ -11,6 +11,6 @@ public class StartGameMenu : MonoBehaviour
 
     public void OnDeleteSave()
     {
-        SaveManager.instance.DeleteSave(Slot);
+        SaveManager.DeleteSave(Slot);
     }
 }

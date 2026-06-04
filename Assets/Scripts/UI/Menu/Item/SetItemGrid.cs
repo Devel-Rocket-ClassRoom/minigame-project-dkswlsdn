@@ -8,8 +8,6 @@ public class SetItemGrid : MonoBehaviour
     [SerializeField] private ShowItemDescription desc;
     [SerializeField] private Character character;
     [SerializeField] private bool isStorage;
-    private List<ItemSaveEntry> storage;
-
 
 
 
@@ -28,12 +26,12 @@ public class SetItemGrid : MonoBehaviour
     {
         Clear();
 
-        storage = isStorage ? SaveManager.instance.CurrentSave.itemInStorage : SaveManager.instance.CurrentSave.itemInCharacter;
+        var storage = isStorage ? SaveManager.CurrentSave.itemInStorage : SaveManager.CurrentSave.itemInCharacter;
 
         foreach (var item in storage)
         {
-            var itm = database.items.Find(i => i.itemName == item.itemName);
-            CreateItemButton(itm, item);
+            var itm = database.items.Find(i => i.itemName == item.Key);
+            CreateItemButton(itm, item.Value);
         }
     }
 
@@ -45,7 +43,7 @@ public class SetItemGrid : MonoBehaviour
         }
     }
 
-    private void CreateItemButton(Item item, ItemSaveEntry entry)
+    private void CreateItemButton(Item item, int amount)
     {
         if (item == null)
         {
@@ -53,6 +51,6 @@ public class SetItemGrid : MonoBehaviour
         }
 
         var b = Instantiate(button, transform);
-        b.Init(item, desc, character, entry, isStorage);
+        b.Init(item, amount, desc, character, isStorage);
     }
 }
