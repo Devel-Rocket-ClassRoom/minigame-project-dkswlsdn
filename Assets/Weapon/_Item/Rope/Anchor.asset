@@ -22,6 +22,7 @@ MonoBehaviour:
     forceDirectionType: 0
     fixedStun: 0
     reverseStun: 0
+    effects: []
     activateTime: 1
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
@@ -35,9 +36,9 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 1
   useAim: 1
-  aimDir: {x: 0.83684325, y: 0.5473775, z: 0.008440309}
+  aimDir: {x: 0.011478168, y: 0.44723168, z: 0.8943445}
   positionOffset: {x: 0, y: 1.5, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-  scale: {x: 1, y: 1, z: 1}
+  scale: {x: 0.5, y: 0.5, z: 3}
   movementType: 3
   spawnRules: []

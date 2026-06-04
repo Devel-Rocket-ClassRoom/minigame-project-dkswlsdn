@@ -18,7 +18,6 @@ public static class SaveManager
         {
             if (current == null)
             {
-                mainPath = Path.Combine(Application.persistentDataPath);
                 LoadRequest(0);
             }
 
@@ -35,6 +34,11 @@ public static class SaveManager
     {
         "Absolute", "Save1", "Save2", "Save3"
     };
+
+    static SaveManager()
+    {
+        mainPath = Path.Combine(Application.persistentDataPath);
+    }
 
 
     public static void SaveRequest()

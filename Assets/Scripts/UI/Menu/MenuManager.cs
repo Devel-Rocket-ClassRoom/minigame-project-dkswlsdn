@@ -98,10 +98,10 @@ public class MenuManager : MonoBehaviour
         isMenuOpen = true;
     }
 
-    public void OpenDialog(string key)
+    public void OpenDialog(string key, IDialogEndHandler handler = null)
     {
         dialogPanel.gameObject.SetActive(true);
-        dialogPanel.StartDialog(key);
+        dialogPanel.StartDialog(key, handler);
         isDialogOpen = true;
     }
 

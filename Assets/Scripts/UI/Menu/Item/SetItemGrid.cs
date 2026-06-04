@@ -6,10 +6,19 @@ public class SetItemGrid : MonoBehaviour
     [SerializeField] private ItemDatabase database;
     [SerializeField] private ItemButton button;
     [SerializeField] private ShowItemDescription desc;
-    [SerializeField] private Character character;
     [SerializeField] private bool isStorage;
 
+    private Character character;
 
+    private void Awake()
+    {
+        Character.SubscribeToPlayer(OnPlayerAppeared);
+    }
+
+    private void OnPlayerAppeared(Character c)
+    {
+        character = c;
+    }
 
     private void OnEnable()
     {

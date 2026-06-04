@@ -48,6 +48,7 @@ public class Anchor : MonoBehaviour
             var rope = Instantiate(RopeItem, transform);
             rope.transform.position = transform.position;
             rope.transform.rotation = Quaternion.identity;
+            Destroy(gameObject);
             return;
         }
 
@@ -59,17 +60,9 @@ public class Anchor : MonoBehaviour
             go.GetComponent<Rope>().owner = this;
         }
 
-        ResizeCollider();
         CreateNavMeshLink();
     }
 
-    private void ResizeCollider()
-    {
-        var col = GetComponent<BoxCollider>();
-        if (col == null) return;
-        col.center = new Vector3(0f, -length * 0.5f, 0f);
-        col.size = new Vector3(col.size.x, length, col.size.z);
-    }
 
     private void CreateNavMeshLink()
     {

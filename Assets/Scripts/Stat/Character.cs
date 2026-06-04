@@ -7,6 +7,14 @@ public class Character : MonoBehaviour
     [HideInInspector] public int Id;
     public int team;
     public bool isPlayer;
+    public static Character CurrentPlayer { get; private set; }
+    public static event Action<Character> OnPlayerAppeared;
+
+    public static void SubscribeToPlayer(Action<Character> callback)
+    {
+        OnPlayerAppeared += callback;
+        if (CurrentPlayer != null) callback(CurrentPlayer);
+    }
 
     [HideInInspector, NonSerialized]
     public int[] opennedToken = new int[9];
@@ -23,6 +31,7 @@ public class Character : MonoBehaviour
     public SpecialStackHandler Stack { get; private set; }
     public SightManager Sight { get; private set; }
     public ItemQuickSlot QuickSlot { get; private set; }
+    public InteractionManager Interaction { get; private set; }
 
 
 
@@ -40,8 +49,15 @@ public class Character : MonoBehaviour
         Stack = GetComponent<SpecialStackHandler>();
         Sight = GetComponentInChildren<SightManager>();
         QuickSlot = GetComponent<ItemQuickSlot>();
+        Interaction = GetComponent<InteractionManager>();
 
         Id = id++;
+
+        if (isPlayer)
+        {
+            CurrentPlayer = this;
+            OnPlayerAppeared?.Invoke(this);
+        }
     }
 
     private void OnEnable()

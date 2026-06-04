@@ -109,7 +109,7 @@ InitTestScene*.unity*
 /Assets/Imported
 
 # Resources
-/Assets/Resources/Sprites
+# /Assets/Resources/Sprites
 
 # Claude Code
 .claude/

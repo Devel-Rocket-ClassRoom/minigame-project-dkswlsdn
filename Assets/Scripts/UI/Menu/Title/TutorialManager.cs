@@ -9,8 +9,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private CanvasGroup comboGroup;
     [SerializeField] private float fadeDuration = 0.5f;
 
-    [SerializeField] private CharacterCommander commander;
-    [SerializeField] private TutorialInteractionManager interaction;
+    private TutorialInteractionManager interaction;
+    private CharacterCommander commander;
+    private void OnPlayerAppeared(Character c)
+    {
+        commander = c.Commander as PlayerCommander;
+        interaction = c.Interaction as TutorialInteractionManager;
+    }
+
     private bool isCharacterReady;
     private bool wasdDone;
     private bool interactionDone;
@@ -19,6 +25,8 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        Character.SubscribeToPlayer(OnPlayerAppeared);
+
         interactionGroup.alpha = 0f;
         interactionGroup.gameObject.SetActive(false);
 

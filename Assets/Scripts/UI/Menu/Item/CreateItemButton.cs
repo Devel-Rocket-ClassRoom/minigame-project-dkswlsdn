@@ -5,15 +5,21 @@ using UnityEngine.UI;
 
 public class CreateItemButton : MonoBehaviour
 {
-    [SerializeField] private Character character;
     [SerializeField] private Image lockImage;
     private Button button;
     private Item item;
+    private Character character;
 
     private void Awake()
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(Create);
+        Character.SubscribeToPlayer(OnPlayerAppeared);
+    }
+
+    private void OnPlayerAppeared(Character c)
+    {
+        character = c;
     }
 
     private void OnEnable()

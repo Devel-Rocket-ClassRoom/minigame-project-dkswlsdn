@@ -249,7 +249,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uC77C\uB2E8 \uCC59\uACA8\uB458\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8552dcd68a8cecb408d61696337980a9, type: 2}
   m_sharedMaterial: {fileID: -6940004249522894326, guid: 8552dcd68a8cecb408d61696337980a9, type: 2}
@@ -664,6 +664,14 @@ PrefabInstance:
     - target: {fileID: 1749429568702730455, guid: 81bb20e747b99f548b9820746f9dbd79, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310836034619700258, guid: 81bb20e747b99f548b9820746f9dbd79, type: 3}
+      propertyPath: text
+      value: "\uBC29\uB791\uC790"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7620656472612511734, guid: 81bb20e747b99f548b9820746f9dbd79, type: 3}
+      propertyPath: m_text
+      value: "\uBC29\uB791\uC790"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

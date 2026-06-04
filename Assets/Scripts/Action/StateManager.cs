@@ -20,7 +20,7 @@ public class StateManager : MonoBehaviour
     public bool CanUseSkill => CanMove && state != CharacterState.Skill;
     public bool CanRotatePlayer => CanMove || state == CharacterState.WakeUp;
     public bool CanRotateCamera => CanRotatePlayer || state == CharacterState.Knockdown;
-    public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Grapped;
+    public bool CanNotMove => state == CharacterState.HitStun || state == CharacterState.Airborne || state == CharacterState.Grapped || state == CharacterState.Knockdown;
 
     private CharacterStat stat;
     private CharacterMovement movement;

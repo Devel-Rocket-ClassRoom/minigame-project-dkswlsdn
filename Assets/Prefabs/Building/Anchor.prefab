@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Anchor
   ropePrefab: {fileID: 2747642959063960618, guid: 7d934a77bf86c0c4dbfad62df303431c, type: 3}
   length: 20
-  exitOffset: {x: 0, y: 1.5, z: 0}
+  exitOffset: {x: 0, y: 0, z: 0}
   layer:
     serializedVersion: 2
     m_Bits: 128

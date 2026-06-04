@@ -10,16 +10,18 @@ public class DialogContainer : MonoBehaviour
 
     private string currentKey;
     private int currentIndex;
+    private IDialogEndHandler endHandler;
 
     private const float minStayTime = 0.2f;
     private float nextTime;
 
     public bool isReady => Time.time > nextTime;
 
-    public void StartDialog(string key)
+    public void StartDialog(string key, IDialogEndHandler handler = null)
     {
         currentKey = key;
         currentIndex = 0;
+        endHandler = handler;
         Show();
     }
 
@@ -55,5 +57,7 @@ public class DialogContainer : MonoBehaviour
     private void End()
     {
         gameObject.SetActive(false);
+        endHandler?.OnDialogEnd();
+        endHandler = null;
     }
 }

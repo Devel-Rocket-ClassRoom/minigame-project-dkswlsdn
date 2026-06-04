@@ -613,7 +613,6 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 8adcd9ba5e222554da5669ba5af63081, type: 2}
   button: {fileID: -2812396511453217251, guid: cd51964408c480b4ab79978ab84a9c73, type: 3}
   desc: {fileID: 2083130956}
-  character: {fileID: 627783154}
   isStorage: 1
 --- !u!1 &43098905
 GameObject:
@@ -10980,10 +10979,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
-    - target: {fileID: 5202363164273994982, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 7369870928879973472, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.52
@@ -11027,28 +11022,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5083150973174929940, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1555152850}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7605f816f60197428ae720408a52e34, type: 3}
---- !u!114 &627783154 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8492135098999730931, guid: b7605f816f60197428ae720408a52e34, type: 3}
-  m_PrefabInstance: {fileID: 627783132}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555152832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e907fccb6d7594d45ad940739bda0b6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Character
 --- !u!114 &627783166 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9076121212534516621, guid: b7605f816f60197428ae720408a52e34, type: 3}
   m_PrefabInstance: {fileID: 627783132}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555152832}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6564b6d0c6c45a749a07bb94bf406e13, type: 3}
@@ -11059,7 +11040,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4797583788337782940, guid: b7605f816f60197428ae720408a52e34, type: 3}
   m_PrefabInstance: {fileID: 627783132}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555152832}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d3889a12353f04a9be59bc00ee1b06, type: 3}
@@ -14705,7 +14686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1db8e18b843e44ba9c395aaa2d8110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateItemButton
-  character: {fileID: 627783154}
   lockImage: {fileID: 684323551}
 --- !u!1001 &850705800
 PrefabInstance:
@@ -18394,7 +18374,6 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 8adcd9ba5e222554da5669ba5af63081, type: 2}
   button: {fileID: -2812396511453217251, guid: cd51964408c480b4ab79978ab84a9c73, type: 3}
   desc: {fileID: 2083130956}
-  character: {fileID: 627783154}
   isStorage: 0
 --- !u!114 &1109484874
 MonoBehaviour:
@@ -26076,24 +26055,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1554036682}
   m_CullTransparentMesh: 1
---- !u!1 &1555152832 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5083150973174929940, guid: b7605f816f60197428ae720408a52e34, type: 3}
-  m_PrefabInstance: {fileID: 627783132}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1555152850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555152832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46dc81df341c2434eb718ed6213c0f0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterInventory
-  database: {fileID: 11400000, guid: 8adcd9ba5e222554da5669ba5af63081, type: 2}
 --- !u!1001 &1560616551
 PrefabInstance:
   m_ObjectHideFlags: 0

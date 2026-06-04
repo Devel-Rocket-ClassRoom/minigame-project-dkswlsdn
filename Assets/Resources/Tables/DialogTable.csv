@@ -1,3 +1,8 @@
 key, icon, name, dialog
-greeting_000, null, 대장장이, 안녕
-greeting_001, null, 대장장이, 무슨 일이야?
+Greeting_000, null, 대장장이, 안녕
+Greeting_001, null, 대장장이, 무슨 일이야?
+
+Tutorial_Anch_000, null, 방랑자, 이건 뭐지? 이상하게 생겼네.
+Tutorial_Anch_001, null, 방랑자, 일단 챙겨둘까?
+Tutorial_End_000, null, 방랑자, 일단 챙겨둘까?
+Tutorial_End_001, null, 방랑자, 일단 챙겨둘까?

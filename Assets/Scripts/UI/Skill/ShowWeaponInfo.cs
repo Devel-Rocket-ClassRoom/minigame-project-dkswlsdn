@@ -22,8 +22,8 @@ public class ShowWeaponInfo : MonoBehaviour
     public Color hpZero;
 
     private PlayerSkillExecuter executer;
-    [SerializeField] private SkillCaster caster;
-    [SerializeField] private CharacterStat stat;
+    private SkillCaster caster;
+    private CharacterStat stat;
 
     // 화면 슬롯에 표시할 skills 인덱스 (L=기본공격 제외, 기존 순서에서 Q만 빠짐)
     private static readonly int[] slotSkillIndex =
@@ -38,16 +38,15 @@ public class ShowWeaponInfo : MonoBehaviour
 
     private void Start()
     {
-        executer = FindAnyObjectByType<PlayerSkillExecuter>();
-        if (executer != null)
-        {
-            Init();
-            executer.onWeaponChanged += Init;
-        }
+        Character.SubscribeToPlayer(Init);
     }
 
-    public void Init()
+    public void Init(Character player)
     {
+        executer = player.Executer as PlayerSkillExecuter;
+        caster = player.Caster;
+        stat = player.Stat;
+
         for (int i = 0; i < slots.Length; i++)
         {
             var skill = i < slotSkillIndex.Length ? executer.GetSkill(slotSkillIndex[i]) : null;
@@ -62,6 +61,8 @@ public class ShowWeaponInfo : MonoBehaviour
 
     private void Update()
     {
+        if (caster == null || stat == null) return;
+
         SetCooldown();
         SetHPBar();
         SetCostBar();

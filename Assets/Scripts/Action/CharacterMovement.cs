@@ -292,7 +292,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
         if (state.State == CharacterState.Grapped) yield break;
 
         var dir = Vector3.zero;
-        rigid.linearVelocity = dir;
+        rigid.linearVelocity = Vector3.zero;
 
         switch (hit.forceDirectionType)
         {
@@ -329,6 +329,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
                     verticalVelocity = hit.airborneForce.y;
                     isFreeMoveEnabled = false;
                     activeGravity = defaultGravity;
+                    friction = 0f;
                     break;
             }
         }
@@ -340,6 +341,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
             verticalVelocity = hit.airborneForce.y;
             isFreeMoveEnabled = false;
             activeGravity = defaultGravity;
+            friction = 0f;
         }
         isFrozen = false;
     }

@@ -7,7 +7,8 @@ public class DialogOpenner : Interactor
 
     public override bool OnDetected(Character character)
     {
-        manager.OpenDialog(key);
+        var handler = GetComponent<IDialogEndHandler>();
+        manager.OpenDialog(key, handler);
         return true;
     }
 }
