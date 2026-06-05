@@ -16,12 +16,12 @@ MonoBehaviour:
   actionTime: 1
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: e78400a33b6cfae459922a33176f5524, type: 2}
-  movement:
+  clip: {fileID: 7400000, guid: 54368d69de80d164d924b537525168b0, type: 2}
+  movementMethod:
     calcType: 0
     gravity: 0
     friction: 0
-    isKeepSpeed: 1
+    isKeepSpeed: 0
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   - preDelay: 0.03
     method: {fileID: 11400000, guid: c976d2b2b1315b34288c76576aca430d, type: 2}
   stack: []
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2
