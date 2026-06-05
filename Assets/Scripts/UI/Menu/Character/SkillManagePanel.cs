@@ -6,9 +6,6 @@ public class SkillManagePanel : MenuPanel
 {
     [SerializeField] private CharacterPanelController panel;
 
-    [Header("Data")]
-    [SerializeField] private WeaponDatabase weaponDatabase;
-
     [Header("Text")]
     [SerializeField] private TextContainer skillDesc;
     [SerializeField] private TextContainer characterOpinion;
@@ -156,8 +153,6 @@ public class SkillManagePanel : MenuPanel
     // 캐릭터 ID(대문자)와 무기 이름(예: Axe)을 대소문자 무시로 매칭
     private Weapon FindWeapon(string id)
     {
-        if (weaponDatabase == null || weaponDatabase.weapons == null) return null;
-        return weaponDatabase.weapons.Find(
-            w => string.Equals(w.weaponName, id, StringComparison.OrdinalIgnoreCase));
+        return DatabaseManager.FindWeapon(id);
     }
 }

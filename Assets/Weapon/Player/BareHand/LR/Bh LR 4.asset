@@ -48,8 +48,9 @@ MonoBehaviour:
   - preDelay: 0.1
     method: {fileID: 11400000, guid: 623cfa4b3b5199f4c867973fbbb5315c, type: 2}
   - preDelay: 0.2
-    method: {fileID: 11400000, guid: 623cfa4b3b5199f4c867973fbbb5315c, type: 2}
+    method: {fileID: 11400000, guid: 647e6c2d30457cd4fa9198d6b06d8de6, type: 2}
   stack: []
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

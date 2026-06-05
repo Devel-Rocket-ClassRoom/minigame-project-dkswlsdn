@@ -89,6 +89,7 @@ public class SaveDataV3 : SaveData
     {
         unlockedCharacterList = new List<string> { implementedCharacter[0] };
         unlockedSubWeaponList = new List<string>();
+        selectedSubWeapon = string.Empty;
 
         characterData = new Dictionary<string, CharacterEntry>();
         foreach (var id in implementedCharacter)
@@ -112,6 +113,8 @@ public class SaveDataV3 : SaveData
 
     public List<string> unlockedSubWeaponList;
     public List<string> unlockedCharacterList;
+
+    public string selectedSubWeapon;
     public List<string> currentParty;
 
     public Dictionary<string, CharacterEntry> characterData;

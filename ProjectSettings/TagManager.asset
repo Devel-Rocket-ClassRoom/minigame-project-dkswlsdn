@@ -16,11 +16,11 @@ TagManager:
   - 
   - Ground
   - Character
-  - Character HItbox
+  - SightDetector
   - Item
   - Interaction
-  - 
-  - 
+  - SightTarget
+  - Attack
   - 
   - 
   - 

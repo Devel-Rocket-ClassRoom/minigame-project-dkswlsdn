@@ -7,7 +7,7 @@ public static class GameSceneManager
 
     private static readonly string[] scenes =
     {
-        "TitleScene", "BaseCampScene", "BattleScene", "TutorialScene"
+        "TitleScene", "BaseCampScene", "BattleScene", "TutorialScene", "BossScene"
     };
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -33,9 +33,15 @@ public static class GameSceneManager
         SceneManager.LoadScene(scenes[(int)scene]);
     }
 
-    public static void StartGame(int idx)
+    public static bool StartGame(int idx)
     {
         SaveManager.LoadRequest(idx);
+
+        if (SaveManager.CurrentSave.anchCount < 0)
+        {
+            return false;
+        }
+
         if (SaveManager.CurrentSave.isTutorialCleared)
         {
             IsInBattle = false;
@@ -47,6 +53,8 @@ public static class GameSceneManager
             SaveManager.ResetSave();
             LoadScene(SceneName.Tutorial);
         }
+
+        return true;
     }
 
     public static void LoadBaseCamp()
@@ -59,6 +67,12 @@ public static class GameSceneManager
         IsInBattle = true;
         LoadScene(SceneName.Battle);
     }
+
+    public static void LoadBoss()
+    {
+        IsInBattle = true;
+        LoadScene(SceneName.Boss);
+    }
 }
 
 public enum SceneName
@@ -67,4 +81,5 @@ public enum SceneName
     BaseCamp = 1,
     Battle = 2,
     Tutorial = 3,
+    Boss = 4,
 }

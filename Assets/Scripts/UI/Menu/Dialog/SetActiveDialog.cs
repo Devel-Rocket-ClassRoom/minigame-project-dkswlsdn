@@ -7,6 +7,6 @@ public class SetActiveDialog : MonoBehaviour, IDialogEndHandler
     public void OnDialogEnd()
     {
         go.SetActive(true);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

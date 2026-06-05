@@ -3,6 +3,7 @@ using UnityEngine;
 public class CharacterGridController : MonoBehaviour
 {
     [SerializeField] private CharacterStatusPanel statusPanel;
+    [SerializeField] private SubWeaponManagePanel subWeaponPanel;
     [SerializeField] private SkillManagePanel skillPanel;
 
     private void Awake()
@@ -22,7 +23,8 @@ public class CharacterGridController : MonoBehaviour
 
     public void RequestOpenSubWeaponMenu(string id)
     {
-        Debug.Log(id);
+        subWeaponPanel.Init(id, this);
+        MenuManager.instance.OpenPopup(subWeaponPanel);
     }
 
     public void RequestOpenSkillMenu(string id)

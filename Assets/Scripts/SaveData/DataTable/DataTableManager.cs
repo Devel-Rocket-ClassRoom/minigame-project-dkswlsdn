@@ -8,7 +8,7 @@ public static class DataTableManager
     public static CharacterTable CharacterTable;
     public static SkillTable SkillTable;
     public static ItemTable ItemTable;
-    public static RecipeTable RecipeTable;
+    public static RecipeTable RecipeTable; 
 
     static DataTableManager()
     {

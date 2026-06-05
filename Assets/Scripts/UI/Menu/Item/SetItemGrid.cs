@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SetItemGrid : MonoBehaviour
 {
-    [SerializeField] private ItemDatabase database;
     [SerializeField] private ItemButton button;
     [SerializeField] private ShowItemDescription desc;
     [SerializeField] private bool isStorage;
@@ -39,7 +38,7 @@ public class SetItemGrid : MonoBehaviour
 
         foreach (var item in storage)
         {
-            var itm = database.items.Find(i => i.itemName == item.Key);
+            var itm = DatabaseManager.FindItem(item.Key);
             CreateItemButton(itm, item.Value);
         }
     }

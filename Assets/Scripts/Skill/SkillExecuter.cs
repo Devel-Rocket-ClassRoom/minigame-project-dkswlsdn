@@ -28,10 +28,10 @@ public class SkillExecuter : MonoBehaviour
     private SkillCaster caster;
     private CharacterCommander commander;
 
-    // 인덱스 = (int)SkillKey (Passive 제외). L=0, R=1, SL=2, LR=3, E=4, F=5, Space=6
-    // → 세이브의 magicOpenedSkill[i] 와 skills[i] 가 1:1 로 매칭된다.
-    protected readonly Skill[] skills = new Skill[7];
-    private readonly float[] cooldowns = new float[7];
+    // 인덱스 = (int)SkillKey. L=0, R=1, SL=2, LR=3, E=4, F=5, Space=6, Passive=7, Q=8(서브웨폰)
+    // Passive(7)는 입력으로 시전하지 않으므로 skills[7]은 항상 null로 둔다(루프에서 자동 스킵).
+    protected readonly Skill[] skills = new Skill[9];
+    private readonly float[] cooldowns = new float[9];
 
     // skills[i] 를 발동시키는 입력 (인덱스 1:1)
     private static readonly ConditionInput[] inputs =
@@ -43,6 +43,8 @@ public class SkillExecuter : MonoBehaviour
         ConditionInput.E,        // 4 E
         ConditionInput.F,        // 5 F
         ConditionInput.Space,    // 6 Space
+        ConditionInput.Interaction, // 7 Passive (미사용 자리, skills[7]이 항상 null이라 호출 안 됨)
+        ConditionInput.Q,        // 8 Q (서브웨폰)
     };
 
     private void Awake()
@@ -56,6 +58,7 @@ public class SkillExecuter : MonoBehaviour
     {
         CurrentWeapon = defaultWeapon;
     }
+
 
     protected virtual void Init(Weapon weapon)
     {
@@ -105,13 +108,19 @@ public class SkillExecuter : MonoBehaviour
         const int lIndex = (int)SkillKey.L;
         if (skills[lIndex] != null && cooldowns[lIndex] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
         {
-            if (commander.GetInput(ConditionInput.SkillR))
+            if (commander.GetInput(ConditionInput.SkillR, true))
             {
-
+                if (caster.Cast(skills[(int)SkillKey.LR], (int)SkillKey.LR))
+                {
+                    cooldowns[(int)SkillKey.LR] = skills[(int)SkillKey.LR].cooldown;
+                }
             }
-            if (caster.Cast(skills[lIndex], lIndex))
+            else
             {
-                cooldowns[lIndex] = skills[lIndex].cooldown;
+                if (caster.Cast(skills[lIndex], lIndex))
+                {
+                    cooldowns[lIndex] = skills[lIndex].cooldown;
+                }
             }
         }
     }

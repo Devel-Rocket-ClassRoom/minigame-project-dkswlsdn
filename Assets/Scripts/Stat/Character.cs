@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -9,6 +10,8 @@ public class Character : MonoBehaviour
     public bool isPlayer;
     public static Character CurrentPlayer { get; private set; }
     public static event Action<Character> OnPlayerAppeared;
+
+    
 
     public static void SubscribeToPlayer(Action<Character> callback)
     {
@@ -29,7 +32,8 @@ public class Character : MonoBehaviour
     public CharacterCommander Commander { get; private set; }
     public CharacterAnchor Anchor { get; private set; }
     public SpecialStackHandler Stack { get; private set; }
-    public SightManager Sight { get; private set; }
+    public CharacterSight Sight { get; private set; }
+    public SightTarget SightTarget { get; private set; }
     public ItemQuickSlot QuickSlot { get; private set; }
     public InteractionManager Interaction { get; private set; }
 
@@ -47,7 +51,8 @@ public class Character : MonoBehaviour
         Commander = GetComponent<CharacterCommander>();
         Anchor = GetComponent<CharacterAnchor>();
         Stack = GetComponent<SpecialStackHandler>();
-        Sight = GetComponentInChildren<SightManager>();
+        Sight = GetComponentInChildren<CharacterSight>();
+        SightTarget = GetComponentInChildren<SightTarget>();
         QuickSlot = GetComponent<ItemQuickSlot>();
         Interaction = GetComponent<InteractionManager>();
 
@@ -62,8 +67,10 @@ public class Character : MonoBehaviour
 
     private void OnEnable()
     {
-        // 풀 재사용/활성화 시 깨끗한 상태로 복귀. 없는 컴포넌트는 ?. 로 건너뜀("null이면 동작 안 함").
-        // 순서 주의: Stat(체력) → State(Dead 해제) → 나머지.
+        if (team != 1)
+            foreach (var r in GetComponentsInChildren<Renderer>())
+                r.enabled = false;
+
         Stat?.ResetState();       // 체력 최대로
         State?.ResetState();      // Dead 해제 → Idle (콜라이더/애니 복구)
         Movement?.ResetState();   // 속도/중력 초기화

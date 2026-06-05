@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CharacterInventory : MonoBehaviour
 {
-    [SerializeField] private ItemDatabase database;
     private Character character;
 
     private void Awake()
@@ -22,7 +21,7 @@ public class CharacterInventory : MonoBehaviour
 
         foreach (var item in inventory)
         {
-            var itm = database.items.Find(i => i.itemName == item.Key);
+            var itm = DatabaseManager.FindItem(item.Key);
             if (itm == null) { Debug.Log(itm.itemName); continue;  }
             if (itm.useWhenReturn)
             {

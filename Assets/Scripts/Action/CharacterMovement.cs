@@ -332,6 +332,11 @@ private IEnumerator CoFreeze(AttackInfo hit)
         isFrozen = true;
         rigid.linearVelocity = Vector3.zero;
         if (hit.reaction == HitReactionType.Gaurded) { isFrozen = false; yield break; }
+
+        // 피격 직후 상태를 캡처. StateManager가 onDamageTake에서 즉시 Airborne으로 바꾸므로
+        // 대기 후 state.State를 보면 항상 Airborne이라 스탠딩 분기를 탈 수 없다.
+        bool wasGrounded = state.State != CharacterState.Airborne && state.State != CharacterState.Knockdown;
+
         yield return new WaitForSeconds(hit.fixedStun);
         if (state.State == CharacterState.Grapped) yield break;
 
@@ -355,7 +360,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
                 break;
         }
 
-        if (state.State != CharacterState.Airborne && state.State != CharacterState.Knockdown)
+        if (wasGrounded)
         {
             switch (hit.reaction)
             {
@@ -367,7 +372,10 @@ private IEnumerator CoFreeze(AttackInfo hit)
                     friction = 8f;
                     break;
                 case HitReactionType.Airborne:
-                    transform.Translate(Vector3.up * 1f);
+                    rigid.position += Vector3.up * 0.5f;
+                    isOnGround = false;
+                    yield return new WaitForFixedUpdate();
+
                     horizontalVelocity = dir * hit.airborneForce.x;
                     horizontalSpeed = horizontalVelocity.magnitude;
                     verticalVelocity = hit.airborneForce.y;
@@ -379,7 +387,6 @@ private IEnumerator CoFreeze(AttackInfo hit)
         }
         else
         {
-            transform.Translate(Vector3.up * 0.1f);
             horizontalVelocity = dir * hit.airborneForce.x;
             horizontalSpeed = horizontalVelocity.magnitude;
             verticalVelocity = hit.airborneForce.y;

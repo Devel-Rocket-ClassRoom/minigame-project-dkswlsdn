@@ -20,6 +20,8 @@ public class MenuManager : MonoBehaviour
     private PlayerInputAction.PlayerActions playerAction;
     private bool isMenuOpen = false;
     private bool isDialogOpen = false;
+    private bool isAlreadyMenuOpened = false;
+    private bool isGameOver = false;
 
     [SerializeField] private bool isToggle;
     [SerializeField] private bool isMainAlwaysOpen;
@@ -44,6 +46,8 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
+        if (isGameOver) return;
+
         if (isToggle)
         {
             if (menuOpen.WasPressedThisFrame())
@@ -109,6 +113,7 @@ public class MenuManager : MonoBehaviour
         if (currentPopup != null) currentPopup.gameObject.SetActive(false);
         panel.gameObject.SetActive(true);
         currentPopup = panel;
+        isAlreadyMenuOpened = isMenuOpen;
         isMenuOpen = true;
     }
 
@@ -147,6 +152,7 @@ public class MenuManager : MonoBehaviour
     {
         currentPopup.gameObject.SetActive(false);
         currentPopup = null;
+        isMenuOpen = isAlreadyMenuOpened;
     }
 
     public void CursorLock(bool lockCursor)
@@ -165,6 +171,7 @@ public class MenuManager : MonoBehaviour
 
     public void GameOver()
     {
+        isGameOver = true;
         OpenMenu(gameOverPanel);
     }
 }

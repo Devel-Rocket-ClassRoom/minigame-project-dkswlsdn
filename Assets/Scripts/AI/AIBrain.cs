@@ -15,7 +15,7 @@ public class AIBrain : MonoBehaviour
     private NPCMovement movement;
     private StateManager state;
     private NPCCamera cam;
-    private SightManager sight;
+    private NPCSight sight;
     private NavMeshAgent agent;
 
     // ── 인스펙터 ──────────────────────────────────────────────
@@ -45,7 +45,7 @@ public class AIBrain : MonoBehaviour
         caster    = GetComponent<SkillCaster>();
         state     = GetComponent<StateManager>();
         cam       = GetComponent<NPCCamera>();
-        sight     = GetComponentInChildren<SightManager>();
+        sight     = GetComponentInChildren<NPCSight>();
         agent     = GetComponent<NavMeshAgent>();
 
         stat.onDamageTake  += ChangeAggro;
@@ -55,8 +55,6 @@ public class AIBrain : MonoBehaviour
         state.onGrab       += OnCancelled;
         state.onGroggy     += OnCancelled;
         state.onKnockdown  += OnCancelled;
-        sight.onDetected   += OnDetected;
-        sight.onLost       += OnLost;
     }
 
     private void OnEnable()
@@ -297,13 +295,13 @@ public class AIBrain : MonoBehaviour
     }
 
     // ── 이벤트 ────────────────────────────────────────────────
-    private void OnDetected(Character target)
+    public void OnDetected(Character target)
     {
         aggro = target;
         ChangeState(AIState.Combat);
     }
 
-    private void OnLost(Character target)
+    public void OnLost(Character target)
     {
         if (aggro == target) ChangeState(AIState.Chase);
     }

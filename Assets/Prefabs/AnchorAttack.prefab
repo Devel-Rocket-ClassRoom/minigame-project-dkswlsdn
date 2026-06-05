@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7171796927973529416}
   - component: {fileID: 3771702403130212087}
   - component: {fileID: 4414882639199538448}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AnchorAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1764,6 +1764,7 @@ GameObject:
   - component: {fileID: 4340166645913866471}
   - component: {fileID: 1541548552837764104}
   - component: {fileID: 2432108390865129349}
+  - component: {fileID: 2739620262070331538}
   m_Layer: 8
   m_Name: Obstacle Soft
   m_TagString: Untagged
@@ -1827,6 +1828,7 @@ MonoBehaviour:
   sightRange: 0
   armor: 4
   grabImmuneLevel: 0
+  isObstacle: 0
 --- !u!114 &6444337426090465278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1906,6 +1908,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 4, z: 1}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &2739620262070331538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323143853057623767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1579708b369dab949afd010428fedc0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDeath
+  groggyDuration: 1
+  holdBeforeEffect: 0.3
+  maxAirborneWait: 10
+  deathEffect:
+    effect: {fileID: 1872147318604286, guid: 5bea49531fc500c408823a2e2863106f, type: 3}
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &9119848385155139060
 GameObject:
   m_ObjectHideFlags: 0

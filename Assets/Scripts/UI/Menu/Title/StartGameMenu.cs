@@ -14,10 +14,14 @@ public class StartGameMenu : MonoBehaviour
     {
         SaveManager.DeleteSave(Slot);
         MenuManager.instance.OpenPopup(delete);
+        MenuManager.instance.ClosePopup();
     }
 
     public void OnStartGame(int slot)
     {
-        GameSceneManager.StartGame(slot);
+        if (!GameSceneManager.StartGame(slot))
+        {
+            Debug.Log("부활할 수 없습니다");
+        }
     }
 }

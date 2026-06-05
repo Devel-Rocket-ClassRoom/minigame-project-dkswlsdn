@@ -47,6 +47,7 @@ public class StateManager : MonoBehaviour
     public CharacterState DeathPrevState { get; private set; }
 
     private Coroutine freezeCoroutine;
+    private Coroutine delayedReactionCoroutine; // 스탠딩 피격: 히트스턴 → 에어본 지연 전이
     private float freezeEndTime;   // 현재 프리즈가 끝나는 시각(갈아끼우기 기준)
     private bool snapVerticalVelocity;  // true면 다음 에어본 갱신을 블렌드 없이 즉시 반영
 
@@ -118,8 +119,6 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    // 사망 진입 전용. 죽인 타격의 파괴판정과 직전 상태를 기록한 뒤 Dead로 전이한다.
-    // (CharacterDeath가 이 정보로 연출 분기를 결정한다)
     public void Die(bool breakable)
     {
         if (State == CharacterState.Dead) return;
@@ -128,7 +127,6 @@ public class StateManager : MonoBehaviour
         ChangeState(CharacterState.Dead);
     }
 
-    // 죽음 연출: 그로기 모션 재생(노멀 속도로). 애니메이터 트리거명은 추후 연결.
     public void DeathGroggy()
     {
         if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
@@ -140,7 +138,6 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    // 죽음 연출: 현재(마지막) 포즈를 그대로 정지시킨다.
     public void DeathFreezePose()
     {
         if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
@@ -175,7 +172,8 @@ public class StateManager : MonoBehaviour
             case CharacterState.Airborne:
                 if (prev == CharacterState.Grapped) knockdownTimer = BASE_KNOCKDOWN_DURATION;
                 onAirborne?.Invoke();
-                if (animator != null) animator.SetTrigger("Airborne");
+                // Exit Time은 무시하되 짧게 블렌드해 부드럽게 전이(타이밍 정확 + 약한 보간)
+                if (animator != null) animator.CrossFadeInFixedTime("Airborne", 0.1f, 0, 0f);
                 SetColliderState(false);
                 break;
             case CharacterState.Knockdown:
@@ -209,6 +207,7 @@ public class StateManager : MonoBehaviour
     public void ResetState()
     {
         if (freezeCoroutine != null) StopCoroutine(freezeCoroutine);
+        if (delayedReactionCoroutine != null) { StopCoroutine(delayedReactionCoroutine); delayedReactionCoroutine = null; }
         IsFrozen = false;
         DeathByBreak = false;
         if (animator != null) animator.speed = 1f;   // 죽음 정지 포즈 해제
@@ -252,6 +251,21 @@ public class StateManager : MonoBehaviour
         IsFrozen = false;
     }
 
+    // 스탠딩 피격 시: 히트스턴 모션을 먼저 띄우고(고정경직 동안 정지 포즈로 유지),
+    // 고정경직이 끝나면 에어본 모션으로 전이한다. CharacterMovement도 같은 fixedStun을
+    // 기다린 뒤 에어본 속도를 적용하므로 모션과 물리가 함께 시작된다.
+    private IEnumerator CoHitStunThenAirborne(float delay)
+    {
+        if (animator != null) animator.SetTrigger("HitStun");
+        ChangeState(CharacterState.HitStun);
+
+        yield return new WaitForSeconds(delay);
+
+        delayedReactionCoroutine = null;
+        if (State == CharacterState.Grapped || State == CharacterState.Dead) yield break;
+        ChangeState(CharacterState.Airborne);
+    }
+
     private void OnDamageTaken(Character character, AttackInfo hit)
     {
         FreezeFor(hit.fixedStun);
@@ -280,8 +294,18 @@ public class StateManager : MonoBehaviour
 
             case HitReactionType.Airborne:
                 if (state == CharacterState.Grapped) break;
-                if (state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill)
+                bool grounded = state == CharacterState.Idle || state == CharacterState.HitStun || state == CharacterState.Move || state == CharacterState.Skill;
+                if (grounded)
+                {
                     knockdownTimer = BASE_KNOCKDOWN_DURATION;
+                    // 스탠딩 피격: 히트스턴 모션을 고정경직만큼 보여준 뒤 에어본으로 전이
+                    if (hit.fixedStun > 0f)
+                    {
+                        if (delayedReactionCoroutine != null) StopCoroutine(delayedReactionCoroutine);
+                        delayedReactionCoroutine = StartCoroutine(CoHitStunThenAirborne(hit.fixedStun));
+                        break;
+                    }
+                }
                 ChangeState(CharacterState.Airborne);
                 break;
 

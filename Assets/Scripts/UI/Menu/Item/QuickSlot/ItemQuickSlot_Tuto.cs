@@ -9,7 +9,7 @@ public class ItemQuickSlot_Tuto : PlayerItemQuickSlot
             var dict = SaveManager.CurrentSave.itemInCharacter;
             if (dict.ContainsKey(itemTypeList[0]))
             {
-                var item = database.items.Find(itm => itm.itemName == itemTypeList[0]);
+                var item = DatabaseManager.FindItem(itemTypeList[0]);
                 item?.OnUse(character);
 
                 if (dict[itemTypeList[0]] <= 0)

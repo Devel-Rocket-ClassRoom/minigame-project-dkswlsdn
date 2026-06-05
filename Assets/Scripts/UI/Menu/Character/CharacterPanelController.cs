@@ -53,16 +53,8 @@ public class CharacterPanelController : MonoBehaviour
         if (list.Contains(thisCharacterId))
         {
             statusButton.onClick.AddListener(OpenStatusPopup);
-
-            if (list.Contains(handgunCharacter))
-            {
-                subWeaponButton.onClick.AddListener(OpenSubWeaponPopup);
-            }
-            if (list.Contains(magicCharacter) || list.Contains(daggerCharacter))
-            {
-                skillButton.onClick.AddListener(OpenSkillPopup);
-            }
-
+            subWeaponButton.onClick.AddListener(OpenSubWeaponPopup);
+            skillButton.onClick.AddListener(OpenSkillPopup);
             deployButton.onClick.AddListener(DeployCharacter);
             joinButton.onClick.AddListener(JoinCharacter);
 
@@ -106,10 +98,12 @@ public class CharacterPanelController : MonoBehaviour
     public void DeployCharacter()
     {
         SaveManager.CurrentSave.currentCharacterId = thisCharacterId;
+        SaveManager.SaveRequest();
     }
 
     public void JoinCharacter()
     {
         if (!SaveManager.CurrentSave.currentParty.Contains(thisCharacterId)) SaveManager.CurrentSave.currentParty.Add(thisCharacterId);
+        SaveManager.SaveRequest();
     }
 }

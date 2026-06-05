@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 시야 콜라이더를 SightRange 스탯에 맞게 크기/위치를 조정한다.
+/// 캐릭터 감지는 CharacterSight(PlayerSight)가 담당한다.
+/// </summary>
 public class SightManager : MonoBehaviour
 {
-    private Character character;
     private CharacterStat stat;
     private CapsuleCollider sightCollider;
 
     [SerializeField] private bool autoCenter = true;
 
-    public HashSet<Character> visibleCharacters { get; private set; } = new HashSet<Character>();
-    public Character FirstEncounter { get; private set; }
-
-    public event Action<Character> onDetected;
-    public event Action<Character> onLost;
-
     private void Awake()
     {
-        character = GetComponentInParent<Character>();
         stat = GetComponentInParent<CharacterStat>();
         sightCollider = GetComponent<CapsuleCollider>();
         sightCollider.isTrigger = true;
@@ -34,37 +28,5 @@ public class SightManager : MonoBehaviour
         sightCollider.center = autoCenter
             ? new Vector3(0, 0, radius - 3f)
             : Vector3.zero;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        var character = other.GetComponent<Character>();
-        if (character == null || character.team == this.character.team) return;
-
-        if (visibleCharacters.Count == 0)
-            FirstEncounter = character;
-
-        visibleCharacters.Add(character);
-        onDetected?.Invoke(character);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        var character = other.GetComponent<Character>();
-        if (character == null || character.team == this.character.team) return;
-
-        visibleCharacters.Remove(character);
-        if (visibleCharacters.Count == 0)
-            FirstEncounter = null;
-
-        onLost?.Invoke(character);
-    }
-
-    // 풀 재사용/부활 시 초기화. 비활성 중엔 OnTriggerExit가 안 불려
-    // 감지 목록이 stale 해질 수 있으므로 강제로 비운다.
-    public void ResetState()
-    {
-        visibleCharacters.Clear();
-        FirstEncounter = null;
     }
 }

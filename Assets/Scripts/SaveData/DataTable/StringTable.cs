@@ -3,7 +3,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class StringTable : DataTable<string>
 {
-    public override void Load(string csv)
+    public override void Load(string csv) 
     {
         table.Clear();
         var lines = csv.Split('\n');

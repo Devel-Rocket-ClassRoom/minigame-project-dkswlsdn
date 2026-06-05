@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerItemQuickSlot : ItemQuickSlot
 {
     public List<string> itemTypeList;
-    [SerializeField] protected ItemDatabase database;
 
     protected virtual void Update()
     {
@@ -14,7 +13,7 @@ public class PlayerItemQuickSlot : ItemQuickSlot
             var dict = SaveManager.CurrentSave.itemInCharacter;
             if (dict.ContainsKey(itemTypeList[0]))
             {
-                var item = database.items.Find(itm => itm.itemName == itemTypeList[0]);
+                var item = DatabaseManager.FindItem(itemTypeList[0]);
                 item?.OnUse(character);
 
                 SaveManager.InventoryIO(item.itemName, -1, false);

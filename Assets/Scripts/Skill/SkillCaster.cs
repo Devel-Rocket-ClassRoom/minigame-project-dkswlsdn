@@ -37,6 +37,7 @@ public class SkillCaster : MonoBehaviour
         
         spawnedAttacks = new List<Attack>();
         context = new SkillContext();
+        context.currentIndex = -1;
     }
 
     private void OnEnable()
@@ -204,6 +205,14 @@ public class SkillCaster : MonoBehaviour
     {
         ReleaseGrab(CharacterState.Idle);
         state.ChangeState(CharacterState.Idle);
+        //if (movement.GetOnGrounded())
+        //{
+        //    state.ChangeState(CharacterState.Idle);
+        //}
+        //else
+        //{
+        //    state.ChangeState(CharacterState.MidAir);
+        //}
         onCooldownReset?.Invoke(context.currentIndex);
         context.current = null;
         context.Clear();

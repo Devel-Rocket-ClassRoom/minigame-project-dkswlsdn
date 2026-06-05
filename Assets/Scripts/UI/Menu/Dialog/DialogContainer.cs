@@ -47,6 +47,13 @@ public class DialogContainer : MonoBehaviour
         string key = $"{currentKey}_{currentIndex:D3}";
         var data = DataTableManager.DialogTable.Get(key);
 
+        if (data == null)
+        {
+            Debug.LogWarning($"[DialogContainer] DialogData 없음: '{key}' (currentKey='{currentKey}') — DialogTable.csv에 해당 키가 있는지 확인");
+            End();
+            return;
+        }
+
         characterImage.sprite = DataTableManager.SpriteTable.Get(data.characterId);
         characterName.ChangeText(data.characterName);
         textTmp.text = data.dialog;
