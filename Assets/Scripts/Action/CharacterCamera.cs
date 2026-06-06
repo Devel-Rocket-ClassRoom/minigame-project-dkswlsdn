@@ -61,4 +61,7 @@ public abstract class CharacterCamera : MonoBehaviour
     {
         canRotateCharacter = false;
     }
+
+    // 카메라 흔들기 요청. 흔들림을 지원하는 카메라(PlayerCamera)만 실제로 처리한다.
+    public virtual void Shake(CameraShakeSettings settings) { }
 }

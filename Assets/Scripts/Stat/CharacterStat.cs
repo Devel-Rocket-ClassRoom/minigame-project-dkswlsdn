@@ -93,6 +93,9 @@ public class CharacterStat : MonoBehaviour
         health -= finalDamage;
         if (hit.isPopup) DamagePopupManager.instance.Popup(finalDamage, crit, anchor.head.position);
 
+        // 어택인포에 설정된 카메라 흔들림을 공격자 카메라에 적용(플레이어가 때렸을 때만 실제로 흔들림)
+        character.Camera?.Shake(myHit.cameraShake);
+
         if (ignoreReaction)
         {
             myHit.reaction = HitReactionType.Gaurded;

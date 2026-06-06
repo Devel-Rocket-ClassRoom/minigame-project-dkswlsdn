@@ -18,6 +18,7 @@ public class SkillAction : ScriptableObject
     public List<AttackEntry> attack;
     public List<StackMethod> stack;
     public List<EffectEntry> effects;
+    public List<CameraShakeEntry> cameraShakes;
 
     public DestinationTargettingMethod targetting;
     public LayerMask targetLayer;
@@ -85,6 +86,13 @@ public struct AttackEntry
     public AttackMethod method;
 }
 
+[Serializable]
+public class CameraShakeEntry
+{
+    public float preDelay;
+    public CameraShakeSettings settings;
+}
+
 public enum SpawnTrigger  { OnHit, OnExpire }
 public enum SpawnPosition { AtHitPoint, AtTarget, AtOrigin }
 
@@ -110,6 +118,7 @@ public class AttackInfo
         mult = hit.mult;
         add = hit.add;
         crit = hit.crit;
+        cameraShake = hit.cameraShake;
         effects = hit.effects;
         reaction = hit.reaction;
         range = hit.range;
@@ -140,6 +149,10 @@ public class AttackInfo
     public float mult;
     public float add;
     public float crit;
+
+    [Header("카메라")]
+    [Tooltip("적중 시 발생할 카메라 흔들림. 비워두면 흔들림 없음")]
+    public CameraShakeSettings cameraShake;
 
     [Header("경직")]
     public HitReactionType reaction;

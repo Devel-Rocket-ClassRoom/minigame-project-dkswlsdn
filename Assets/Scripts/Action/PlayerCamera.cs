@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerCamera : CharacterCamera
 {
-
     private float rotationX = 0f;
     public float RotationX
     {
@@ -37,14 +36,17 @@ public class PlayerCamera : CharacterCamera
 
     private void LateUpdate()
     {
-        if (cam == null) return;
+        if (lookAtTransform == null) return;
         var mouseInput = PlayerMovement.Action.Player.Rotate.ReadValue<Vector2>();
         RotationX -= mouseInput.y * vSpeed * Time.deltaTime;
         lookAtTransform.localRotation = Quaternion.Euler(RotationX, 0, 0);
         if (canRotateCharacter) playerTransform.Rotate(new Vector3(0, mouseInput.x, 0) * hSpeed * Time.deltaTime);
-        cam.transform.position = lookAtTransform.position - lookAtTransform.forward * distance;
-        cam.transform.LookAt(lookAtTransform);
+
+        // 카메라 위치/LookAt 직접 제어는 제거 — 시네머신(PlayerVCam이 lookAtTransform을 Follow)이 담당.
+        // 흔들림은 Main Camera의 CameraShaker(Brain 뒤)에서 적용한다.
     }
+
+    public override void Shake(CameraShakeSettings settings) => CameraShaker.Instance?.Shake(settings);
 
     public float VerticalRate()
     {

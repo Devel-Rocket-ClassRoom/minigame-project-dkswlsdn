@@ -16,6 +16,35 @@ MonoBehaviour:
     mult: 3.15
     add: 800
     crit: 0
+    cameraShake:
+      direction: {x: 0.5, y: 0.8660254}
+      amplitude: 0.6
+      oscillations: 2
+      duration: 0.5
+      envelope:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     reaction: 2
     range: 1
     stunDuration: 1
@@ -39,7 +68,7 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: -0.32441127, y: -0.6097109, z: -0.7231943}
+  aimDir: {x: 0.1223295, y: -0.3987262, z: 0.9088745}
   positionOffset: {x: 0, y: 1.5, z: 1.15}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   scale: {x: 2, y: 2, z: 2.3}

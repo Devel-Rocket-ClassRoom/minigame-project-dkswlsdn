@@ -155,6 +155,8 @@ public class SkillCaster : MonoBehaviour
         StartCoroutine(nameof(CoGetStack));
         StopCoroutine(nameof(CoPlayEffect));
         StartCoroutine(nameof(CoPlayEffect));
+        StopCoroutine(nameof(CoCameraShake));
+        StartCoroutine(nameof(CoCameraShake));
 
         onActionStart.Invoke(action);
     }
@@ -349,6 +351,18 @@ public class SkillCaster : MonoBehaviour
             }
 
             EffectManager.instance.Play(effect.effect, parent);
+        }
+    }
+
+    // 액션 진행 중 preDelay에 맞춰 카메라 흔들림 발생(연출용). 흔드는 대상은 시전자 본인의 카메라.
+    IEnumerator CoCameraShake()
+    {
+        if (context.current.cameraShakes == null) yield break;
+
+        foreach (var shake in context.current.cameraShakes)
+        {
+            yield return new WaitForSecondsUnfrozen(shake.preDelay, state);
+            character.Camera?.Shake(shake.settings);
         }
     }
 
