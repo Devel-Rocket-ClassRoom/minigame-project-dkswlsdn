@@ -11,6 +11,8 @@ public class SkillAction : ScriptableObject
     public float partialCooldown;
     public bool useGrab;
     public AnimationClip clip;
+    [Tooltip("모션 진입 시 크로스페이드 보간 시간(초). 0이면 즉시 전환")]
+    public float blendTime;
 
     public MovementMethod movementMethod;
     public List<AttackEntry> attack;
@@ -105,7 +107,10 @@ public class AttackInfo
         origin = hit.origin;
         id = hit.id;
         isPopup = hit.isPopup;
-        damage = hit.damage;
+        mult = hit.mult;
+        add = hit.add;
+        crit = hit.crit;
+        effects = hit.effects;
         reaction = hit.reaction;
         range = hit.range;
         stunDuration = hit.stunDuration;
@@ -132,7 +137,9 @@ public class AttackInfo
     public bool isPopup;
 
     [Header("데미지")]
-    public float damage;
+    public float mult;
+    public float add;
+    public float crit;
 
     [Header("경직")]
     public HitReactionType reaction;

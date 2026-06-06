@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
-    damage: 1000
+    mult: 3.15
+    add: 800
+    crit: 0
     reaction: 2
     range: 1
     stunDuration: 1

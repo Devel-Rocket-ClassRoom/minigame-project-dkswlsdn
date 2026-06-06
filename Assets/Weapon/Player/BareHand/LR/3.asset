@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
-    damage: 5
+    mult: 1
+    add: 200
+    crit: 0
     reaction: 2
     range: 1
     stunDuration: 0.6
@@ -22,10 +24,12 @@ MonoBehaviour:
     forceDirectionType: 0
     fixedStun: 0
     reverseStun: 0.066
+    effects: []
     activateTime: 0.1
     isDestroyOnCanceled: 1
     isReleaseGrab: 0
     projectileSpeed: 0
+    isBreakable: 0
   type: 1
   targetLayer:
     serializedVersion: 2
@@ -35,7 +39,7 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: 0.4753899, y: 0, z: 0.87977517}
+  aimDir: {x: -0.038609136, y: 0, z: 0.9992544}
   positionOffset: {x: 0, y: 1, z: 1}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1.2, y: 1, z: 3}

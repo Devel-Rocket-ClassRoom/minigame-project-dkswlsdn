@@ -27,7 +27,9 @@ public class Attack : MonoBehaviour
         this.targetPoint = targetPoint;
         hitTarget.Clear();
         IsHit = false;
-        this.method = method;
+        // AttackMethod는 공유 SO 에셋이다. 그대로 참조해서 info를 수정하면 에셋 원본이 망가진다.
+        // 인스턴스 전용 복제본을 만들어 거기에만 런타임 값을 쓴다. (OnDestroy에서 정리)
+        this.method = Instantiate(method);
         this.method.info = new AttackInfo(method.info);
         this.method.info.id = character.Id;
         this.method.info.isPopup = character.isPlayer;
@@ -70,6 +72,12 @@ public class Attack : MonoBehaviour
         this.character.State.FreezeFor(method.info.reverseStun);
         onHit?.Invoke(character);
         if (method.isSingleTarget) Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        // Activate에서 Instantiate한 런타임 복제본 정리 (에셋 원본은 destroy 대상이 아님)
+        if (method != null) Destroy(method);
     }
 
     private void Update()

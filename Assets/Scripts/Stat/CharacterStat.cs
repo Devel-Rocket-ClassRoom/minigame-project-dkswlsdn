@@ -1,15 +1,22 @@
+using Newtonsoft.Json.Linq;
 using System;
 using UnityEngine;
 
 public class CharacterStat : MonoBehaviour
 {
-    private CharacterAnchor anchor;
-    private StateManager state;
+    protected CharacterAnchor anchor;
+    protected StateManager state;
 
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float health;
-    [SerializeField] private float attack;
-    [SerializeField] private float sightRange;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float health;
+    [SerializeField] protected float attack;
+    [SerializeField] protected float crit;
+    [SerializeField] protected float defense;
+    [SerializeField] protected float dodgy;
+    [SerializeField] protected float sightRange;
+
+    public float Attack => attack;
+    public float Critical => crit;
 
     public float SightRange => sightRange;
 
@@ -29,14 +36,20 @@ public class CharacterStat : MonoBehaviour
     public float HPRatio => Mathf.Clamp01(health / maxHealth);
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         anchor = GetComponent<CharacterAnchor>();
         state = GetComponent<StateManager>();
     }
 
+    // 스탯이 갱신되었음을 파생 클래스가 알릴 수 있도록 하는 훅. (event는 선언 클래스 외부에서 직접 호출 불가)
+    protected void RaiseStatChanged()
+    {
+        onStatChanged?.Invoke();
+    }
 
-    public float GetStatPercent(StatType type) 
+
+    public float GetStatPercent(StatType type)
     {
         return type switch
         {
@@ -56,6 +69,13 @@ public class CharacterStat : MonoBehaviour
 
         var myHit = new AttackInfo(hit);
 
+        var stat = character.Stat;
+        bool crit = false;
+        float finalCrit = myHit.crit + stat.Critical - dodgy;
+        if (finalCrit <= 0) crit = false;
+        else if (finalCrit >= 100f) crit = true;
+        else crit = UnityEngine.Random.Range(0f, 100f) <= finalCrit;
+
         ArmorType requiredArmor = myHit.range switch
         {
             RangeType.None => ArmorType.Full,
@@ -67,9 +87,11 @@ public class CharacterStat : MonoBehaviour
 
         bool ignoreReaction = (armor & requiredArmor) != 0;
 
-
-        health -= myHit.damage;
-        if (hit.isPopup) DamagePopupManager.instance.Popup(myHit.damage, anchor.head.position);
+        float originDamage = stat.Attack * myHit.mult + myHit.add;
+        float defendedDamage = originDamage * (100f / (100 + defense));
+        float finalDamage = crit ? defendedDamage * 1.3f : defendedDamage;
+        health -= finalDamage;
+        if (hit.isPopup) DamagePopupManager.instance.Popup(finalDamage, crit, anchor.head.position);
 
         if (ignoreReaction)
         {

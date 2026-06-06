@@ -26,8 +26,8 @@ public class CharacterTable : DataTable<CharacterData>
                 & float.TryParse(cols[2], out float critical)
                 & float.TryParse(cols[3], out float health)
                 & float.TryParse(cols[4], out float defense)
-                & float.TryParse(cols[4], out float dodgy)
-                & int.TryParse(cols[5], out int carry));
+                & float.TryParse(cols[5], out float dodgy)
+                & int.TryParse(cols[6], out int carry));
 
             if (isParseFail)
                 throw new System.InvalidOperationException("캐릭터 기본 데이터 파싱 실패");

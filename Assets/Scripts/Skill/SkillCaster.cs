@@ -8,6 +8,7 @@ public class SkillCaster : MonoBehaviour
     private CharacterMovement movement;
     private CharacterAim aim;
     private StateManager state;
+    private CharacterStat stat;
     private Character character;
     private CharacterAnchor anchor;
 
@@ -32,6 +33,7 @@ public class SkillCaster : MonoBehaviour
         movement = GetComponent<CharacterMovement>();
         aim = GetComponent<CharacterAim>();
         state = GetComponent<StateManager>();
+        stat = GetComponent<CharacterStat>();
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
         
