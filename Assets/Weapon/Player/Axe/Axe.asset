@@ -17,12 +17,30 @@ MonoBehaviour:
   cannotUse: 0
   icon: {fileID: 0}
   model: {fileID: 0}
+  PassiveSkill: {fileID: 0}
+  ESkill: {fileID: 11400000, guid: 9f29ebae010844e4b861e01ba1bb7520, type: 2}
+  FSkill: {fileID: 0}
+  SpaceSkill: {fileID: 0}
   LSkill: {fileID: 11400000, guid: 03f3fec81694be646966dea549b035d8, type: 2}
   RSkill: {fileID: 11400000, guid: cc0237705a66a204480a106430d96358, type: 2}
-  LRSkill: {fileID: 11400000, guid: 1d62950e4339785468659ff83822696b, type: 2}
   SLSkill: {fileID: 11400000, guid: 4403d16aff2e4aa469cc03e55644a2ba, type: 2}
-  FSkill: {fileID: 0}
-  QSkill: {fileID: 0}
-  ESkill: {fileID: 11400000, guid: 9f29ebae010844e4b861e01ba1bb7520, type: 2}
-  SpaceSkill: {fileID: 0}
-  combo: []
+  LRSkill: {fileID: 11400000, guid: 1d62950e4339785468659ff83822696b, type: 2}
+  MagicPassiveSkill: {fileID: 0}
+  MagicESkill: {fileID: 0}
+  MagicFSkill: {fileID: 0}
+  MagicSpaceSkill: {fileID: 0}
+  MagicLSkill: {fileID: 0}
+  MagicRSkill: {fileID: 0}
+  MagicSLSkill: {fileID: 0}
+  MagicLRSkill: {fileID: 0}
+  combo:
+  - conditions:
+    - {fileID: 11400000, guid: 2aec201dd85727846adb48b14a662c70, type: 2}
+    - {fileID: 11400000, guid: 91eecb14d2d6ede4ca393ea6b4600814, type: 2}
+    - {fileID: 11400000, guid: aaa6715907d536849be8dd49b97164ca, type: 2}
+    - {fileID: 11400000, guid: 56aa6d9ccbb0f344ba90e8b6fb788bd7, type: 2}
+    comboInput:
+    - input: 4
+      preDelay: 0.1
+      isPress: 1
+      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}

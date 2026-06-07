@@ -20,16 +20,20 @@ public class DamagePopupManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // 씬 종속 싱글톤: DontDestroyOnLoad를 쓰지 않으므로 씬마다 자기 매니저가 주인이 된다.
+        // 기존 인스턴스를 Destroy(self)하면, 씬 전환 시 새 씬의 Awake가 이전 씬 파괴 전에
+        // 먼저 호출되어 새 매니저(와 자식 Canvas)가 파괴되는 문제가 생긴다.
+        instance = this;
 
         cam = Camera.main;
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
     }
 
     public void Popup(float damage, bool crit, Vector3 head)

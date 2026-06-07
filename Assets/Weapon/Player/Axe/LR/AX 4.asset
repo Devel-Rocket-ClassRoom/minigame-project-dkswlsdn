@@ -16,7 +16,8 @@ MonoBehaviour:
   actionTime: 0.7
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: fbdd4336af0217845b6de36d507d6707, type: 2}
+  clip: {fileID: 7400000, guid: 8a05126974800164a914fecfdb01f76f, type: 2}
+  blendTime: 0
   movementMethod:
     calcType: 0
     gravity: 20
@@ -47,7 +48,12 @@ MonoBehaviour:
   attack:
   - preDelay: 0
     method: {fileID: 11400000, guid: a6a516ef60fb32f48b3e4b5990586216, type: 2}
+  grabImmuneLevel: 0
   stack: []
+  effects: []
+  cameraShakes: []
+  normalizePivotOnCameraAction: 0
+  cameraActions: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

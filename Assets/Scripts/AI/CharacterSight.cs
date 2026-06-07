@@ -70,6 +70,7 @@ public class CharacterSight : MonoBehaviour
         {
             OnLost(character);
             onLost?.Invoke(character);
+            TeamManager.Instance?.ReportVisibility(owner, character, false);
         }
     }
 
@@ -87,6 +88,19 @@ public class CharacterSight : MonoBehaviour
                 continue;
             }
 
+            // 풀링으로 비활성화된 후보: 보임 상태였다면 해제(렌더러 끔)해 stale을 막는다.
+            // (비활성화 시 OnTriggerExit가 항상 발생하진 않음). candidates엔 남겨 재활성 시 다시 감지되게 한다.
+            if (!candidate.gameObject.activeInHierarchy)
+            {
+                if (visibles.Remove(candidate))
+                {
+                    OnLost(candidate);
+                    onLost?.Invoke(candidate);
+                    TeamManager.Instance?.ReportVisibility(owner, candidate, false);
+                }
+                continue;
+            }
+
             bool nowVisible = CheckVisible(candidate);
             bool wasVisible = visibles.Contains(candidate);
 
@@ -95,12 +109,14 @@ public class CharacterSight : MonoBehaviour
                 visibles.Add(candidate);
                 OnDetected(candidate);
                 onDetected?.Invoke(candidate);
+                TeamManager.Instance?.ReportVisibility(owner, candidate, true);
             }
             else if (!nowVisible && wasVisible)
             {
                 visibles.Remove(candidate);
                 OnLost(candidate);
                 onLost?.Invoke(candidate);
+                TeamManager.Instance?.ReportVisibility(owner, candidate, false);
             }
         }
     }
@@ -173,5 +189,16 @@ public class CharacterSight : MonoBehaviour
         candidates.Clear();
         visibles.Clear();
         colCache.Clear();
+    }
+
+    // 시야 소유자가 비활성화/파괴되면, 보고 있던 대상들의 팀 가시 카운트를 정리한다.
+    // (OnTriggerExit가 비활성화 시 항상 발생하진 않아 stale 렌더가 남는 것을 방지)
+    protected virtual void OnDisable()
+    {
+        if (TeamManager.Instance != null)
+            foreach (var c in visibles)
+                TeamManager.Instance.ReportVisibility(owner, c, false);
+
+        visibles.Clear();
     }
 }

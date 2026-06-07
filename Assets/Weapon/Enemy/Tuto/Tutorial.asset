@@ -17,17 +17,24 @@ MonoBehaviour:
   cannotUse: 0
   icon: {fileID: 0}
   model: {fileID: 0}
+  PassiveSkill: {fileID: 0}
+  ESkill: {fileID: 0}
+  FSkill: {fileID: 0}
+  SpaceSkill: {fileID: 0}
   LSkill: {fileID: 11400000, guid: e78c8985805c22845928568b42ba09ff, type: 2}
   RSkill: {fileID: 0}
-  LRSkill: {fileID: 0}
   SLSkill: {fileID: 0}
-  FSkill: {fileID: 0}
-  QSkill: {fileID: 0}
-  ESkill: {fileID: 0}
-  SpaceSkill: {fileID: 0}
+  LRSkill: {fileID: 0}
+  MagicPassiveSkill: {fileID: 0}
+  MagicESkill: {fileID: 0}
+  MagicFSkill: {fileID: 0}
+  MagicSpaceSkill: {fileID: 0}
+  MagicLSkill: {fileID: 0}
+  MagicRSkill: {fileID: 0}
+  MagicSLSkill: {fileID: 0}
+  MagicLRSkill: {fileID: 0}
   combo:
   - conditions:
-    - {fileID: 11400000, guid: aaa6715907d536849be8dd49b97164ca, type: 2}
     - {fileID: 11400000, guid: 0ee63aa30268593449d6bc6a18c089c7, type: 2}
     comboInput:
     - input: 0

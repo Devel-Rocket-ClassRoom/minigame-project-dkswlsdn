@@ -100,6 +100,8 @@ public class SaveDataV3 : SaveData
         currentParty = new List<string>();
 
         currentCharacterId = implementedCharacter[0];
+        currentParty.Add(currentCharacterId); // 현재 캐릭터는 항상 파티 일원
+
         maxInventorySpace = 10;
         maxStorageSpace = 140;
 

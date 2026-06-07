@@ -26,7 +26,7 @@ public class PlayerSkillExecuter : SkillExecuter
         {
             // 캐릭터(무기)가 바뀐 경우: 무기를 새로 로드 (setter가 Init 호출)
             loadedCharacterId = character;
-            var weaponName = DataTableManager.StringTable.Get($"{character}_WEAPON");
+            var weaponName = DataTableManager.StringTable.Get(character);
             CurrentWeapon = DatabaseManager.FindWeapon(weaponName);
         }
         else

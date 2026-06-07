@@ -22,9 +22,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float checkInterval = 1f;
 
     [Header("Death")]
-    [SerializeField] private float corpseDelay = 2f;
-
-    [Header("Death")]
     [SerializeField] private List<ItemDropRate> dropRateList;
 
     private ObjectPool<Character> pool;
@@ -59,7 +56,13 @@ public class SpawnManager : MonoBehaviour
 
     private Character CreateCharacter()
     {
-        var c = Instantiate(spawnCharacter);
+        // 프리팹 기본 위치(원점 등)에서 NavMeshAgent가 OnEnable되면 "not close enough to NavMesh" 경고가 난다.
+        // 생성 시점부터 네브메시 위 유효 위치(스폰 지점)에 두어 경고를 막는다. 실제 배치는 SpawnOne에서.
+        Vector3 pos = (spawnPoint != null && spawnPoint.Length > 0 && spawnPoint[0] != null)
+            ? spawnPoint[0].transform.position
+            : transform.position;
+
+        var c = Instantiate(spawnCharacter, pos, Quaternion.identity);
         c.gameObject.SetActive(false);
         return c;
     }
@@ -118,19 +121,14 @@ public class SpawnManager : MonoBehaviour
         c.GetComponent<StateManager>()?.ResetState();
         c.GetComponent<CharacterMovement>()?.ResetState();
         c.GetComponent<CharacterStat>()?.ResetState();
-        c.GetComponent<CharacterDeath>()?.SetOwnedByPool(true);   // 자가 Destroy 방지(소멸은 corpseDelay로)
 
-        Action handler = () => OnDead(c);
+        // 죽음 연출은 비풀 적과 동일하게 진행하고, 연출이 끝나는 시점(비풀이 Destroy하는 시점)에 풀 반환.
+        var death = c.GetComponent<CharacterDeath>();
+        death.SetOwnedByPool(true);
+
+        Action handler = () => Release(c);
         deathHandlers[c] = handler;
-        c.State.onDead += handler;
-    }
-
-    private void OnDead(Character c) => StartCoroutine(ReleaseAfter(c, corpseDelay));
-
-    private IEnumerator ReleaseAfter(Character c, float delay)
-    {
-        if (delay > 0f) yield return new WaitForSeconds(delay);
-        Release(c);
+        death.onDeathComplete += handler;
     }
 
     private void Release(Character c)
@@ -139,7 +137,8 @@ public class SpawnManager : MonoBehaviour
 
         if (deathHandlers.TryGetValue(c, out var h))
         {
-            c.State.onDead -= h;
+            var death = c.GetComponent<CharacterDeath>();
+            if (death != null) death.onDeathComplete -= h;
             deathHandlers.Remove(c);
         }
         pool.Release(c);

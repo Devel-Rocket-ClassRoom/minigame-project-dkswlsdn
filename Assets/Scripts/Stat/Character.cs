@@ -67,9 +67,11 @@ public class Character : MonoBehaviour
 
     private void OnEnable()
     {
-        if (team != 1)
-            foreach (var r in GetComponentsInChildren<Renderer>())
-                r.enabled = false;
+        // 아군 팀(1)은 항상 보이고, 적(그 외)은 평소 숨김 → TeamManager가 시야에 들어올 때 켠다.
+        // team이 바뀌어 OnEnable이 다시 도는 경우(아군 스폰)에도 확실히 반영되도록 명시적으로 on/off.
+        bool visible = team == 1;
+        foreach (var r in GetComponentsInChildren<Renderer>())
+            r.enabled = visible;
 
         Stat?.ResetState();       // 체력 최대로
         State?.ResetState();      // Dead 해제 → Idle (콜라이더/애니 복구)

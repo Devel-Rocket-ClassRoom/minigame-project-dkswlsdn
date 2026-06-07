@@ -55,13 +55,15 @@ public class StateManager : MonoBehaviour
     private float stunEndTime;
     [SerializeField] private float knockdownTimer;
     private float wakeUpTimer;
+    private float airborneEnterTime;   // 에어본 진입 시각(착지 엣지 누락 대비 폴백용)
 
     [SerializeField] private Collider standCollider;
     [SerializeField] private Collider layCollider;
 
-    private const float BASE_KNOCKDOWN_DURATION = 2f;
-    private const float BASE_WAKEUP_DURATION    = 0.55f;
+    private const float BASE_KNOCKDOWN_DURATION = 1f;
+    private const float BASE_WAKEUP_DURATION    = 0.84f;
     private const float KNOCKDOWN_EXTEND_AMOUNT  = 0.1f;
+    private const float AIRBORNE_LAND_GRACE      = 0.15f;  // 이 시간 뒤 접지면 강제 착지(엣지 누락 폴백)
 
     private void Awake()
     {
@@ -102,6 +104,11 @@ public class StateManager : MonoBehaviour
                 if (Time.time >= stunEndTime) ChangeState(CharacterState.Idle);
                 break;
             case CharacterState.Airborne:
+                // 착지 엣지(onLand) 누락 대비 폴백: 진입 후 유예시간이 지났는데 접지 상태면 강제로 착지 처리.
+                // 실제 띄움은 이 시간 동안 공중에 있으므로 정상 띄움엔 영향 없음.
+                if (Time.time >= airborneEnterTime + AIRBORNE_LAND_GRACE
+                    && movement != null && movement.GetOnGrounded())
+                    ChangeState(CharacterState.Knockdown);
                 break;
             case CharacterState.Knockdown:
                 if (isGrounded) knockdownTimer -= Time.deltaTime;
@@ -171,6 +178,7 @@ public class StateManager : MonoBehaviour
                 break;
             case CharacterState.Airborne:
                 if (prev == CharacterState.Grapped) knockdownTimer = BASE_KNOCKDOWN_DURATION;
+                airborneEnterTime = Time.time;
                 onAirborne?.Invoke();
                 // Exit Time은 무시하되 짧게 블렌드해 부드럽게 전이(타이밍 정확 + 약한 보간)
                 if (animator != null) animator.CrossFadeInFixedTime("Airborne", 0.1f, 0, 0f);
@@ -214,6 +222,10 @@ public class StateManager : MonoBehaviour
         State = CharacterState.Idle;
         ChangeState(CharacterState.Idle);
     }
+
+    // 모델 교체 시 새 모델의 Animator로 재연결. Animator는 갈아끼우는 Model 자식 안에 있어
+    // 인스펙터 참조가 끊기므로, CharacterModelSwapper가 교체 후 이 메서드로 다시 물려준다.
+    public void SetAnimator(Animator a) { animator = a; }
 
     public void SetGrounded(bool grounded) { isGrounded = grounded; }
 

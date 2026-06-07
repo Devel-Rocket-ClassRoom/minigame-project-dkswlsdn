@@ -1,24 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// CharacterSight를 확장해 플레이어 전용 시야 처리를 담당한다.
-/// 보이게 됐을 때 대상의 렌더러를 켜고, 안 보이게 됐을 때 끈다.
+/// 플레이어 전용 시야. 가시성 판정은 base(CharacterSight)가 수행하고,
+/// 적 렌더러 on/off는 TeamManager가 팀 전체(플레이어 + 아군) 시야를 합산해 처리한다.
+/// 따라서 아군이 본 적도 플레이어 화면에 함께 보인다(시야 공유).
 /// </summary>
 public class PlayerSight : CharacterSight
 {
-    protected override void OnDetected(Character character)
-    {
-        SetRenderersEnabled(character, true);
-    }
-
-    protected override void OnLost(Character character)
-    {
-        SetRenderersEnabled(character, false);
-    }
-
-    private static void SetRenderersEnabled(Character character, bool enabled)
-    {
-        foreach (var renderer in character.GetComponentsInChildren<Renderer>())
-            renderer.enabled = enabled;
-    }
 }

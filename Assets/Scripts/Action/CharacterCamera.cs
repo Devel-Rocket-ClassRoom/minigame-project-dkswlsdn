@@ -64,4 +64,13 @@ public abstract class CharacterCamera : MonoBehaviour
 
     // 카메라 흔들기 요청. 흔들림을 지원하는 카메라(PlayerCamera)만 실제로 처리한다.
     public virtual void Shake(CameraShakeSettings settings) { }
+
+    // 스킬 카메라 액션 요청. 플레이어 카메라만 실제로 처리한다.
+    public virtual void PlayCameraAction(CameraActionEntry entry) { }
+
+    // 진행 중인 카메라 액션을 중립으로 복귀. 플레이어 카메라만 실제로 처리한다.
+    public virtual void CancelCameraAction() { }
+
+    // 피벗 pitch를 0으로 정규화(선형 보간). 플레이어 카메라만 실제로 처리한다.
+    public virtual void NormalizePivotPitch() { }
 }

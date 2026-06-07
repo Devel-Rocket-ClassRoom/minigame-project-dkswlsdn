@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe L
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   skillId: AX_L
-  cooldown: 0.3
+  cooldown: 0.5
   actions:
   - {fileID: 11400000, guid: 36f9947ff91050a4bb548f5c679ad614, type: 2}
   transitions: []

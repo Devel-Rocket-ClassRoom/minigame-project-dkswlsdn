@@ -25,10 +25,33 @@ public class CharacterVisualStateHandler : MonoBehaviour
 
     private void Awake()
     {
-        stat      = GetComponent<CharacterStat>();
+        stat = GetComponent<CharacterStat>();
+        AcquireBodyRenderers();
+        AcquireOutline(outlineRenderers); // 초기엔 인스펙터에 직렬화된 참조 사용
+    }
+
+    // 모델 교체(CharacterModelSwapper) 후 호출. 새 모델의 렌더러로 페이드/아웃라인 대상을 다시 잡는다.
+    // 기존 캐시는 파괴되어 MissingReferenceException을 유발하므로 반드시 재취득해야 한다.
+    public void Rebind()
+    {
+        // 이전 아웃라인 머티리얼 인스턴스 정리
+        if (outlineMats != null)
+            foreach (var m in outlineMats)
+                if (m != null) Destroy(m);
+
+        AcquireBodyRenderers();
+        AcquireOutline(FindOutlineRenderers()); // 새 모델엔 직렬화 참조가 없으므로 이름으로 재탐색
+
+        // 다음 Update에서 현재 상태를 새 렌더러에 강제로 다시 적용하도록 캐시 무효화
+        prevArmor  = (ArmorType)(-1);
+        prevImmune = false;
+    }
+
+    // 무적 페이드용 WallFadeTarget을 모든 자식 렌더러에 확보
+    private void AcquireBodyRenderers()
+    {
         renderers = GetComponentsInChildren<Renderer>(includeInactive: true);
 
-        // 무적 페이드용 WallFadeTarget
         fadeTargets = new WallFadeTarget[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
         {
@@ -37,8 +60,12 @@ public class CharacterVisualStateHandler : MonoBehaviour
             ft.Configure(immuneAlpha, immuneFadeSpeed);
             fadeTargets[i] = ft;
         }
+    }
 
-        // 아웃라인 머티리얼 인스턴스
+    // 아웃라인 머티리얼 인스턴스 생성 + 평소엔 끄기
+    private void AcquireOutline(Renderer[] outlines)
+    {
+        outlineRenderers = outlines ?? new Renderer[0];
         outlineMats = new Material[outlineRenderers.Length];
         for (int i = 0; i < outlineRenderers.Length; i++)
         {
@@ -46,6 +73,20 @@ public class CharacterVisualStateHandler : MonoBehaviour
             outlineMats[i] = outlineRenderers[i].material;
             outlineRenderers[i].gameObject.SetActive(false);
         }
+    }
+
+    // 새 모델 계층에서 이름에 "outline"이 들어간 렌더러를 아웃라인으로 간주해 찾는다.
+    // (모델 프리팹에 아웃라인 메시가 없으면 빈 배열 → 아웃라인 없이 정상 동작)
+    private Renderer[] FindOutlineRenderers()
+    {
+        var list = new System.Collections.Generic.List<Renderer>();
+        foreach (var r in renderers)
+        {
+            if (r == null) continue;
+            if (r.gameObject.name.IndexOf("outline", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                list.Add(r);
+        }
+        return list.ToArray();
     }
 
     private void OnDestroy()
@@ -85,7 +126,7 @@ public class CharacterVisualStateHandler : MonoBehaviour
     private void ApplyImmuneFade(bool immune)
     {
         foreach (var ft in fadeTargets)
-            ft.SetHidden(immune);
+            if (ft != null) ft.SetHidden(immune);
     }
 
     private Color GetOutlineColor(ArmorType armor)

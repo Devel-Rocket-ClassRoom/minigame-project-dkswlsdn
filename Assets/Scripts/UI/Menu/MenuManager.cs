@@ -132,12 +132,17 @@ public class MenuManager : MonoBehaviour
         isMenuOpen = isMainAlwaysOpen;
 
         if (currentPopup != null) currentPopup.gameObject.SetActive(false);
-        
+
         if (isMainAlwaysOpen)
         {
             currentMenu = mainPanel;
             mainPanel.gameObject.SetActive(true);
         }
+
+        // 창을 닫을 때 저장된 선택(deploy)에 맞춰 플레이어 모델/무기 교체.
+        // 선택이 바뀌지 않았으면 Swap 내부에서 무시되므로 매번 호출해도 무해하다.
+        if (Character.CurrentPlayer != null)
+            Character.CurrentPlayer.GetComponent<CharacterModelSwapper>()?.Swap();
     }
 
     public void BackMenu()
@@ -159,12 +164,10 @@ public class MenuManager : MonoBehaviour
     {
         if (lockCursor)
         {
-            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
-            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
     }

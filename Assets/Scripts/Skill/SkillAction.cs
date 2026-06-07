@@ -16,9 +16,13 @@ public class SkillAction : ScriptableObject
 
     public MovementMethod movementMethod;
     public List<AttackEntry> attack;
+    public int grabImmuneLevel;
     public List<StackMethod> stack;
     public List<EffectEntry> effects;
     public List<CameraShakeEntry> cameraShakes;
+
+    public bool normalizePivotOnCameraAction;
+    public List<CameraActionEntry> cameraActions;
 
     public DestinationTargettingMethod targetting;
     public LayerMask targetLayer;
@@ -149,6 +153,7 @@ public class AttackInfo
     public float mult;
     public float add;
     public float crit;
+    public int grabLevel;
 
     [Header("카메라")]
     [Tooltip("적중 시 발생할 카메라 흔들림. 비워두면 흔들림 없음")]

@@ -23,11 +23,23 @@ public class SkillAnimationHandler : MonoBehaviour
         caster = GetComponent<SkillCaster>();
         if (animator == null) animator = GetComponentInChildren<Animator>();
 
+        Rebind(animator);
+    }
+
+    // 모델 교체 시 새 Animator로 오버라이드 컨트롤러를 다시 빌드한다.
+    // 새 모델 인스턴스의 Animator는 기본 컨트롤러를 들고 있으므로(오버라이드 중첩 아님) 그대로 감싸면 된다.
+    public void Rebind(Animator newAnimator)
+    {
+        animator = newAnimator;
+        if (animator == null) return;
+
         overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = overrideController;
 
         overridesList = new List<KeyValuePair<AnimationClip, AnimationClip>>(overrideController.overridesCount);
         overrideController.GetOverrides(overridesList);
+
+        pingPong = 0;
     }
 
     private void OnEnable()  => caster.onActionStart += OnActionStart;

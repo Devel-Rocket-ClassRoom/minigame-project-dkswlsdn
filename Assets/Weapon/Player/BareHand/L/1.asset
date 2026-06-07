@@ -16,6 +16,7 @@ MonoBehaviour:
     mult: 0.35
     add: 0
     crit: 0
+    grabLevel: 0
     cameraShake:
       direction: {x: 0.5, y: 0.8660254}
       amplitude: 0.1
@@ -68,9 +69,9 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: -0.28811643, y: -0.25766265, z: -0.9222792}
+  aimDir: {x: 0.6171171, y: -0.2576628, z: -0.74348927}
   positionOffset: {x: 0, y: 1.2, z: 0.75}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 1.2, y: 1.2, z: 1.5}
+  scale: {x: 1.7, y: 1.2, z: 1.5}
   movementType: 1
   spawnRules: []

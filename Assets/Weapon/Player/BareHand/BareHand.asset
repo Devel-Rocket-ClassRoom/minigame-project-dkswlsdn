@@ -17,54 +17,29 @@ MonoBehaviour:
   cannotUse: 0
   icon: {fileID: 0}
   model: {fileID: 0}
+  PassiveSkill: {fileID: 0}
+  ESkill: {fileID: 11400000, guid: 3fc1f9ef5a5eebb44a4c947ef2c22b06, type: 2}
+  FSkill: {fileID: 11400000, guid: 2fe8ae55cb040de46ad3fb814bca60db, type: 2}
+  SpaceSkill: {fileID: 11400000, guid: dd41bbded2065dc499609ef28a49037c, type: 2}
   LSkill: {fileID: 11400000, guid: 59dbd2998c1392048a030dfdbd21fb6b, type: 2}
   RSkill: {fileID: 11400000, guid: f0aba983c5515f24f99cb09148ce5a39, type: 2}
-  LRSkill: {fileID: 11400000, guid: ed23fbca87a4b39409dc8a5e975ec8c4, type: 2}
   SLSkill: {fileID: 11400000, guid: d517e1af5a824e34b883f5a1e66cf9b0, type: 2}
-  FSkill: {fileID: 11400000, guid: 2fe8ae55cb040de46ad3fb814bca60db, type: 2}
-  QSkill: {fileID: 0}
-  ESkill: {fileID: 11400000, guid: 3fc1f9ef5a5eebb44a4c947ef2c22b06, type: 2}
-  SpaceSkill: {fileID: 11400000, guid: dd41bbded2065dc499609ef28a49037c, type: 2}
+  LRSkill: {fileID: 11400000, guid: ed23fbca87a4b39409dc8a5e975ec8c4, type: 2}
+  MagicPassiveSkill: {fileID: 0}
+  MagicESkill: {fileID: 0}
+  MagicFSkill: {fileID: 0}
+  MagicSpaceSkill: {fileID: 0}
+  MagicLSkill: {fileID: 0}
+  MagicRSkill: {fileID: 0}
+  MagicSLSkill: {fileID: 0}
+  MagicLRSkill: {fileID: 0}
   combo:
-  - conditions: []
+  - conditions:
+    - {fileID: 11400000, guid: 2aec201dd85727846adb48b14a662c70, type: 2}
+    - {fileID: 11400000, guid: 56aa6d9ccbb0f344ba90e8b6fb788bd7, type: 2}
+    - {fileID: 11400000, guid: 91eecb14d2d6ede4ca393ea6b4600814, type: 2}
     comboInput:
     - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
-      isPress: 1
-      condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}
-    - input: 4
-      preDelay: 0.1
+      preDelay: 0
       isPress: 1
       condtion: {fileID: 11400000, guid: 5ba8e08105ffd1743ae8a868b6355adf, type: 2}

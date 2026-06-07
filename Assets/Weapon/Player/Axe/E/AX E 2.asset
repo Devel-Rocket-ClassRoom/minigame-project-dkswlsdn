@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: AX E 2
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.5
+  actionTime: 0.8
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
+  blendTime: 0
   movementMethod:
     calcType: 0
     gravity: 0
@@ -47,7 +48,12 @@ MonoBehaviour:
   attack:
   - preDelay: 0
     method: {fileID: 11400000, guid: 7daada1afbff9984384e4b3253417c7f, type: 2}
+  grabImmuneLevel: 0
   stack: []
+  effects: []
+  cameraShakes: []
+  normalizePivotOnCameraAction: 0
+  cameraActions: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

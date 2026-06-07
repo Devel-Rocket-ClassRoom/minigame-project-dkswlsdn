@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -36,6 +37,10 @@ public class CharacterDeath : MonoBehaviour
     private Coroutine routine;
     private bool ownedByPool;   // SpawnManager가 관리하는 인스턴스인지
 
+    // 풀 소속 인스턴스에서 사망 연출이 끝난 시점(비풀이면 Destroy하는 그 시점)에 발생.
+    // 구독자(SpawnManager)가 이때 풀로 반환한다.
+    public event Action onDeathComplete;
+
     private void Awake()
     {
         state = GetComponent<StateManager>();
@@ -67,26 +72,24 @@ public class CharacterDeath : MonoBehaviour
 
         if (routine != null) StopCoroutine(routine);
         bool breakable = state.DeathByBreak;
-        bool wasAirborne = state.DeathPrevState == CharacterState.Airborne;
-        routine = StartCoroutine(CoDeath(breakable, wasAirborne));
+        routine = StartCoroutine(CoDeath(breakable));
     }
 
-    private IEnumerator CoDeath(bool breakable, bool wasAirborne)
+    private IEnumerator CoDeath(bool breakable)
     {
         if (breakable)
         {
-            // 즉시 사망 모션 (Airborne이어도 바로 정지)
+            // 즉시 사망 모션 (공중이어도 바로 정지)
         }
-        else if (wasAirborne)
+        else if (movement != null && !movement.GetOnGrounded() && state.State == CharacterState.Airborne)
         {
-            // 착지까지 대기 (낙하는 물리로 진행됨)
             float timeout = Time.time + maxAirborneWait;
             while (movement != null && !movement.GetOnGrounded() && Time.time < timeout)
                 yield return null;
         }
         else
         {
-            // 일반 그로기 모션
+            // 지상 사망 → 그로기 모션
             state.DeathGroggy();
             yield return new WaitForSeconds(groggyDuration);
         }
@@ -105,9 +108,15 @@ public class CharacterDeath : MonoBehaviour
             // 플레이어는 파괴하지 않고 게임오버 흐름으로 넘긴다(카메라/입력/CurrentPlayer 참조 보호)
             MenuManager.instance.GameOver();
         }
-        else if (!ownedByPool)
+        else if (ownedByPool)
         {
-            // 스폰매니저 소속이면 corpseDelay로 풀 반환되므로 여기선 Destroy하지 않는다.
+            // 풀 소속: Destroy 대신 이 시점(=비풀이 Destroy하는 시점)에 풀 반환을 요청한다.
+            routine = null;
+            onDeathComplete?.Invoke();
+            yield break;
+        }
+        else
+        {
             Destroy(gameObject);
         }
 

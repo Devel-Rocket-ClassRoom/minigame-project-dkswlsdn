@@ -247,7 +247,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1492
+  m_VersionIndex: 1537
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1492
+  m_VersionIndex: 1537
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -913,7 +913,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1492
+  m_VersionIndex: 1537
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1492
+  m_VersionIndex: 1537
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1492
+  m_VersionIndex: 1537
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1706,9 +1706,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4358322549631722291}
   - component: {fileID: 4979272645229787557}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1749,6 +1749,74 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 4, z: 1}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!1 &7139470324826114468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70605796038830287}
+  - component: {fileID: 3449076002235826479}
+  - component: {fileID: 5334235798915491501}
+  m_Layer: 12
+  m_Name: Obstacle (1)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &70605796038830287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7139470324826114468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8916377785083658842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3449076002235826479
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7139470324826114468}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &5334235798915491501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7139470324826114468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c947850026d848b819c8a0c53471c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SightTarget
 --- !u!1 &7323143853057623767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,6 +1833,7 @@ GameObject:
   - component: {fileID: 1541548552837764104}
   - component: {fileID: 2432108390865129349}
   - component: {fileID: 2739620262070331538}
+  - component: {fileID: 2012417385177461871}
   m_Layer: 8
   m_Name: Obstacle Soft
   m_TagString: Untagged
@@ -1793,6 +1862,7 @@ Transform:
   - {fileID: 6276783344210744428}
   - {fileID: 7162831896213194864}
   - {fileID: 4358322549631722291}
+  - {fileID: 70605796038830287}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3355243268743757698
@@ -1822,13 +1892,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6564b6d0c6c45a749a07bb94bf406e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStat
-  maxHealth: 100
+  maxHealth: 2500
   health: 0
   attack: 0
+  crit: 0
+  defense: 0
+  dodgy: 0
   sightRange: 0
   armor: 4
-  grabImmuneLevel: 0
-  isObstacle: 0
+  defaultGrabImmuneLevel: 3
+  isObstacle: 1
 --- !u!114 &6444337426090465278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1928,6 +2001,29 @@ MonoBehaviour:
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
     scaleOffset: {x: 0, y: 0, z: 0}
+--- !u!136 &2012417385177461871
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323143853057623767}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9119848385155139060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,7 +2271,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1492
+  m_VersionIndex: 1537
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

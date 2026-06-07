@@ -63,9 +63,16 @@ public class EffectManager : MonoBehaviour
         if (!pools.ContainsKey(prefab))
         {
             pools[prefab] = new ObjectPool<GameObject>(
-                createFunc: () => Instantiate(prefab),
+                // 매니저를 부모로 생성/반환한다. 풀에 대기 중인 비활성 이펙트가
+                // 일시적인 캐릭터의 자식으로 남으면, 그 캐릭터가 Destroy될 때 함께 파괴되어
+                // 풀에 죽은 참조가 남는다(MissingReferenceException의 원인).
+                createFunc: () => Instantiate(prefab, transform),
                 actionOnGet: go => go.SetActive(true),
-                actionOnRelease: go => go.SetActive(false),
+                actionOnRelease: go =>
+                {
+                    go.transform.SetParent(transform);
+                    go.SetActive(false);
+                },
                 actionOnDestroy: go => Destroy(go)
             );
         }
@@ -75,7 +82,9 @@ public class EffectManager : MonoBehaviour
     private IEnumerator ReturnToPool(GameObject go, ObjectPool<GameObject> pool, float delay)
     {
         yield return new WaitForSeconds(delay);
-        pool.Release(go);
+        // 재생 중(활성)인 이펙트가 부모와 함께 파괴됐을 수 있다.
+        // 죽은 참조를 Release하면 풀이 오염되므로 가드한다.
+        if (go != null) pool.Release(go);
     }
 }
 
