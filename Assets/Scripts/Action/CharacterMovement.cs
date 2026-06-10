@@ -263,7 +263,7 @@ public abstract class CharacterMovement : MonoBehaviour
             switch (method.calcType)
             {
                 case DistanceCalculateType.Fixed:
-                    aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
+                    aim.GetLookAtDistance(method.targetting, method.targetLayer, distance, out targetY, method.useTargetting);
                     break;
                 case DistanceCalculateType.UseInput:
                     if (commander.GetInput(ConditionInput.MoveForward, true)) { }
@@ -277,7 +277,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     break;
                 case DistanceCalculateType.UseAim:
-                    distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
+                    distance = aim.GetLookAtDistance(method.targetting, method.targetLayer, distance, out targetY, method.useTargetting);
                     break;
                 case DistanceCalculateType.Mixed:
                     if (commander.GetInput(ConditionInput.MoveBackward, true))
@@ -286,7 +286,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     else
                     {
-                        distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
+                        distance = aim.GetLookAtDistance(method.targetting, method.targetLayer, distance, out targetY, method.useTargetting);
                     }
                     break;
             }
@@ -321,13 +321,13 @@ public abstract class CharacterMovement : MonoBehaviour
         }
     }
 
-    public void StunMove(Character character, AttackInfo hit)
+    public void StunMove(Character character, AttackInfo hit, AttackId id)
     {
         StopAllCoroutines();
-        StartCoroutine(CoFreeze(hit));
+        StartCoroutine(CoFreeze(hit, id));
     }
 
-private IEnumerator CoFreeze(AttackInfo hit)
+private IEnumerator CoFreeze(AttackInfo hit, AttackId id)
     {
         isFrozen = true;
         rigid.linearVelocity = Vector3.zero;
@@ -346,12 +346,12 @@ private IEnumerator CoFreeze(AttackInfo hit)
         switch (hit.forceDirectionType)
         {
             case ForceDirectionType.Fixed:
-                dir = hit.origin.forward;
+                dir = id.origin.forward;
                 break;
             case ForceDirectionType.Spread:
-                dir = transform.position - hit.origin.position;
+                dir = transform.position - id.origin.position;
                 dir.y = 0;
-                dir = dir == Vector3.zero ? hit.origin.forward : dir.normalized;
+                dir = dir == Vector3.zero ? id.origin.forward : dir.normalized;
                 break;
             case ForceDirectionType.Random:
                 break;

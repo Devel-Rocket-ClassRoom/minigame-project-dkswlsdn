@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class PlayerAim : CharacterAim
@@ -30,11 +31,16 @@ public class PlayerAim : CharacterAim
         switch (method)
         {
             case DestinationTargettingMethod.LowAngle:
-                if (GetRayPoint(characterRay, distance, groundLayer, out point, out ly, out _))
+                if (GetRayPoint(aimRay, distance + add, groundLayer, out point, out ly, out _))
                 {
-                    GetRayPoint(characterRay, distance, targetLayer, out point, out ly, out character);
+                    dir = (point - CAim).normalized;
+                    GetRayPoint(new Ray(CAim, dir), Mathf.Infinity, targetLayer, out point, out ly, out character);
                 }
-                y = ly - 1;
+                else
+                {
+                    GetRayPoint(new Ray(CAim, transform.forward), distance, targetLayer, out point, out ly, out character);
+                }
+                y = ly;
                 return point;
             case DestinationTargettingMethod.HighAngle:
                 if (GetRayPoint(aimRay, distance + add, groundLayer, out point, out ly, out _))

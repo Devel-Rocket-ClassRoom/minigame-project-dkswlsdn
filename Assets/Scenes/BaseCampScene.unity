@@ -12196,14 +12196,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1054480588967726959, guid: b7605f816f60197428ae720408a52e34, type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 1744336639}
     - target: {fileID: 2860827428991359692, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: aim
       value: 
       objectReference: {fileID: 444787138}
-    - target: {fileID: 2860827428991359692, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: lookAt
-      value: 
-      objectReference: {fileID: 644342306}
     - target: {fileID: 4886264997926590039, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: cam
       value: 
@@ -12251,14 +12251,6 @@ PrefabInstance:
     - target: {fileID: 7369870928879973472, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8965739408161652863, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 4224
-      objectReference: {fileID: 0}
-    - target: {fileID: 8965739408161652863, guid: b7605f816f60197428ae720408a52e34, type: 3}
-      propertyPath: targetLayer.m_Bits
-      value: 4224
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31758,6 +31750,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!4 &1744336639 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7321503434452160044, guid: b7605f816f60197428ae720408a52e34, type: 3}
+  m_PrefabInstance: {fileID: 627783132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1745641660
 GameObject:
   m_ObjectHideFlags: 0

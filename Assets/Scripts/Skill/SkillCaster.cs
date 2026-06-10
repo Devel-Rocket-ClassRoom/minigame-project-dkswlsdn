@@ -18,10 +18,9 @@ public class SkillCaster : MonoBehaviour
     private float actionTimer;
     private float minTransitionTimer;
 
-    private List<Attack> spawnedAttacks;
-
     public event Action<SkillAction> onActionStart;
     public event Action onSkillEnd;
+    public event Action onSkillCancled;
     public event Action<int> onCooldownReset;
 
     private bool enable = true;
@@ -37,7 +36,6 @@ public class SkillCaster : MonoBehaviour
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
         
-        spawnedAttacks = new List<Attack>();
         context = new SkillContext();
         context.currentIndex = -1;
     }
@@ -77,7 +75,6 @@ public class SkillCaster : MonoBehaviour
         if (!enable) return;
 
         context.spendTime += Time.deltaTime;
-        spawnedAttacks.RemoveAll(atk => atk == null);
 
         CheckTransition();
         CheckHitbox();
@@ -142,7 +139,6 @@ public class SkillCaster : MonoBehaviour
             return;
         }
 
-        context.targetPoint = aim.GetLookAtVector(action.targetting, action.targetLayer, action.aimDistance, out _, out context.target);
         context.current = action;
         actionTimer = action.actionTime + Time.time;
         minTransitionTimer = action.minTransitionTime + Time.time;
@@ -249,11 +245,12 @@ public class SkillCaster : MonoBehaviour
                 foreach (var c in context.grabTarget)
                 {
                     var info = new AttackInfo(attack.method.info);
-                    info.id = character.Id;
-                    info.isPopup = character.isPlayer;
-                    info.origin = transform;
+                    var id = new AttackId();
+                    id.id = character.Id;
+                    id.isPlayer = character.isPlayer;
+                    id.origin = transform;
                     info.useGrab = context.current.useGrab;
-                    c.Stat.TakeDamage(character, info);
+                    c.Stat.TakeDamage(character, info, id);
                 }
 
                 if (attack.method.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
@@ -261,14 +258,18 @@ public class SkillCaster : MonoBehaviour
             else if (attack.method.type != HitboxType.None)
             {
                 var atk = attack.method;
-                atk.aimDir = (context.targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
+                Vector3 targetPoint = aim.GetLookAtVector(atk.targetting, atk.targetLayer, atk.aimDistance, out _, out Transform targetCharacter);
+                if (atk.useTargetting && targetCharacter != null)
+                    targetPoint = targetCharacter.position;
+                atk.aimDir = (targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
 
-                var instance = AttackManager.instance.RequestAttack(character, atk, context.targetPoint);
+                var instance = AttackManager.instance.RequestAttack(character, atk, targetPoint);
                 if (instance == null) continue;
 
-                spawnedAttacks.Add(instance);
-
                 var capturedContext = context;
+
+                if (attack.method.info.isDestroyOnCanceled) { onSkillCancled += instance.OnCancled; onSkillCancled = null; }
+
                 if (attack.method.isGrab)
                 {
                     instance.onHit += (crt) =>
@@ -430,16 +431,9 @@ public class SkillCaster : MonoBehaviour
 
         context.Clear();
         StopAllCoroutines();
-        character.Camera?.CancelCameraAction(); // 진행 중인 카메라 액션 0.2초 복귀
+        character.Camera?.CancelCameraAction();
 
-        for (int i = spawnedAttacks.Count - 1; i >= 0; i--)
-        {
-            if (spawnedAttacks[i] != null && spawnedAttacks[i].method.info.isDestroyOnCanceled)
-            {
-                AttackManager.instance.DestroyAttack(spawnedAttacks[i]);
-                spawnedAttacks.RemoveAt(i);
-            }
-        }
+        onSkillCancled?.Invoke();
     }
 
     private void OnDead()
@@ -472,8 +466,6 @@ public class SkillContext
     public bool wasDamagedInAction;
 
     // 현재 액션
-    public Transform target;
-    public Vector3 targetPoint;
     public SkillAction current;
     public SkillAction next;
 
@@ -487,8 +479,6 @@ public class SkillContext
         hitTarget.Clear();
         grabTarget.Clear();
         wasDamagedInAction = false;
-        target = null;
-        targetPoint = Vector3.zero;
         current = null;
         next = null;
     }

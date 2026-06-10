@@ -20,6 +20,7 @@ MonoBehaviour:
   blendTime: 0
   movementMethod:
     calcType: 1
+    targetting: 0
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -27,6 +28,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
+    useTargetting: 0
     distance: 2
     neutralDistance: 1
     backwardDistance: 0
@@ -73,11 +75,6 @@ MonoBehaviour:
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
-  targetting: 0
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  aimDistance: 0
   transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0

@@ -24,10 +24,6 @@ public class SkillAction : ScriptableObject
     public bool normalizePivotOnCameraAction;
     public List<CameraActionEntry> cameraActions;
 
-    public DestinationTargettingMethod targetting;
-    public LayerMask targetLayer;
-    public float aimDistance;
-
     public List<SkillTransition> transitions;
     public float minTransitionTime;
     public float maxTransitionTime;
@@ -46,6 +42,8 @@ public class SkillTransition
 public struct MovementMethod
 {
     public DistanceCalculateType calcType;
+    public DestinationTargettingMethod targetting;  // 이동 거리 계산용
+    public LayerMask targetLayer;
 
     [Header("공통")]
     public float gravity;
@@ -117,9 +115,6 @@ public class AttackInfo
 
     public AttackInfo(AttackInfo hit)
     {
-        origin = hit.origin;
-        id = hit.id;
-        isPopup = hit.isPopup;
         mult = hit.mult;
         add = hit.add;
         crit = hit.crit;
@@ -139,16 +134,11 @@ public class AttackInfo
         projectileSpeed = hit.projectileSpeed;
         useGrab = hit.useGrab;
         isBreakable = hit.isBreakable;
+        useFrozen = hit.useFrozen;
     }
 
     [HideInInspector, NonSerialized]
-    public Transform origin;
-    [HideInInspector, NonSerialized]
     public bool useGrab;
-    [HideInInspector, NonSerialized]
-    public int id;
-    [HideInInspector, NonSerialized]
-    public bool isPopup;
 
     [Header("데미지")]
     public float mult;
@@ -179,6 +169,7 @@ public class AttackInfo
     public bool isReleaseGrab;
     public float projectileSpeed;
     public bool isBreakable;
+    public bool useFrozen;
 }
 
 

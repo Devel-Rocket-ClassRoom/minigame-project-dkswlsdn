@@ -278,7 +278,7 @@ public class StateManager : MonoBehaviour
         ChangeState(CharacterState.Airborne);
     }
 
-    private void OnDamageTaken(Character character, AttackInfo hit)
+    private void OnDamageTaken(Character character, AttackInfo hit, AttackId id)
     {
         FreezeFor(hit.fixedStun);
 

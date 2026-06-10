@@ -361,7 +361,7 @@ public class AIBrain : MonoBehaviour
         if (aggro == target) ChangeState(AIState.Chase);
     }
 
-    private void ChangeAggro(Character target, AttackInfo info)
+    private void ChangeAggro(Character target, AttackInfo info, AttackId id)
     {
         if (IsObstacle(target)) return;   // 오브젝트는 어그로/보복 대상 아님
         lastAttacker = target;   // 넘어뜨린 범인 추적용(녹다운 카운트 ①에 사용)

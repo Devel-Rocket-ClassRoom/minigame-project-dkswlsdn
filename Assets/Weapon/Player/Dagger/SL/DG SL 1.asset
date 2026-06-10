@@ -20,6 +20,10 @@ MonoBehaviour:
   blendTime: 0
   movementMethod:
     calcType: 3
+    targetting: 0
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 4096
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -27,7 +31,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
-    useTargetting: 0
+    useTargetting: 1
     distance: 7
     neutralDistance: 0
     backwardDistance: 0
@@ -53,11 +57,6 @@ MonoBehaviour:
   cameraShakes: []
   normalizePivotOnCameraAction: 0
   cameraActions: []
-  targetting: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  aimDistance: 7
   transitions:
   - conditions:
     - {fileID: 11400000, guid: b30b3ec54f5ecd4448f2e22346bee148, type: 2}

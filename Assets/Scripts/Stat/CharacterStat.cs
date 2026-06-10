@@ -35,7 +35,7 @@ public class CharacterStat : MonoBehaviour
     private const float wakeUpImmuneDuration = 1.1f;
     private Coroutine wakeUpImmuneCoroutine;
 
-    public event Action<Character, AttackInfo> onDamageTake; // 나 이런 공격을 받았어!
+    public event Action<Character, AttackInfo, AttackId> onDamageTake; // 나 이런 공격을 받았어!
     public event Action<float> onTakeDamage; // 나 이만큼의 데미지를 받았어!
     public event Action onSuperArmorActivate; // 나 슈퍼아머 발동했어!
     public event Action onHealthLack; // 나 체력이 부족해!
@@ -123,7 +123,7 @@ public class CharacterStat : MonoBehaviour
         damageTaken = damage;
     }
 
-    public void TakeDamage(Character character, AttackInfo hit)
+    public void TakeDamage(Character character, AttackInfo hit, AttackId id)
     {
         if (IsImmune || state.State == CharacterState.Dead) return;   // 무적이거나 이미 죽은 대상은 타격 무시
 
@@ -151,7 +151,7 @@ public class CharacterStat : MonoBehaviour
         float defendedDamage = originDamage * (100f / (100 + defense));
         float finalDamage = crit ? defendedDamage * 1.3f : defendedDamage;
         health -= finalDamage;
-        if (hit.isPopup) DamagePopupManager.instance.Popup(finalDamage, crit, anchor.head.position);
+        if (id.isPlayer) DamagePopupManager.instance.Popup(finalDamage, crit, anchor.head.position);
 
         // 어택인포에 설정된 카메라 흔들림을 공격자 카메라에 적용(플레이어가 때렸을 때만 실제로 흔들림)
         character.Camera?.Shake(myHit.cameraShake);
@@ -169,7 +169,7 @@ public class CharacterStat : MonoBehaviour
             return;
         }
 
-        onDamageTake?.Invoke(character, myHit);
+        onDamageTake?.Invoke(character, myHit, id);
 
         if (isObstacle && myHit.isBreakable) { health = 0; }
 
