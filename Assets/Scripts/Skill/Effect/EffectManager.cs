@@ -63,9 +63,6 @@ public class EffectManager : MonoBehaviour
         if (!pools.ContainsKey(prefab))
         {
             pools[prefab] = new ObjectPool<GameObject>(
-                // 매니저를 부모로 생성/반환한다. 풀에 대기 중인 비활성 이펙트가
-                // 일시적인 캐릭터의 자식으로 남으면, 그 캐릭터가 Destroy될 때 함께 파괴되어
-                // 풀에 죽은 참조가 남는다(MissingReferenceException의 원인).
                 createFunc: () => Instantiate(prefab, transform),
                 actionOnGet: go => go.SetActive(true),
                 actionOnRelease: go =>

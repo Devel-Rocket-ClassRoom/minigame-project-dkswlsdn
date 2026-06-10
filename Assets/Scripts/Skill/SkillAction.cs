@@ -55,6 +55,7 @@ public struct MovementMethod
     public bool rightSide;
     public bool canFreeMove;
     public float freeMoveSpeed;
+    public bool useTargetting;
 
     [Header("수평이동")]
     public float distance;

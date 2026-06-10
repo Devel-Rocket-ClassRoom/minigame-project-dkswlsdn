@@ -16,7 +16,8 @@ MonoBehaviour:
   actionTime: 0.3
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: 79a491f4a56d4ff4599cd239fb665145, type: 2}
+  clip: {fileID: 7400000, guid: d70041fd66edb7845b15fe1fcae2a4f8, type: 2}
+  blendTime: 0
   movementMethod:
     calcType: 1
     gravity: 0
@@ -26,6 +27,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
+    useTargetting: 0
     distance: 1
     neutralDistance: 0.5
     backwardDistance: 0
@@ -44,13 +46,20 @@ MonoBehaviour:
     yawLimit: 0
     cameraLocked: 0
     lookSpeedLimit: 0
-  attack: []
+  attack:
+  - preDelay: 0.1
+    method: {fileID: 11400000, guid: dcf23e91940c0cf4c802ed755a0bc003, type: 2}
+  grabImmuneLevel: 0
   stack: []
-  targetting: 0
+  effects: []
+  cameraShakes: []
+  normalizePivotOnCameraAction: 0
+  cameraActions: []
+  targetting: 2
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  aimDistance: 0
+    m_Bits: 4096
+  aimDistance: 12
   transitions:
   - conditions:
     - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}
