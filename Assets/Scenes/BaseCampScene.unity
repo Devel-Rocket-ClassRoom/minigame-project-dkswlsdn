@@ -12253,6 +12253,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8965739408161652863, guid: b7605f816f60197428ae720408a52e34, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 4224
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965739408161652863, guid: b7605f816f60197428ae720408a52e34, type: 3}
       propertyPath: targetLayer.m_Bits
       value: 4224
       objectReference: {fileID: 0}

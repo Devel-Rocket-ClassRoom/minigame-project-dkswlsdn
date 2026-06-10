@@ -27,6 +27,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
+    useTargetting: 0
     distance: 7
     neutralDistance: 0
     backwardDistance: 0
@@ -52,7 +53,7 @@ MonoBehaviour:
   cameraShakes: []
   normalizePivotOnCameraAction: 0
   cameraActions: []
-  targetting: 0
+  targetting: 1
   targetLayer:
     serializedVersion: 2
     m_Bits: 4096
