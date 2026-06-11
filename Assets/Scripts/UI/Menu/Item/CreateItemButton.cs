@@ -34,6 +34,11 @@ public class CreateItemButton : MonoBehaviour
         item = null;
     }
 
+    private void OnDestroy()
+    {
+        Character.UnsubscribeFromPlayer(OnPlayerAppeared);
+    }
+
     public void Load()
     {
         bool b = CheckRecipy();

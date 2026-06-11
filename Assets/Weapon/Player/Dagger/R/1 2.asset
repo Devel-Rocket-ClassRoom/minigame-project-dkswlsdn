@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b71cb004a2a96949ab3572c238dc5a0, type: 3}
-  m_Name: Anchor
+  m_Name: 1 2
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
     mult: 0
@@ -55,27 +55,27 @@ MonoBehaviour:
     fixedStun: 0
     reverseStun: 0
     effects: []
-    activateTime: 1
+    activateTime: 0
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
-    projectileSpeed: 40
+    projectileSpeed: 0
     isBreakable: 0
     useFrozen: 0
-  type: 3
+  type: 0
   targetLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   isCheckHit: 0
   isGrab: 0
   toGrab: 0
-  isSingleTarget: 1
-  useAim: 1
-  aimDir: {x: 0.86791235, y: 0.49644312, z: 0.016502887}
-  positionOffset: {x: 0, y: 1.5, z: 0}
+  isSingleTarget: 0
+  useAim: 0
+  aimDir: {x: 0, y: 0, z: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-  scale: {x: 0.5, y: 0.5, z: 3}
-  movementType: 3
-  targetting: 2
-  aimDistance: 40
+  scale: {x: 0, y: 0, z: 0}
+  movementType: 1
+  targetting: 0
+  aimDistance: 0
   useTargetting: 0
   spawnRules: []

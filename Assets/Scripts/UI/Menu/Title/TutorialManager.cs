@@ -103,6 +103,11 @@ public class TutorialManager : MonoBehaviour
         group.gameObject.SetActive(false);
     }
 
+    private void OnDestroy()
+    {
+        Character.UnsubscribeFromPlayer(OnPlayerAppeared);
+    }
+
     IEnumerator Wait(float duration)
     {
         yield return new WaitForSeconds(duration);

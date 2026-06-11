@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dagger R
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   skillId: DG_R
-  cooldown: 1
+  cooldown: 0.1
   actions:
   - {fileID: 11400000, guid: f9f65bae103f35f4396e68eba2c28b8b, type: 2}
   transitions: []

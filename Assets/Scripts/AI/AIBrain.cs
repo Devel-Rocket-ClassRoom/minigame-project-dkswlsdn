@@ -61,7 +61,10 @@ public class AIBrain : MonoBehaviour
         cam       = GetComponent<NPCCamera>();
         sight     = GetComponentInChildren<NPCSight>();
         agent     = GetComponent<NavMeshAgent>();
+    }
 
+    private void OnEnable()
+    {
         stat.onDamageTake  += ChangeAggro;
         state.onAirborne   += OnCancelled;
         state.onDead       += OnCancelled;
@@ -71,10 +74,7 @@ public class AIBrain : MonoBehaviour
         state.onGroggy     += OnCancelled;
         state.onKnockdown  += OnCancelled;
         state.onKnockdown  += OnKnockedDown;
-    }
 
-    private void OnEnable()
-    {
         // 풀 재사용 대비: 비활성화로 코루틴 자체는 멈췄지만 참조가 stale(non-null)로 남는다.
         // 특히 comboCoroutine이 non-null로 남으면 SkillCommand가 영영 공격을 시작하지 않는다.
         comboCoroutine = null;
@@ -99,6 +99,19 @@ public class AIBrain : MonoBehaviour
         if (!agent.isOnNavMesh) return;
 
         ChangeState(IdleState());
+    }
+
+    private void OnDisable()
+    {
+        stat.onDamageTake  -= ChangeAggro;
+        state.onAirborne   -= OnCancelled;
+        state.onDead       -= OnCancelled;
+        state.onDead       -= OnDead;
+        state.onHitstun    -= OnCancelled;
+        state.onGrab       -= OnCancelled;
+        state.onGroggy     -= OnCancelled;
+        state.onKnockdown  -= OnCancelled;
+        state.onKnockdown  -= OnKnockedDown;
     }
 
     // 스포너가 활성화 '전에' 순찰 경로를 주입한다.

@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: DG L 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 1
-  actionTime: 0.3
+  actionTime: 0.25
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 7400000, guid: d70041fd66edb7845b15fe1fcae2a4f8, type: 2}
   blendTime: 0
   movementMethod:
     calcType: 1
+    targetting: 0
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 0
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -47,7 +51,7 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack:
-  - preDelay: 0.1
+  - preDelay: 0.2
     method: {fileID: 11400000, guid: dcf23e91940c0cf4c802ed755a0bc003, type: 2}
   grabImmuneLevel: 0
   stack: []
@@ -55,11 +59,6 @@ MonoBehaviour:
   cameraShakes: []
   normalizePivotOnCameraAction: 0
   cameraActions: []
-  targetting: 2
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  aimDistance: 12
   transitions:
   - conditions:
     - {fileID: 11400000, guid: f6fb8567c5b1cb441b1b8500f0d2c42b, type: 2}

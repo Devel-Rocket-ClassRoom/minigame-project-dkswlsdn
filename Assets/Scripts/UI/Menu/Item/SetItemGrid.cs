@@ -30,6 +30,11 @@ public class SetItemGrid : MonoBehaviour
         SaveManager.onSaveModified -= Load;
     }
 
+    private void OnDestroy()
+    {
+        Character.UnsubscribeFromPlayer(OnPlayerAppeared);
+    }
+
     public void Load()
     {
         Clear();

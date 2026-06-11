@@ -63,6 +63,11 @@ public class ShowWeaponInfo : MonoBehaviour
         if (executer != null) executer.onWeaponChanged -= RefreshSlots;
     }
 
+    private void OnDestroy()
+    {
+        Character.UnsubscribeFromPlayer(Init);
+    }
+
     private void RefreshSlots()
     {
         if (executer == null) return;

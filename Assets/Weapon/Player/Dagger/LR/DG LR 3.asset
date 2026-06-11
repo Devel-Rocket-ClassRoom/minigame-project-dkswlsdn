@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: DG LR 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 2
+  actionTime: 3
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
+  blendTime: 0
   movementMethod:
     calcType: 0
+    targetting: 0
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 0
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -26,6 +31,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
+    useTargetting: 0
     distance: 0
     neutralDistance: 0
     backwardDistance: 0
@@ -43,14 +49,14 @@ MonoBehaviour:
     regularTime: 0
     yawLimit: 0
     cameraLocked: 0
-    lookSpeedLimit: 0
+    lookSpeedLimit: 30
   attack: []
+  grabImmuneLevel: 0
   stack: []
-  targetting: 0
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  aimDistance: 0
+  effects: []
+  cameraShakes: []
+  normalizePivotOnCameraAction: 0
+  cameraActions: []
   transitions:
   - conditions:
     - {fileID: 11400000, guid: cfa1cd763d531b1459cd5cea15fc4588, type: 2}

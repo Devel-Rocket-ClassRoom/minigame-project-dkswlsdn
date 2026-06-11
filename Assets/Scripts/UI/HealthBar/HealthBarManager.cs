@@ -84,6 +84,7 @@ public class HealthBarManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        Character.UnsubscribeFromPlayer(OnPlayerAppeared);
         if (sight != null)
         {
             sight.onDetected -= OnDetected;

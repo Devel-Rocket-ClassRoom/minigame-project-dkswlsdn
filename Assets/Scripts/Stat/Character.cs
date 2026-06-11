@@ -19,6 +19,11 @@ public class Character : MonoBehaviour
         if (CurrentPlayer != null) callback(CurrentPlayer);
     }
 
+    public static void UnsubscribeFromPlayer(Action<Character> callback)
+    {
+        OnPlayerAppeared -= callback;
+    }
+
     [HideInInspector, NonSerialized]
     public int[] opennedToken = new int[9];
 
