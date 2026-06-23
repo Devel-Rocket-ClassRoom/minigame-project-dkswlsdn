@@ -38,8 +38,6 @@ public class AuthManager : MonoBehaviour
 
     private async UniTaskVoid Start()
     {
-        await UniTask.WaitUntil(() => FirebaseInitializer.Instance != null);
-
         bool isReady = await FirebaseInitializer.Instance.WaitForInitializationAsync();
 
         if (!isReady)
