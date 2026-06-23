@@ -4,9 +4,8 @@ public class ClearTutorial : Interactor
 {
     public override bool OnDetected(Character character)
     {
-        SaveManager.instance.CurrentSave.isTutorialCleared = true;
-        SaveManager.instance.SaveRequest();
-        GameSceneManager.instance.LoadBaseCamp();
+        SaveManager.SaveRequest();
+        GameSceneManager.LoadBaseCamp();
         return true;
     }
 }

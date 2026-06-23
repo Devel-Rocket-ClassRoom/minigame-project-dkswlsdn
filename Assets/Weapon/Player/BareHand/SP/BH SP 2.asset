@@ -16,7 +16,7 @@ MonoBehaviour:
   actionTime: 0.6
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: ae61b9766bf83ac40bf3c06ae961da1c, type: 2}
+  clip: {fileID: 7400000, guid: 7a395db41cb9f73429a3a437269ebbcf, type: 2}
   movementMethod:
     calcType: 0
     gravity: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
     lookSpeedLimit: 0
   attack: []
   stack: []
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

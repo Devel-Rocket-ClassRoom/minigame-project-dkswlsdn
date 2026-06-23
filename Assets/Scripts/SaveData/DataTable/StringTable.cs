@@ -3,7 +3,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class StringTable : DataTable<string>
 {
-    public override void Load(string csv)
+    public override void Load(string csv) 
     {
         table.Clear();
         var lines = csv.Split('\n');
@@ -18,7 +18,7 @@ public class StringTable : DataTable<string>
             if (line.StartsWith("#")) continue;            // 주석 스킵
             if (!headerSkipped) { headerSkipped = true; continue; } // 헤더 스킵
 
-            var cols = line.Split(',');
+            var cols = CsvUtil.SplitLine(line);
             if (cols.Length < 2) continue;
 
             string key = cols[0].Trim();

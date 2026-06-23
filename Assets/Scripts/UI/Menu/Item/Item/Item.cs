@@ -1,18 +1,26 @@
 using System;
 using UnityEngine;
 
-public abstract class Item : ScriptableObject
+[CreateAssetMenu(menuName = "Item/Item")]
+public class Item : ScriptableObject
 {
-    public string itemName;
-    public int id;
-    public Sprite icon;
-    public string desc;
+    public static event Action onUse;
+    public static event Action onGet;
 
-    public abstract void OnUse(Character character);
+    public string itemName;
+    public float weight;
+
+    public bool canUseInBattle;
+    public bool canUseInBaseCamp;
+    public bool isInstantUse;
+    public bool useWhenReturn;
+
+    public virtual void OnUse(Character character) { onUse?.Invoke(); }
 
     public virtual void OnGet(Character character)
     {
-        SaveManager.instance.CurrentSave.itemInCharacter.Add(new ItemSaveEntry(itemName, DateTime.Now));
+        SaveManager.InventoryIO(itemName, 1, false);
+        onGet?.Invoke();
     }
 }
 

@@ -17,8 +17,13 @@ MonoBehaviour:
   partialCooldown: 0
   useGrab: 0
   clip: {fileID: 0}
+  blendTime: 0
   movementMethod:
     calcType: 0
+    targetting: 0
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 0
     gravity: 0
     friction: 0
     isKeepSpeed: 1
@@ -26,6 +31,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
+    useTargetting: 0
     distance: 0
     neutralDistance: 0
     backwardDistance: 0
@@ -47,12 +53,12 @@ MonoBehaviour:
   attack:
   - preDelay: 0
     method: {fileID: 11400000, guid: d0844650ffb4a324fb1fbe38cb927bcf, type: 2}
+  grabImmuneLevel: 0
   stack: []
-  targetting: 2
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  aimDistance: 30
+  effects: []
+  cameraShakes: []
+  normalizePivotOnCameraAction: 0
+  cameraActions: []
   transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0

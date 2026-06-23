@@ -108,5 +108,8 @@ InitTestScene*.unity*
 # Imported
 /Assets/Imported
 
+# Resources
+# /Assets/Resources/Sprites
+
 # Claude Code
 .claude/

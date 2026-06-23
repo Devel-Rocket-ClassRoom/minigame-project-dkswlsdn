@@ -10,16 +10,13 @@ public class Attack : MonoBehaviour
     [HideInInspector] public AttackMethod method;
     private Vector3 targetPoint;
 
-    private int team;
-    private float life;
-
     public bool IsHit { get; private set; }
 
     public event Action<Character> onHit;
     public event Action<Vector3> onTargetHit;
 
     private bool isReady;
-    private bool canSpawn;
+    private AttackId id = new AttackId();
 
     public void Activate(Character character, AttackMethod method, Vector3 targetPoint, bool canSpawn = true)
     {
@@ -27,12 +24,16 @@ public class Attack : MonoBehaviour
         this.targetPoint = targetPoint;
         hitTarget.Clear();
         IsHit = false;
+
+        onHit = null;
+
         this.method = method;
-        this.method.info = new AttackInfo(method.info);
-        this.method.info.id = character.Id;
-        this.method.info.isPopup = character.isPlayer;
-        this.method.info.origin = character.transform;
-        life = method.info.activateTime;
+        
+        id.id = character.Id;
+        id.team = character.team;
+        id.isPlayer = character.isPlayer;
+        id.canSpawn = canSpawn;
+        id.origin = character.transform;
 
         if (method.movementType == AttackMovementMethod.Teleport)
             transform.position = targetPoint;
@@ -43,13 +44,13 @@ public class Attack : MonoBehaviour
         if (method.scale != Vector3.zero)
             transform.localScale = method.scale;
 
-        this.team = character.team;
-        this.canSpawn = canSpawn;
         isReady = true;
 
         if (canSpawn && method.spawnRules != null && method.spawnRules.Count > 0)
             onHit += (hitCharacter) =>
                 StartCoroutine(CoSpawn(SpawnTrigger.OnHit, hitCharacter));
+
+        StartCoroutine(CoLife());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,33 +59,29 @@ public class Attack : MonoBehaviour
         if (((1 << other.gameObject.layer) & method.targetLayer) == 0) return;
 
         var character = other.GetComponent<Character>();
-        if (character == null || hitTarget.Contains(character.Id) || character.team == team) return;
+        if (character == null || hitTarget.Contains(character.Id) || character.team == id.team) return;
 
         hitTarget.Add(character.Id);
         IsHit = true;
 
-        if (!method.isGrab)
-            character.Stat.TakeDamage(this.character, method.info);
+        character.Stat.TakeDamage(this.character, method.info, id);
 
-        life += method.info.reverseStun;
         this.character.State.FreezeFor(method.info.reverseStun);
         onHit?.Invoke(character);
-        if (method.isSingleTarget) Destroy(gameObject);
+        if (method.isSingleTarget && isReady)
+        {
+            isReady = false;
+            StopAllCoroutines();
+            AttackManager.instance.ReleaseAttack(this);
+        }
     }
+
 
     private void Update()
     {
         if (!isReady) return;
 
-        if (life <= 0)
-        {
-            isReady = false;
-            if (canSpawn) StartCoroutine(CoSpawn(SpawnTrigger.OnExpire));
-            else Destroy(gameObject);
-        }
-
         AttackMove();
-        life -= Time.deltaTime;
     }
 
     private void AttackMove()
@@ -97,6 +94,17 @@ public class Attack : MonoBehaviour
             case AttackMovementMethod.Linear:
                 transform.position += transform.forward * method.info.projectileSpeed * Time.deltaTime;
                 break;
+        }
+    }
+
+    IEnumerator CoLife()
+    {
+        if (method.info.useFrozen) yield return new WaitForSecondsUnfrozen(method.info.activateTime, character.State);
+        else yield return new WaitForSeconds(method.info.activateTime);
+        if (isReady)
+        {
+            isReady = false;
+            AttackManager.instance.ReleaseAttack(this);
         }
     }
 
@@ -118,8 +126,23 @@ public class Attack : MonoBehaviour
 
             AttackManager.instance.RequestAttack(character, rule.method, targetPoint, canSpawn: false);
         }
-
-        if (trigger == SpawnTrigger.OnExpire)
-            Destroy(gameObject);
     }
+    
+    public void OnCancled()
+    {
+        if (isReady)
+        {
+            isReady = false;
+            AttackManager.instance.ReleaseAttack(this);
+        }
+    }
+}
+
+public struct AttackId
+{
+    public int id;
+    public int team;
+    public bool isPlayer;
+    public bool canSpawn;
+    public Transform origin;
 }

@@ -8,6 +8,7 @@ public class SkillCaster : MonoBehaviour
     private CharacterMovement movement;
     private CharacterAim aim;
     private StateManager state;
+    private CharacterStat stat;
     private Character character;
     private CharacterAnchor anchor;
 
@@ -17,10 +18,9 @@ public class SkillCaster : MonoBehaviour
     private float actionTimer;
     private float minTransitionTimer;
 
-    private List<Attack> spawnedAttacks;
-
     public event Action<SkillAction> onActionStart;
     public event Action onSkillEnd;
+    public event Action onSkillCancled;
     public event Action<int> onCooldownReset;
 
     private bool enable = true;
@@ -32,11 +32,12 @@ public class SkillCaster : MonoBehaviour
         movement = GetComponent<CharacterMovement>();
         aim = GetComponent<CharacterAim>();
         state = GetComponent<StateManager>();
+        stat = GetComponent<CharacterStat>();
         character = GetComponent<Character>();
         anchor = GetComponent<CharacterAnchor>();
         
-        spawnedAttacks = new List<Attack>();
         context = new SkillContext();
+        context.currentIndex = -1;
     }
 
     private void OnEnable()
@@ -74,7 +75,6 @@ public class SkillCaster : MonoBehaviour
         if (!enable) return;
 
         context.spendTime += Time.deltaTime;
-        spawnedAttacks.RemoveAll(atk => atk == null);
 
         CheckTransition();
         CheckHitbox();
@@ -85,7 +85,7 @@ public class SkillCaster : MonoBehaviour
             {
                 if (target != null)
                 {
-                    target.Movement.MoveToPosition(anchor.anchor);
+                    target.Movement?.MoveToPosition(anchor.anchor);
                 }
             }
         }
@@ -139,12 +139,13 @@ public class SkillCaster : MonoBehaviour
             return;
         }
 
-        context.targetPoint = aim.GetLookAtVector(action.targetting, action.targetLayer, action.aimDistance, out _);
         context.current = action;
         actionTimer = action.actionTime + Time.time;
         minTransitionTimer = action.minTransitionTime + Time.time;
         context.wasDamagedInAction = false;
         context.isHit = false;
+
+        stat.ApplyGrabImmune(action.grabImmuneLevel);
 
         StopCoroutine(nameof(CoSkillAttack));
         StartCoroutine(nameof(CoSkillAttack));
@@ -152,6 +153,10 @@ public class SkillCaster : MonoBehaviour
         StartCoroutine(nameof(CoGetStack));
         StopCoroutine(nameof(CoPlayEffect));
         StartCoroutine(nameof(CoPlayEffect));
+        StopCoroutine(nameof(CoCameraShake));
+        StartCoroutine(nameof(CoCameraShake));
+        StopCoroutine(nameof(CoCameraAction));
+        StartCoroutine(nameof(CoCameraAction));
 
         onActionStart.Invoke(action);
     }
@@ -203,7 +208,16 @@ public class SkillCaster : MonoBehaviour
     private void SkillEnd()
     {
         ReleaseGrab(CharacterState.Idle);
+        character.Camera?.CancelCameraAction(); // 진행 중인 카메라 액션 0.2초 복귀
         state.ChangeState(CharacterState.Idle);
+        //if (movement.GetOnGrounded())
+        //{
+        //    state.ChangeState(CharacterState.Idle);
+        //}
+        //else
+        //{
+        //    state.ChangeState(CharacterState.MidAir);
+        //}
         onCooldownReset?.Invoke(context.currentIndex);
         context.current = null;
         context.Clear();
@@ -231,11 +245,12 @@ public class SkillCaster : MonoBehaviour
                 foreach (var c in context.grabTarget)
                 {
                     var info = new AttackInfo(attack.method.info);
-                    info.id = character.Id;
-                    info.isPopup = character.isPlayer;
-                    info.origin = transform;
+                    var id = new AttackId();
+                    id.id = character.Id;
+                    id.isPlayer = character.isPlayer;
+                    id.origin = transform;
                     info.useGrab = context.current.useGrab;
-                    c.Stat.TakeDamage(character, info);
+                    c.Stat.TakeDamage(character, info, id);
                 }
 
                 if (attack.method.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
@@ -243,23 +258,30 @@ public class SkillCaster : MonoBehaviour
             else if (attack.method.type != HitboxType.None)
             {
                 var atk = attack.method;
-                atk.aimDir = (context.targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
+                Vector3 targetPoint = aim.GetLookAtVector(atk.targetting, atk.targetLayer, atk.aimDistance, out _, out Transform targetCharacter);
+                if (atk.useTargetting && targetCharacter != null)
+                    targetPoint = targetCharacter.position;
+                atk.aimDir = (targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
 
-                var instance = AttackManager.instance.RequestAttack(character, atk, context.targetPoint);
+                var instance = AttackManager.instance.RequestAttack(character, atk, targetPoint);
                 if (instance == null) continue;
 
-                spawnedAttacks.Add(instance);
-
                 var capturedContext = context;
+
+                if (attack.method.info.isDestroyOnCanceled) { onSkillCancled += instance.OnCancled; onSkillCancled = null; }
+
                 if (attack.method.isGrab)
                 {
                     instance.onHit += (crt) =>
                     {
-                        if (crt.Id != character.Id && crt.State.State != CharacterState.Grapped)
+                        if (crt.Id != character.Id
+                            && crt.State.State != CharacterState.Grapped
+                            && crt.State.State != CharacterState.Dead   // 죽은 대상은 잡지 않음(부활 방지)
+                            && crt.Stat.GrabImmuneLevel < attack.method.info.grabLevel)
                         {
                             capturedContext.grabTarget.Add(crt);
                             crt.State.ChangeState(CharacterState.Grapped);
-                            crt.Movement.StartGrabbed();
+                            crt.Movement?.StartGrabbed();
                         }
                     };
                 }
@@ -341,6 +363,34 @@ public class SkillCaster : MonoBehaviour
         }
     }
 
+    // 액션 진행 중 preDelay에 맞춰 카메라 흔들림 발생(연출용). 흔드는 대상은 시전자 본인의 카메라.
+    IEnumerator CoCameraShake()
+    {
+        if (context.current.cameraShakes == null) yield break;
+
+        foreach (var shake in context.current.cameraShakes)
+        {
+            yield return new WaitForSecondsUnfrozen(shake.preDelay, state);
+            character.Camera?.Shake(shake.settings);
+        }
+    }
+
+    // 액션 진행 중 preDelay에 맞춰 카메라 액션(vcam 오프셋/회전/줌 연출) 발생. 시전자 본인 카메라 대상.
+    IEnumerator CoCameraAction()
+    {
+        var actions = context.current.cameraActions;
+        if (actions == null || actions.Count == 0) yield break;
+
+        // 설정된 경우 시작 시 피벗 pitch를 0으로 정규화
+        if (context.current.normalizePivotOnCameraAction) character.Camera?.NormalizePivotPitch();
+
+        foreach (var act in actions)
+        {
+            yield return new WaitForSecondsUnfrozen(act.preDelay, state);
+            character.Camera?.PlayCameraAction(act);
+        }
+    }
+
     private void OnFreeze(float duration)
     {
         actionTimer += duration;
@@ -360,7 +410,7 @@ public class SkillCaster : MonoBehaviour
             if (target == null) continue;
             if (target.State.State == CharacterState.Grapped)
                 target.State.ChangeState(state);
-            target.Movement.EndGrabbed();
+            target.Movement?.EndGrabbed();
         }
         context.grabTarget.Clear();
     }
@@ -368,6 +418,7 @@ public class SkillCaster : MonoBehaviour
     public void OnCanceled()
     {
         ReleaseGrab(CharacterState.Idle);
+        stat.ResetGrabImmune();
 
         if (context.current != null)
         {
@@ -380,21 +431,20 @@ public class SkillCaster : MonoBehaviour
 
         context.Clear();
         StopAllCoroutines();
+        character.Camera?.CancelCameraAction();
 
-        for (int i = spawnedAttacks.Count - 1; i >= 0; i--)
-        {
-            if (spawnedAttacks[i] != null && spawnedAttacks[i].method.info.isDestroyOnCanceled)
-            {
-                AttackManager.instance.DestroyAttack(spawnedAttacks[i]);
-                spawnedAttacks.RemoveAt(i);
-            }
-        }
+        onSkillCancled?.Invoke();
     }
 
     private void OnDead()
     {
         OnCanceled();
         enable = false;
+    }
+
+    public void ResetState()
+    {
+        enable = true;
     }
 
     private void CheckHitbox()
@@ -416,8 +466,6 @@ public class SkillContext
     public bool wasDamagedInAction;
 
     // 현재 액션
-    public Transform target;
-    public Vector3 targetPoint;
     public SkillAction current;
     public SkillAction next;
 
@@ -431,8 +479,6 @@ public class SkillContext
         hitTarget.Clear();
         grabTarget.Clear();
         wasDamagedInAction = false;
-        target = null;
-        targetPoint = Vector3.zero;
         current = null;
         next = null;
     }

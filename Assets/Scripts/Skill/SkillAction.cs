@@ -11,15 +11,18 @@ public class SkillAction : ScriptableObject
     public float partialCooldown;
     public bool useGrab;
     public AnimationClip clip;
+    [Tooltip("모션 진입 시 크로스페이드 보간 시간(초). 0이면 즉시 전환")]
+    public float blendTime;
 
     public MovementMethod movementMethod;
     public List<AttackEntry> attack;
+    public int grabImmuneLevel;
     public List<StackMethod> stack;
     public List<EffectEntry> effects;
+    public List<CameraShakeEntry> cameraShakes;
 
-    public DestinationTargettingMethod targetting;
-    public LayerMask targetLayer;
-    public float aimDistance;
+    public bool normalizePivotOnCameraAction;
+    public List<CameraActionEntry> cameraActions;
 
     public List<SkillTransition> transitions;
     public float minTransitionTime;
@@ -39,6 +42,8 @@ public class SkillTransition
 public struct MovementMethod
 {
     public DistanceCalculateType calcType;
+    public DestinationTargettingMethod targetting;  // 이동 거리 계산용
+    public LayerMask targetLayer;
 
     [Header("공통")]
     public float gravity;
@@ -48,6 +53,7 @@ public struct MovementMethod
     public bool rightSide;
     public bool canFreeMove;
     public float freeMoveSpeed;
+    public bool useTargetting;
 
     [Header("수평이동")]
     public float distance;
@@ -83,6 +89,13 @@ public struct AttackEntry
     public AttackMethod method;
 }
 
+[Serializable]
+public class CameraShakeEntry
+{
+    public float preDelay;
+    public CameraShakeSettings settings;
+}
+
 public enum SpawnTrigger  { OnHit, OnExpire }
 public enum SpawnPosition { AtHitPoint, AtTarget, AtOrigin }
 
@@ -102,10 +115,11 @@ public class AttackInfo
 
     public AttackInfo(AttackInfo hit)
     {
-        origin = hit.origin;
-        id = hit.id;
-        isPopup = hit.isPopup;
-        damage = hit.damage;
+        mult = hit.mult;
+        add = hit.add;
+        crit = hit.crit;
+        cameraShake = hit.cameraShake;
+        effects = hit.effects;
         reaction = hit.reaction;
         range = hit.range;
         stunDuration = hit.stunDuration;
@@ -119,19 +133,22 @@ public class AttackInfo
         isReleaseGrab = hit.isReleaseGrab;
         projectileSpeed = hit.projectileSpeed;
         useGrab = hit.useGrab;
+        isBreakable = hit.isBreakable;
+        useFrozen = hit.useFrozen;
     }
 
     [HideInInspector, NonSerialized]
-    public Transform origin;
-    [HideInInspector, NonSerialized]
     public bool useGrab;
-    [HideInInspector, NonSerialized]
-    public int id;
-    [HideInInspector, NonSerialized]
-    public bool isPopup;
 
     [Header("데미지")]
-    public float damage;
+    public float mult;
+    public float add;
+    public float crit;
+    public int grabLevel;
+
+    [Header("카메라")]
+    [Tooltip("적중 시 발생할 카메라 흔들림. 비워두면 흔들림 없음")]
+    public CameraShakeSettings cameraShake;
 
     [Header("경직")]
     public HitReactionType reaction;
@@ -151,6 +168,8 @@ public class AttackInfo
     public bool isDestroyOnCanceled;
     public bool isReleaseGrab;
     public float projectileSpeed;
+    public bool isBreakable;
+    public bool useFrozen;
 }
 
 

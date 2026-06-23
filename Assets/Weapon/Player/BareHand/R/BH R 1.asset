@@ -13,24 +13,25 @@ MonoBehaviour:
   m_Name: BH R 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 2
-  actionTime: 0.5
+  actionTime: 0.07
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: c3c9d96aacd615e4596c049eae171472, type: 2}
+  clip: {fileID: 7400000, guid: e8c32659f3d30f94e920e42e3182214d, type: 2}
+  blendTime: 0.1
   movementMethod:
     calcType: 0
     gravity: 0
     friction: 0
-    isKeepSpeed: 0
+    isKeepSpeed: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
-    distance: 12
+    distance: 0
     neutralDistance: 0
     backwardDistance: 0
     isFrictionAutoCalc: 0
-    followTerrain: 1
+    followTerrain: 0
     useInputDirection: 0
     isStaticDirection: 0
     useAltitudeModifire: 0
@@ -44,20 +45,16 @@ MonoBehaviour:
     yawLimit: 0
     cameraLocked: 0
     lookSpeedLimit: 0
-  attack:
-  - preDelay: 0
-    method: {fileID: 11400000, guid: b0574b2663d9cd44b81284330bf0d367, type: 2}
+  attack: []
   stack: []
+  effects: []
+  cameraShakes: []
   targetting: 0
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
   aimDistance: 0
-  transitions:
-  - conditions:
-    - {fileID: 11400000, guid: fdf70dc6c34015d4f801acb62e3f7da3, type: 2}
-    nextAction: {fileID: 11400000, guid: 27c59b3e2e8c7304c9c3759e5c908673, type: 2}
-    immediateTransition: 1
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  autoTransition: {fileID: 11400000, guid: 53e6a79dd68e43241bea22be3bbd45e8, type: 2}
+  autoTransition: {fileID: 11400000, guid: afdc804919803574485e951849afd0ea, type: 2}

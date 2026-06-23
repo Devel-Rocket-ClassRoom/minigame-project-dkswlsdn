@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: BH L 3
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 1
-  actionTime: 0.45
+  actionTime: 0.6
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: 3a62ee2543aa81b43ab38587718a7f4d, type: 2}
+  clip: {fileID: 7400000, guid: 27377433b016c2142b13c4c858598139, type: 2}
+  blendTime: 0
   movementMethod:
     calcType: 1
     gravity: 20
@@ -45,9 +46,19 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack:
-  - preDelay: 0.15
+  - preDelay: 0.25
     method: {fileID: 11400000, guid: e648215f7d5a54f439f90ab97e3cff6a, type: 2}
   stack: []
+  effects:
+  - effect:
+      effect: {fileID: 1872147318604286, guid: 5bea49531fc500c408823a2e2863106f, type: 3}
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotationOffset: {x: 0, y: 180, z: 180}
+      scaleOffset: {x: 0.1, y: 0.1, z: 0.1}
+    preDelay: 0.3
+    method: 3
+    isLeft: 0
+  cameraShakes: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

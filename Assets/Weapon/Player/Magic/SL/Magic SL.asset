@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6641b697ad657478c85dc606d83a7b, type: 3}
   m_Name: Magic SL
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillName: "\uAD11\uACA9"
+  skillId: MG_SL
   cooldown: 1
   actions:
   - {fileID: 11400000, guid: 1176e2dbc3df20a479b21453d27e0a0c, type: 2}

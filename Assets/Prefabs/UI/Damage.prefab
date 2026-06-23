@@ -93,13 +93,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -150,3 +150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5743cd3a768b05b4d883cc01362aa3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageFadeout
+  riseDistance: 60
+  normalHold: 0.3
+  normalRise: 0.5
+  critStartScale: 3
+  critEndScale: 1.3
+  critScaleDuration: 0.2
+  critShakeDuration: 0.3
+  critShakeAmount: 8
+  critBlinkInterval: 0.05
+  critBlinkColor: {r: 1, g: 0, b: 0, a: 1}
+  critRiseDuration: 0.5

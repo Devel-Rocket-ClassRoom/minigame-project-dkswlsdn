@@ -13,6 +13,7 @@ public enum CharacterState
     Grapped,
     Dead,
     Climb,
+    MidAir,
 }
 
 public enum HitReactionType
@@ -59,7 +60,30 @@ public enum MovementAction
 
 public enum StatType
 {
-    HP, MP,
+    Attack,
+    Critical,
+    Health,
+    Defense,
+    Dodgy,
+    Speed,
+    Carry,
+}
+
+// enum 값이 곧 세이브의 magicOpenedSkill[] 배열 인덱스다.
+// (L=0, R=1, SL=2, LR=3, E=4, F=5, Space=6, Passive=7, Q=8(서브웨폰))
+// SkillButton.MagicIndex 는 (int)skillKey 를 그대로 사용하므로 순서를 바꾸면 안 된다.
+// Q(서브웨폰)는 기존 인덱스 보존을 위해 항상 마지막에 둔다.
+public enum SkillKey
+{
+    L,
+    R,
+    SL,
+    LR,
+    E,
+    F,
+    Space,
+    Passive,
+    Q,
 }
 
 public enum ForceDirectionType

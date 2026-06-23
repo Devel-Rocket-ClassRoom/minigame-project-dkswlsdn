@@ -5,7 +5,9 @@ public abstract class CharacterCamera : MonoBehaviour
     protected SkillCaster caster;
     protected StateManager state;
 
-    [SerializeField] protected bool canRotateCharacter;
+    // 순수 런타임 플래그(OnStun/ReturnOrigin/OnUseSkill로만 제어). 직렬화하지 않아
+    // 프리팹에서 실수로 false로 박혀 회전이 막히는 일을 방지한다.
+    protected bool canRotateCharacter = true;
 
     protected virtual void Awake()
     {
@@ -26,6 +28,8 @@ public abstract class CharacterCamera : MonoBehaviour
 
         caster.onActionStart += OnUseSkill;
         caster.onSkillEnd += ReturnOrigin;
+
+        canRotateCharacter = true;
     }
 
     private void OnDisable()
@@ -57,4 +61,16 @@ public abstract class CharacterCamera : MonoBehaviour
     {
         canRotateCharacter = false;
     }
+
+    // 카메라 흔들기 요청. 흔들림을 지원하는 카메라(PlayerCamera)만 실제로 처리한다.
+    public virtual void Shake(CameraShakeSettings settings) { }
+
+    // 스킬 카메라 액션 요청. 플레이어 카메라만 실제로 처리한다.
+    public virtual void PlayCameraAction(CameraActionEntry entry) { }
+
+    // 진행 중인 카메라 액션을 중립으로 복귀. 플레이어 카메라만 실제로 처리한다.
+    public virtual void CancelCameraAction() { }
+
+    // 피벗 pitch를 0으로 정규화(선형 보간). 플레이어 카메라만 실제로 처리한다.
+    public virtual void NormalizePivotPitch() { }
 }

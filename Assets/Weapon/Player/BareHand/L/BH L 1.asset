@@ -16,7 +16,7 @@ MonoBehaviour:
   actionTime: 0.25
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: 0a48e6ff94b791f4da30c8923a7d032c, type: 2}
+  clip: {fileID: 7400000, guid: e25586a1deddc0d48be97c4da5f99795, type: 2}
   movementMethod:
     calcType: 1
     gravity: 20
@@ -52,9 +52,9 @@ MonoBehaviour:
   - effect:
       effect: {fileID: 1872147318604286, guid: 5bea49531fc500c408823a2e2863106f, type: 3}
       positionOffset: {x: 0, y: 0, z: 0}
-      rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-      scaleOffset: {x: 0, y: 0, z: 0}
-    preDelay: 0
+      rotationOffset: {x: 0, y: 180, z: 0}
+      scaleOffset: {x: 0.1, y: 0.1, z: 0.1}
+    preDelay: 0.1
     method: 2
     isLeft: 1
   targetting: 0

@@ -16,7 +16,7 @@ MonoBehaviour:
   actionTime: 0.6
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: fe87dd1a80987534490c6ea651512486, type: 2}
+  clip: {fileID: 7400000, guid: 30b5dc055029cb543b96dd792b2a89e8, type: 2}
   movementMethod:
     calcType: 1
     gravity: 20
@@ -48,8 +48,9 @@ MonoBehaviour:
   - preDelay: 0.1
     method: {fileID: 11400000, guid: 623cfa4b3b5199f4c867973fbbb5315c, type: 2}
   - preDelay: 0.3
-    method: {fileID: 11400000, guid: 623cfa4b3b5199f4c867973fbbb5315c, type: 2}
+    method: {fileID: 11400000, guid: 647e6c2d30457cd4fa9198d6b06d8de6, type: 2}
   stack: []
+  effects: []
   targetting: 0
   targetLayer:
     serializedVersion: 2

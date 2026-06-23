@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6641b697ad657478c85dc606d83a7b, type: 3}
   m_Name: ChargeLance
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillName: Charge Lance
+  skillId: TEST
   cooldown: 30
   actions:
   - {fileID: 11400000, guid: 0c2ba919e9b5f564985e8757eed31a7c, type: 2}

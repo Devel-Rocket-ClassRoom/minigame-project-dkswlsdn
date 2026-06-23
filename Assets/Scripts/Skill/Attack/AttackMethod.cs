@@ -21,5 +21,9 @@ public class AttackMethod : ScriptableObject
     public Vector3 scale;
     public AttackMovementMethod movementType;
 
+    public DestinationTargettingMethod targetting;
+    public float aimDistance;
+    public bool useTargetting;
+
     public List<SpawnRule> spawnRules;
 }

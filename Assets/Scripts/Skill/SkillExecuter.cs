@@ -5,7 +5,6 @@ public class SkillExecuter : MonoBehaviour
 {
     public bool IsDisableCast { get; set; }
     private Weapon currentWeapon;
-    public Skill instantQSkill;
     public Weapon CurrentWeapon
     {
         get => currentWeapon;
@@ -29,18 +28,23 @@ public class SkillExecuter : MonoBehaviour
     private SkillCaster caster;
     private CharacterCommander commander;
 
-    private readonly Skill[] skills = new Skill[8];
-    private readonly float[] cooldowns = new float[8];
+    // 인덱스 = (int)SkillKey. L=0, R=1, SL=2, LR=3, E=4, F=5, Space=6, Passive=7, Q=8(서브웨폰)
+    // Passive(7)는 입력으로 시전하지 않으므로 skills[7]은 항상 null로 둔다(루프에서 자동 스킵).
+    protected readonly Skill[] skills = new Skill[9];
+    private readonly float[] cooldowns = new float[9];
 
+    // skills[i] 를 발동시키는 입력 (인덱스 1:1)
     private static readonly ConditionInput[] inputs =
     {
-        ConditionInput.SkillR,
-        ConditionInput.SkillSL,
-        ConditionInput.SkillLR,
-        ConditionInput.Q,
-        ConditionInput.E,
-        ConditionInput.F,
-        ConditionInput.Space,
+        ConditionInput.SkillL,   // 0 L
+        ConditionInput.SkillR,   // 1 R
+        ConditionInput.SkillSL,  // 2 SL
+        ConditionInput.SkillLR,  // 3 LR
+        ConditionInput.E,        // 4 E
+        ConditionInput.F,        // 5 F
+        ConditionInput.Space,    // 6 Space
+        ConditionInput.Interaction, // 7 Passive (미사용 자리, skills[7]이 항상 null이라 호출 안 됨)
+        ConditionInput.Q,        // 8 Q (서브웨폰)
     };
 
     private void Awake()
@@ -55,16 +59,16 @@ public class SkillExecuter : MonoBehaviour
         CurrentWeapon = defaultWeapon;
     }
 
-    private void Init(Weapon weapon)
+
+    protected virtual void Init(Weapon weapon)
     {
-        skills[0] = weapon.LSkill;
-        skills[1] = weapon.RSkill;
-        skills[2] = weapon.SLSkill;
-        skills[3] = weapon.LRSkill;
-        skills[4] = weapon.QSkill;
-        skills[5] = weapon.ESkill;
-        skills[6] = weapon.FSkill;
-        skills[7] = weapon.SpaceSkill;
+        skills[(int)SkillKey.L]     = weapon.LSkill;
+        skills[(int)SkillKey.R]     = weapon.RSkill;
+        skills[(int)SkillKey.SL]    = weapon.SLSkill;
+        skills[(int)SkillKey.LR]    = weapon.LRSkill;
+        skills[(int)SkillKey.E]     = weapon.ESkill;
+        skills[(int)SkillKey.F]     = weapon.FSkill;
+        skills[(int)SkillKey.Space] = weapon.SpaceSkill;
 
         for (int i = 0; i < cooldowns.Length; i++)
         {
@@ -82,17 +86,15 @@ public class SkillExecuter : MonoBehaviour
             cooldowns[i] -= Time.deltaTime;
         }
 
-        for (int i = inputs.Length; i >= 1; i--)
+        // L(기본 공격, index 0)을 제외한 스킬을 높은 인덱스부터 검사한다.
+        for (int i = skills.Length - 1; i >= 1; i--)
         {
             if (skills[i] == null) continue;
             if (cooldowns[i] > 0) continue;
-            if (!commander.GetInput(inputs[i - 1], false)) continue;
+            if (!commander.GetInput(inputs[i], false)) continue;
 
-            // L을 누른 채 R을 누르면 LR 콤보 의도이므로 단독 R을 보류한다.
-            // (LR 컴포지트 입력은 R 단독 입력보다 한 프레임 늦게 판정될 수 있어,
-            //  보류하지 않으면 R이 LR보다 먼저 발동되어 버린다.)
-            if (inputs[i - 1] == ConditionInput.SkillR
-                && skills[3] != null && cooldowns[3] <= 0f
+            if (inputs[i] == ConditionInput.SkillR
+                && skills[(int)SkillKey.LR] != null && cooldowns[(int)SkillKey.LR] <= 0f
                 && commander.GetInput(ConditionInput.SkillL, true))
                 continue;
 
@@ -103,11 +105,22 @@ public class SkillExecuter : MonoBehaviour
             }
         }
 
-        if (skills[0] != null && cooldowns[0] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
+        const int lIndex = (int)SkillKey.L;
+        if (skills[lIndex] != null && cooldowns[lIndex] <= 0 && commander.GetInput(ConditionInput.SkillL, false))
         {
-            if (caster.Cast(skills[0], 0))
+            if (commander.GetInput(ConditionInput.SkillR, true))
             {
-                cooldowns[0] = skills[0].cooldown;
+                if (caster.Cast(skills[(int)SkillKey.LR], (int)SkillKey.LR))
+                {
+                    cooldowns[(int)SkillKey.LR] = skills[(int)SkillKey.LR].cooldown;
+                }
+            }
+            else
+            {
+                if (caster.Cast(skills[lIndex], lIndex))
+                {
+                    cooldowns[lIndex] = skills[lIndex].cooldown;
+                }
             }
         }
     }
@@ -127,6 +140,14 @@ public class SkillExecuter : MonoBehaviour
         cooldowns[index] = skills[index].cooldown;
     }
 
+    // 풀 재사용/부활 시 초기화. 캐스트락 해제 + 모든 쿨다운 초기화.
+    public void ResetState()
+    {
+        IsDisableCast = false;
+        for (int i = 0; i < cooldowns.Length; i++)
+            cooldowns[i] = 0f;
+    }
+
     public bool IsSkillReady(ConditionInput input)
     {
         int idx = GetSkillIndex(input);
@@ -136,8 +157,6 @@ public class SkillExecuter : MonoBehaviour
 
     private int GetSkillIndex(ConditionInput input)
     {
-        if (input == ConditionInput.SkillL) return 0;
-        int i = System.Array.IndexOf(inputs, input);
-        return i >= 0 ? i + 1 : -1;
+        return Array.IndexOf(inputs, input);
     }
 }

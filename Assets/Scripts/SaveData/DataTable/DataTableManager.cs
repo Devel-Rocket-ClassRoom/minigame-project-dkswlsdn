@@ -2,9 +2,13 @@ using UnityEngine;
 
 public static class DataTableManager
 {
-    public static StringTable StringTable; 
+    public static StringTable StringTable;
     public static SpriteTable SpriteTable;
     public static DialogTable DialogTable;
+    public static CharacterTable CharacterTable;
+    public static SkillTable SkillTable;
+    public static ItemTable ItemTable;
+    public static RecipeTable RecipeTable; 
 
     static DataTableManager()
     {
@@ -16,6 +20,10 @@ public static class DataTableManager
         StringTable = new StringTable();
         SpriteTable = new SpriteTable();
         DialogTable = new DialogTable();
+        CharacterTable = new CharacterTable();
+        SkillTable = new SkillTable();
+        ItemTable = new ItemTable();
+        RecipeTable = new RecipeTable();
         LoadAll();
     }
 
@@ -24,6 +32,10 @@ public static class DataTableManager
         StringTable.Load(LoadCSV("Tables/StringTable"));
         SpriteTable.Load(LoadCSV("Tables/SpriteTable"));
         DialogTable.Load(LoadCSV("Tables/DialogTable"));
+        CharacterTable.Load(LoadCSV("Tables/CharacterTable"));
+        SkillTable.Load(LoadCSV("Tables/SkillTable"));
+        ItemTable.Load(LoadCSV("Tables/ItemTable"));
+        RecipeTable.Load(LoadCSV("Tables/RecipyTable"));
     }
 
     private static string LoadCSV(string path)

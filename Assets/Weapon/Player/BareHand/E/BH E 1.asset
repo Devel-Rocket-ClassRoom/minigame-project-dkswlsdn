@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: BH E 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.3
+  actionTime: 0.1
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: 1511e7b5f8029e040ad9ba51bcf49d9c, type: 2}
+  blendTime: 0
   movementMethod:
     calcType: 1
+    targetting: 0
     gravity: 0
     friction: 0
     isKeepSpeed: 0
@@ -26,6 +28,7 @@ MonoBehaviour:
     rightSide: 0
     canFreeMove: 0
     freeMoveSpeed: 0
+    useTargetting: 0
     distance: 2
     neutralDistance: 1
     backwardDistance: 0
@@ -45,13 +48,33 @@ MonoBehaviour:
     cameraLocked: 0
     lookSpeedLimit: 0
   attack: []
-  stack: []
+  grabImmuneLevel: 0
+  stack:
+  - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
+    conditions: []
+    count: 1
+    life: 0.9
+    preDelay: 0
+    onCanceled: 1
   effects: []
-  targetting: 0
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  aimDistance: 0
+  cameraShakes: []
+  normalizePivotOnCameraAction: 1
+  cameraActions:
+  - preDelay: 0
+    localOffset: {x: 0.2, y: 0, z: 1}
+    pan: 0
+    tilt: 0
+    dutch: 0
+    zoom: 0.9
+    blendIn: 0
+    hold: 0.6
+    blendOut: 0
+    ease:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
   transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0

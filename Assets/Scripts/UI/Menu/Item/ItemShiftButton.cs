@@ -7,44 +7,33 @@ public class ItemShiftButton : MonoBehaviour
     [SerializeField] private SetItemGrid storageGrid;
     [SerializeField] private SetItemGrid characterGrid;
 
-    private bool toStorage;
-    private ItemSaveEntry entry;
+    private bool isStorage;
+    private string item;
 
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(OnShift);
     }
 
-    public void Init(ItemSaveEntry item, bool isStorage)
+    public void Init(string item, bool isStorage)
     {
-        toStorage = !isStorage;
-        entry = item;
+        this.isStorage = isStorage;
+        this.item = item;
     }
 
     private void OnShift()
     {
-        var storage = SaveManager.instance.CurrentSave.itemInStorage;
-        var character = SaveManager.instance.CurrentSave.itemInCharacter;
-
-        if (toStorage)
+        if (isStorage && SaveManager.CurrentSave.itemInStorage.ContainsKey(item))
         {
-            character.Remove(entry);
-            storage.Add(entry);
+            SaveManager.InventoryIO(item, 1, !isStorage);
+            SaveManager.InventoryIO(item, -1, isStorage);
         }
-        else
+        else if (!isStorage && SaveManager.CurrentSave.itemInCharacter.ContainsKey(item))
         {
-            storage.Remove(entry);
-            character.Add(entry);
+            SaveManager.InventoryIO(item, 1, !isStorage);
+            SaveManager.InventoryIO(item, -1, isStorage);
         }
 
-        toStorage = !toStorage;
-        SaveManager.instance.SaveRequest();
-        ReLoad();
-    }
-
-    private void ReLoad()
-    {
-        storageGrid.Load();
-        characterGrid.Load();
+        SaveManager.SaveRequest();
     }
 }

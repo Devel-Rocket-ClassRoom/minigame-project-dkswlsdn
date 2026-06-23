@@ -11,17 +11,45 @@ public class Weapon : ScriptableObject
     public Sprite icon;
     public GameObject model;
 
+    [Header("기본 스킬")]
+    public Skill PassiveSkill;
+    public Skill ESkill;
+    public Skill FSkill;
+    public Skill SpaceSkill;
     public Skill LSkill;
     public Skill RSkill;
-    public Skill LRSkill;
     public Skill SLSkill;
-    public Skill FSkill;
-    public Skill QSkill;
-    public Skill ESkill;
-    public Skill SpaceSkill;
+    public Skill LRSkill;
+
+    [Header("마법 전환 스킬")]
+    public Skill MagicPassiveSkill;
+    public Skill MagicESkill;
+    public Skill MagicFSkill;
+    public Skill MagicSpaceSkill;
+    public Skill MagicLSkill;
+    public Skill MagicRSkill;
+    public Skill MagicSLSkill;
+    public Skill MagicLRSkill;
 
     [Header("콤보")]
     public List<Combo> combo;
+
+    // SkillKey와 마법 전환 여부로 해당 스킬을 반환
+    public Skill GetSkill(SkillKey key, bool isMagic)
+    {
+        switch (key)
+        {
+            case SkillKey.Passive: return isMagic ? MagicPassiveSkill : PassiveSkill;
+            case SkillKey.E:       return isMagic ? MagicESkill : ESkill;
+            case SkillKey.F:       return isMagic ? MagicFSkill : FSkill;
+            case SkillKey.Space:   return isMagic ? MagicSpaceSkill : SpaceSkill;
+            case SkillKey.L:       return isMagic ? MagicLSkill : LSkill;
+            case SkillKey.R:       return isMagic ? MagicRSkill : RSkill;
+            case SkillKey.SL:      return isMagic ? MagicSLSkill : SLSkill;
+            case SkillKey.LR:      return isMagic ? MagicLRSkill : LRSkill;
+            default: return null;
+        }
+    }
 }
 
 [Serializable]

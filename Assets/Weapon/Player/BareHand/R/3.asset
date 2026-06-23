@@ -13,19 +13,52 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
-    damage: 10
+    mult: 1.5
+    add: 300
+    crit: 0
+    cameraShake:
+      direction: {x: 0.5, y: 0.8660254}
+      amplitude: 0.2
+      oscillations: 2
+      duration: 0.3
+      envelope:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     reaction: 2
     range: 1
     stunDuration: 0.4
     stunForce: 2
-    airborneForce: {x: 3, y: 7}
+    airborneForce: {x: 2, y: 8}
     forceDirectionType: 0
     fixedStun: 0
     reverseStun: 0.066
+    effects: []
     activateTime: 0.1
     isDestroyOnCanceled: 1
     isReleaseGrab: 1
     projectileSpeed: 0
+    isBreakable: 0
   type: 2
   targetLayer:
     serializedVersion: 2
@@ -35,7 +68,7 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: -0.36969703, y: 0.4472135, z: 0.8144471}
+  aimDir: {x: 0.66953737, y: 0.4472135, z: -0.5930598}
   positionOffset: {x: 0, y: 0.5, z: 1}
   rotationOffset: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 3, y: 2, z: 3}

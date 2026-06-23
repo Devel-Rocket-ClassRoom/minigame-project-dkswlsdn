@@ -13,16 +13,26 @@ public class ShowItemDescription : MonoBehaviour
     [SerializeField] private ConsumeButton consumeButton;
     [SerializeField] private ItemShiftButton shiftButton;
 
-    public void Init(Item item, Character character, ItemSaveEntry entry, bool isStorage)
+    private void OnEnable()
+    {
+        SaveManager.onSaveModified += Clear;
+    }
+
+    private void OnDisable()
+    {
+        SaveManager.onSaveModified -= Clear;
+    }
+
+    public void Init(Item item, Character character, bool isStorage)
     {
         this.item = item;
         this.character = character;
-        this.entry = entry;
         itemName.ChangeText(item.itemName);
-        icon.sprite = item.icon;
-        desc.ChangeText(item.desc);
+        //icon.sprite = item.icon;
+        if (DataTableManager.ItemTable.TryGet(item.itemName, out ItemData data))
+            desc.ChangeText(data.description);
 
-        shiftButton.Init(entry, isStorage);
+        if (shiftButton != null) shiftButton.Init(item.itemName, isStorage);
 
         consumeButton.Init(item, character, entry, isStorage);
     }

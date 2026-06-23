@@ -1,12 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node
+public class Node : MonoBehaviour
 {
-    public List<Node> adjacentNode;
-}
+    public List<Node> adjacentNodes;
 
-public struct NodeMethod
-{
-    public Node node;
+    public Node GetNearest(Vector3 position)
+    {
+        Node nearest = this;
+        float minSqrDist = (transform.position - position).sqrMagnitude;
+
+        foreach (var node in adjacentNodes)
+        {
+            float sqrDist = (node.transform.position - position).sqrMagnitude;
+            if (sqrDist < minSqrDist)
+            {
+                minSqrDist = sqrDist;
+                nearest = node;
+            }
+        }
+
+        return nearest;
+    }
 }

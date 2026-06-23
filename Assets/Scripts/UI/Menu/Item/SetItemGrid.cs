@@ -3,30 +3,48 @@ using UnityEngine;
 
 public class SetItemGrid : MonoBehaviour
 {
-    [SerializeField] private ItemDatabase database;
     [SerializeField] private ItemButton button;
     [SerializeField] private ShowItemDescription desc;
-    [SerializeField] private Character character;
     [SerializeField] private bool isStorage;
-    private List<ItemSaveEntry> storage;
 
+    private Character character;
 
+    private void Awake()
+    {
+        Character.SubscribeToPlayer(OnPlayerAppeared);
+    }
+
+    private void OnPlayerAppeared(Character c)
+    {
+        character = c;
+    }
 
     private void OnEnable()
     {
         Load();
+        SaveManager.onSaveModified += Load;
+    }
+
+    private void OnDisable()
+    {
+        SaveManager.onSaveModified -= Load;
+    }
+
+    private void OnDestroy()
+    {
+        Character.UnsubscribeFromPlayer(OnPlayerAppeared);
     }
 
     public void Load()
     {
         Clear();
 
-        storage = isStorage ? SaveManager.instance.CurrentSave.itemInStorage : SaveManager.instance.CurrentSave.itemInCharacter;
+        var storage = isStorage ? SaveManager.CurrentSave.itemInStorage : SaveManager.CurrentSave.itemInCharacter;
 
         foreach (var item in storage)
         {
-            var itm = database.items.Find(i => i.itemName == item.itemName);
-            CreateItemButton(itm, item);
+            var itm = DatabaseManager.FindItem(item.Key);
+            CreateItemButton(itm, item.Value);
         }
     }
 
@@ -38,12 +56,14 @@ public class SetItemGrid : MonoBehaviour
         }
     }
 
-    private void CreateItemButton(Item item, ItemSaveEntry entry)
+    private void CreateItemButton(Item item, int amount)
     {
+        if (item == null)
+        {
+            return;
+        }
+
         var b = Instantiate(button, transform);
-
-        if (item == null) return;
-
-        b.Init(item, desc, character, entry, isStorage);
+        b.Init(item, amount, desc, character, isStorage);
     }
 }

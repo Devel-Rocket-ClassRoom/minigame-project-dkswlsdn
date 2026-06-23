@@ -16,7 +16,8 @@ MonoBehaviour:
   actionTime: 0.8
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 0}
+  clip: {fileID: 7400000, guid: da6ceb885925edd4aa86e0b767da7bec, type: 2}
+  blendTime: 0
   movementMethod:
     calcType: 0
     gravity: 0
@@ -50,8 +51,34 @@ MonoBehaviour:
   - preDelay: 0.2
     method: {fileID: 11400000, guid: 823cec2ad2c2b3a4282f317f981ad217, type: 2}
   - preDelay: 0.2
-    method: {fileID: 11400000, guid: 823cec2ad2c2b3a4282f317f981ad217, type: 2}
-  stack: []
+    method: {fileID: 11400000, guid: 8b187a76a9c1e6446a49b8552dc0f26a, type: 2}
+  grabImmuneLevel: 0
+  stack:
+  - stack: {fileID: 11400000, guid: 6bef6e163ea663b49a79ce85cccd0d83, type: 2}
+    conditions: []
+    count: 1
+    life: 1.4
+    preDelay: 0.2
+    onCanceled: 1
+  effects: []
+  cameraShakes: []
+  normalizePivotOnCameraAction: 0
+  cameraActions:
+  - preDelay: 0
+    localOffset: {x: 0, y: 0, z: 0}
+    pan: 0
+    tilt: -5
+    dutch: 0
+    zoom: 0.7
+    blendIn: 0.8
+    hold: 0
+    blendOut: 0
+    ease:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
   targetting: 0
   targetLayer:
     serializedVersion: 2

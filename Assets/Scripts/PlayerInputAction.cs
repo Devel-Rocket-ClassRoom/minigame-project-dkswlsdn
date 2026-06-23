@@ -235,6 +235,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Help"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3c80d7f-da29-4365-a43d-377528852c2f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -534,6 +543,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Item 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e893787b-8191-4a98-a9c6-8b5c9caf599e"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Help"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -667,6 +687,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_E = m_Player.FindAction("E", throwIfNotFound: true);
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Item1 = m_Player.FindAction("Item 1", throwIfNotFound: true);
+        m_Player_Help = m_Player.FindAction("Help", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_MenuToggle = m_Menu.FindAction("MenuToggle", throwIfNotFound: true);
@@ -772,6 +793,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_E;
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Item1;
+    private readonly InputAction m_Player_Help;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -848,6 +870,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Item1 => m_Wrapper.m_Player_Item1;
         /// <summary>
+        /// Provides access to the underlying input action "Player/Help".
+        /// </summary>
+        public InputAction @Help => m_Wrapper.m_Player_Help;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -921,6 +947,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Item1.started += instance.OnItem1;
             @Item1.performed += instance.OnItem1;
             @Item1.canceled += instance.OnItem1;
+            @Help.started += instance.OnHelp;
+            @Help.performed += instance.OnHelp;
+            @Help.canceled += instance.OnHelp;
         }
 
         /// <summary>
@@ -980,6 +1009,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Item1.started -= instance.OnItem1;
             @Item1.performed -= instance.OnItem1;
             @Item1.canceled -= instance.OnItem1;
+            @Help.started -= instance.OnHelp;
+            @Help.performed -= instance.OnHelp;
+            @Help.canceled -= instance.OnHelp;
         }
 
         /// <summary>
@@ -1335,6 +1367,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnItem1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Help" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHelp(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menu" which allows adding and removing callbacks.

@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8893536605686205394}
   - component: {fileID: 7786373711720176430}
   - component: {fileID: 2121447087015001605}
-  m_Layer: 0
+  - component: {fileID: -2000953176941092277}
+  m_Layer: 13
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,32 +126,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e11d7a9ad1600c499a2c1c761c6b734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attack
-  method:
-    info:
-      damage: 0
-      stack: {fileID: 0}
-      count: 0
-      reaction: 0
-      stunDuration: 0
-      stunForce: 0
-      airborneForce: {x: 0, y: 0}
-      forceDirectionType: 0
-      fixedStun: 0
-      reverseStun: 0
-      activateTime: 0
-      isDestroyOnCanceled: 0
-      isReleaseGrab: 0
-      projectileSpeed: 0
-    type: 0
-    preDelay: 0
-    isCheckHit: 0
-    isGrab: 0
-    toGrab: 0
-    useAim: 0
-    aimDir: {x: 0, y: 0, z: 0}
-    positionOffset: {x: 0, y: 0, z: 0}
-    rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-    scale: {x: 0, y: 0, z: 0}
-    movementType: 0
-    spawnRules: []
-  isGrab: 0
+  method: {fileID: 0}
+--- !u!54 &-2000953176941092277
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7899601111826348925}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

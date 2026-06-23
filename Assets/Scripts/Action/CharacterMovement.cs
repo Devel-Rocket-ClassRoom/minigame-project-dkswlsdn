@@ -20,6 +20,11 @@ public abstract class CharacterMovement : MonoBehaviour
     private float friction = 0;
     [SerializeField] private LayerMask groundLayer;
 
+    // 캐릭터 간 막힘 판정 (물리 충돌은 끄고, 이동만 막는다 → 밀림 없음)
+    [SerializeField] private LayerMask characterBlockLayer; // 다른 캐릭터들이 속한 레이어
+    [SerializeField] private CapsuleCollider bodyCollider;  // 막힘 판정에 쓸 본체 캡슐
+    private const float blockSkin = 0.02f;                  // 살짝 띄워서 끼임 방지
+
     // 현재 물리 정보
     protected Vector3 inputDirection;
     private Vector3 localDirection;
@@ -53,6 +58,7 @@ public abstract class CharacterMovement : MonoBehaviour
         stat = GetComponent<CharacterStat>();
         state = GetComponent<StateManager>();
         commander = GetComponent<CharacterCommander>();
+        if (bodyCollider == null) bodyCollider = GetComponentInChildren<CapsuleCollider>();
     }
 
     private void OnEnable()
@@ -101,6 +107,7 @@ public abstract class CharacterMovement : MonoBehaviour
         }
 
         ApplyFriction();
+        BlockAgainstCharacters();
         Move();
     }
 
@@ -112,10 +119,44 @@ public abstract class CharacterMovement : MonoBehaviour
 
     private void Move()
     {
-        if (!state.CanNotMove)
-            rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
-        else
-            rigid.linearVelocity = new Vector3(rigid.linearVelocity.x, verticalVelocity, rigid.linearVelocity.z);
+        rigid.linearVelocity = horizontalVelocity + Vector3.up * verticalVelocity;
+    }
+
+    // 다른 캐릭터를 향해 가는 수평 속도 성분만 깎아낸다.
+    // 물리 충돌(레이어)은 꺼져 있어 밀림은 없고, 이동만 벽처럼 막히며 표면을 따라 미끄러진다.
+    private void BlockAgainstCharacters()
+    {
+        if (bodyCollider == null || characterBlockLayer == 0) return;
+
+        Vector3 horiz = new Vector3(horizontalVelocity.x, 0f, horizontalVelocity.z);
+        if (horiz.sqrMagnitude < 0.0001f) return;
+
+        // 캡슐의 월드 양 끝점 계산
+        float height = Mathf.Max(bodyCollider.height, bodyCollider.radius * 2f);
+        float radius = bodyCollider.radius;
+        Vector3 center = bodyCollider.transform.TransformPoint(bodyCollider.center);
+        Vector3 up = bodyCollider.transform.up;
+        float half = Mathf.Max(0f, height * 0.5f - radius);
+        Vector3 p1 = center + up * half;
+        Vector3 p2 = center - up * half;
+
+        Vector3 dir = horiz.normalized;
+        float dist = horiz.magnitude * Time.fixedDeltaTime + blockSkin;
+
+        if (Physics.CapsuleCast(p1, p2, radius, dir, out RaycastHit hit, dist,
+                                characterBlockLayer, QueryTriggerInteraction.Ignore))
+        {
+            Vector3 n = hit.normal;
+            n.y = 0f;
+            if (n.sqrMagnitude < 0.0001f) return;
+            n.Normalize();
+
+            float into = Vector3.Dot(horiz, n);
+            if (into < 0f) horiz -= n * into; // 벽으로 파고드는 성분 제거 → 접선 방향만 남아 미끄러짐
+
+            horizontalVelocity.x = horiz.x;
+            horizontalVelocity.z = horiz.z;
+        }
     }
 
     protected void FreeMove()
@@ -124,7 +165,7 @@ public abstract class CharacterMovement : MonoBehaviour
         {
             horizontalSpeed = moveSpeed;
         }
-        else if (inputDirection.z < -0.01f)
+        else if (Mathf.Abs(inputDirection.x) < 0.01f && inputDirection.z < -0.01f)
         {
             horizontalSpeed = moveSpeed * 0.3f;
         }
@@ -222,7 +263,7 @@ public abstract class CharacterMovement : MonoBehaviour
             switch (method.calcType)
             {
                 case DistanceCalculateType.Fixed:
-                    aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
+                    aim.GetLookAtDistance(method.targetting, method.targetLayer, distance, out targetY, method.useTargetting);
                     break;
                 case DistanceCalculateType.UseInput:
                     if (commander.GetInput(ConditionInput.MoveForward, true)) { }
@@ -236,7 +277,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     break;
                 case DistanceCalculateType.UseAim:
-                    distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
+                    distance = aim.GetLookAtDistance(method.targetting, method.targetLayer, distance, out targetY, method.useTargetting);
                     break;
                 case DistanceCalculateType.Mixed:
                     if (commander.GetInput(ConditionInput.MoveBackward, true))
@@ -245,7 +286,7 @@ public abstract class CharacterMovement : MonoBehaviour
                     }
                     else
                     {
-                        distance = aim.GetLookAtDistance(action.targetting, groundLayer, distance, out targetY);
+                        distance = aim.GetLookAtDistance(method.targetting, method.targetLayer, distance, out targetY, method.useTargetting);
                     }
                     break;
             }
@@ -280,32 +321,37 @@ public abstract class CharacterMovement : MonoBehaviour
         }
     }
 
-    public void StunMove(Character character, AttackInfo hit)
+    public void StunMove(Character character, AttackInfo hit, AttackId id)
     {
         StopAllCoroutines();
-        StartCoroutine(CoFreeze(hit));
+        StartCoroutine(CoFreeze(hit, id));
     }
 
-private IEnumerator CoFreeze(AttackInfo hit)
+private IEnumerator CoFreeze(AttackInfo hit, AttackId id)
     {
         isFrozen = true;
         rigid.linearVelocity = Vector3.zero;
         if (hit.reaction == HitReactionType.Gaurded) { isFrozen = false; yield break; }
+
+        // 피격 직후 상태를 캡처. StateManager가 onDamageTake에서 즉시 Airborne으로 바꾸므로
+        // 대기 후 state.State를 보면 항상 Airborne이라 스탠딩 분기를 탈 수 없다.
+        bool wasGrounded = state.State != CharacterState.Airborne && state.State != CharacterState.Knockdown;
+
         yield return new WaitForSeconds(hit.fixedStun);
         if (state.State == CharacterState.Grapped) yield break;
 
         var dir = Vector3.zero;
-        rigid.linearVelocity = dir;
+        rigid.linearVelocity = Vector3.zero;
 
         switch (hit.forceDirectionType)
         {
             case ForceDirectionType.Fixed:
-                dir = hit.origin.forward;
+                dir = id.origin.forward;
                 break;
             case ForceDirectionType.Spread:
-                dir = transform.position - hit.origin.position;
+                dir = transform.position - id.origin.position;
                 dir.y = 0;
-                dir = dir == Vector3.zero ? hit.origin.forward : dir.normalized;
+                dir = dir == Vector3.zero ? id.origin.forward : dir.normalized;
                 break;
             case ForceDirectionType.Random:
                 break;
@@ -314,32 +360,39 @@ private IEnumerator CoFreeze(AttackInfo hit)
                 break;
         }
 
-        if (state.State != CharacterState.Airborne && state.State != CharacterState.Knockdown)
+        if (wasGrounded)
         {
             switch (hit.reaction)
             {
                 case HitReactionType.HitStun:
-                    rigid.AddForce(dir * hit.stunForce, ForceMode.Impulse);
+                    horizontalVelocity = dir * hit.stunForce;
+                    horizontalSpeed = horizontalVelocity.magnitude;
                     isFreeMoveEnabled = false;
-                    activeGravity = defaultGravity;
-                    friction = 6f;
+                    activeGravity = defaultGravity; 
+                    friction = 8f;
                     break;
                 case HitReactionType.Airborne:
-                    transform.Translate(Vector3.up * 1f);
-                    rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
+                    rigid.position += Vector3.up * 0.5f;
+                    isOnGround = false;
+                    yield return new WaitForFixedUpdate();
+
+                    horizontalVelocity = dir * hit.airborneForce.x;
+                    horizontalSpeed = horizontalVelocity.magnitude;
                     verticalVelocity = hit.airborneForce.y;
                     isFreeMoveEnabled = false;
                     activeGravity = defaultGravity;
+                    friction = 0f;
                     break;
             }
         }
         else
         {
-            transform.Translate(Vector3.up * 0.1f);
-            rigid.AddForce(dir * hit.airborneForce.x, ForceMode.Impulse);
+            horizontalVelocity = dir * hit.airborneForce.x;
+            horizontalSpeed = horizontalVelocity.magnitude;
             verticalVelocity = hit.airborneForce.y;
             isFreeMoveEnabled = false;
             activeGravity = defaultGravity;
+            friction = 0f;
         }
         isFrozen = false;
     }
@@ -381,6 +434,7 @@ private IEnumerator CoFreeze(AttackInfo hit)
         {
             surfaceNormal = Vector3.up;
             isNearGround = false;
+            isOnGround = false;
         }
 
         bool isGrounded = isNearGround && isOnGround;
@@ -397,9 +451,24 @@ private IEnumerator CoFreeze(AttackInfo hit)
     }
 
 
+    // 위로 향하는 정도(코사인). 0.5 ≈ 약 60도 이내 경사까지 바닥으로 인정, 그보다 가파르면 벽 취급
+    private const float groundNormalThreshold = 0.5f;
+
+    // Ground 콜라이더와의 접점 중 '발밑 바닥'(위로 향하는 법선)이 있는지 검사. 측면(벽) 접촉은 제외
+    private bool HasFloorContact(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Ground")) return false;
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if (collision.GetContact(i).normal.y >= groundNormalThreshold)
+                return true;
+        }
+        return false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground") && isNearGround && verticalVelocity < 0)
+        if (HasFloorContact(collision) && verticalVelocity < 0f)
         {
             verticalVelocity = 0f;
             isOnGround = true;
@@ -407,9 +476,9 @@ private IEnumerator CoFreeze(AttackInfo hit)
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground") && isNearGround && verticalVelocity < 0)
+        if (HasFloorContact(collision) && verticalVelocity <= 0f)
         {
-            verticalVelocity = 0f;
+            if (verticalVelocity < 0f) verticalVelocity = 0f;
             isOnGround = true;
         }
     }
@@ -438,9 +507,33 @@ private IEnumerator CoFreeze(AttackInfo hit)
         isFreeMoveEnabled = true;
     }
 
+    // 풀 재사용/부활 시 초기화. 속도·중력·이동 상태를 기본값으로 되돌린다.
+    public void ResetState()
+    {
+        if (rigid != null) rigid.linearVelocity = Vector3.zero;
+        verticalVelocity = 0f;
+        horizontalVelocity = Vector3.zero;
+        horizontalSpeed = 0f;
+        activeGravity = defaultGravity;
+        friction = 0f;
+        isFreeMoveEnabled = true;
+        isFrozen = false;
+        enabled = true;   // StopImmediately로 꺼졌을 수 있으니 재활성
+    }
+
     public void OnKnockdown()
     {
         horizontalVelocity = Vector3.zero;
+    }
+
+    // 죽음 연출용 즉시 정지. 속도를 0으로 만들고 이동 갱신을 멈춘다.
+    public void StopImmediately()
+    {
+        horizontalVelocity = Vector3.zero;
+        verticalVelocity = 0f;
+        horizontalSpeed = 0f;
+        if (rigid != null) rigid.linearVelocity = Vector3.zero;
+        enabled = false;
     }
 
     public bool GetOnGrounded()
