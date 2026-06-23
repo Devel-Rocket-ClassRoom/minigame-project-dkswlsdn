@@ -113,3 +113,12 @@ InitTestScene*.unity*
 
 # Claude Code
 .claude/
+
+
+# Firebase sensitive config files
+Assets/google-services.json
+Assets/google-services.json.meta
+Assets/StreamingAssets/google-services-desktop.json
+Assets/StreamingAssets/google-services-desktop.json.meta
+Assets/Resources/FirebaseConfig.asset
+Assets/Resources/FirebaseConfig.asset.meta
