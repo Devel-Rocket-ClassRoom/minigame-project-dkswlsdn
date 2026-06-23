@@ -60,6 +60,7 @@ MonoBehaviour:
     isReleaseGrab: 0
     projectileSpeed: 0
     isBreakable: 0
+    useFrozen: 0
   type: 1
   targetLayer:
     serializedVersion: 2
@@ -69,9 +70,12 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 1
-  aimDir: {x: -0.36001197, y: 0, z: 0.93294764}
+  aimDir: {x: 0.31917176, y: -0.44823098, z: 0.83499604}
   positionOffset: {x: 0, y: 1, z: 5}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   scale: {x: 1.5, y: 1.5, z: 10}
   movementType: 0
+  targetting: 2
+  aimDistance: 10
+  useTargetting: 0
   spawnRules: []
