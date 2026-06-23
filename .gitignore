@@ -122,3 +122,9 @@ Assets/StreamingAssets/google-services-desktop.json
 Assets/StreamingAssets/google-services-desktop.json.meta
 Assets/Resources/FirebaseConfig.asset
 Assets/Resources/FirebaseConfig.asset.meta
+
+# Firebase SDK binaries
+Assets/Firebase/Plugins/
+Assets/ExternalDependencyManager/
+Assets/Plugins/iOS/Firebase/
+Assets/Plugins/tvOS/Firebase/
