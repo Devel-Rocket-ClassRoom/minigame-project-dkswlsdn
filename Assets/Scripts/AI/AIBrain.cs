@@ -160,6 +160,8 @@ public class AIBrain : MonoBehaviour
                 break;
 
             case AIState.Chase:
+                if (aggro == null) { ChangeState(IdleState()); break; }
+                if (sight.Visibles.Contains(aggro)) { ChangeState(AIState.Combat); break; }
                 if (FindVisitedAnchorNearby() is Anchor chaseAnchor)
                     ChangeState(AIState.DestroyRope, chaseAnchor);
                 break;
