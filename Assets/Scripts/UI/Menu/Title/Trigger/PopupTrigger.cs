@@ -1,4 +1,3 @@
-using Michsky.UI.ModernUIPack;
 using UnityEngine;
 
 public class PopupTrigger : MonoBehaviour

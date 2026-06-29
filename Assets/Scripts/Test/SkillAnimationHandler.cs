@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,18 +17,16 @@ public class SkillAnimationHandler : MonoBehaviour
     private AnimatorOverrideController overrideController;
     private List<KeyValuePair<AnimationClip, AnimationClip>> overridesList;
 
-    private int pingPong; // 0/1, 매 스킬마다 토글해서 직전과 다른 스테이트로 진입
+    private int pingPong;
+    private Coroutine phaseCoroutine;
 
     private void Awake()
     {
         caster = GetComponent<SkillCaster>();
         if (animator == null) animator = GetComponentInChildren<Animator>();
-
         Rebind(animator);
     }
 
-    // 모델 교체 시 새 Animator로 오버라이드 컨트롤러를 다시 빌드한다.
-    // 새 모델 인스턴스의 Animator는 기본 컨트롤러를 들고 있으므로(오버라이드 중첩 아님) 그대로 감싸면 된다.
     public void Rebind(Animator newAnimator)
     {
         animator = newAnimator;
@@ -47,33 +46,74 @@ public class SkillAnimationHandler : MonoBehaviour
 
     private void OnActionStart(SkillAction action)
     {
-        if (action.clip == null) return;
+        if (action.animationPhases == null || action.animationPhases.Count == 0) return;
 
-        // 매 스킬마다 A↔B 토글.
-        // 직전 스킬과 "다른" 스테이트로 들어가야 CrossFade가 이전 모션→새 모션을 제대로 블렌딩한다.
-        // (같은 스테이트로 CrossFade하면 오버라이드 교체 때문에 블렌딩이 안 됨)
+        if (phaseCoroutine != null) StopCoroutine(phaseCoroutine);
+        animator.speed = 1f;
+        phaseCoroutine = StartCoroutine(CoPlayPhases(action.animationPhases));
+    }
+
+    public void StopAnimation()
+    {
+        if (phaseCoroutine != null)
+        {
+            StopCoroutine(phaseCoroutine);
+            phaseCoroutine = null;
+        }
+        animator.speed = 1f;
+    }
+
+    private IEnumerator CoPlayPhases(List<AnimationPhase> phases)
+    {
+        foreach (var phase in phases)
+        {
+            if (phase.clip == null) continue;
+
+            if (phase.delay > 0f)
+                yield return new WaitForSeconds(phase.delay);
+
+            PlayPhaseClip(phase);
+
+            if (phase.speedEaseDuration > 0f)
+                yield return StartCoroutine(CoEaseSpeed(phase));
+            else
+                animator.speed = phase.speedFrom;
+        }
+    }
+
+    private void PlayPhaseClip(AnimationPhase phase)
+    {
         pingPong ^= 1;
         string targetClipKey = placeholderClipNames[pingPong];
         string targetState   = skillStateNames[pingPong];
 
-        // 이번에 들어갈 스테이트의 플레이스홀더만 새 클립으로 교체.
-        // 반대쪽 스테이트는 직전 클립을 유지하므로 블렌딩 소스가 살아있다.
         for (int i = 0; i < overridesList.Count; i++)
         {
             if (overridesList[i].Key.name == targetClipKey)
             {
                 overridesList[i] = new KeyValuePair<AnimationClip, AnimationClip>(
-                    overridesList[i].Key, action.clip);
+                    overridesList[i].Key, phase.clip);
                 break;
             }
         }
-
         overrideController.ApplyOverrides(overridesList);
 
-        // blendTime > 0 이면 그 시간(초)만큼 진입 보간, 0이면 즉시 전환
-        if (action.blendTime > 0f)
-            animator.CrossFadeInFixedTime(targetState, action.blendTime, 0, 0f);
-        else
-            animator.Play(targetState, 0, 0f);
+        float startNormalized = phase.startFrame / (phase.clip.frameRate * phase.clip.length);
+        animator.speed = phase.speedFrom;
+        animator.CrossFadeInFixedTime(targetState, phase.blendTime, 0, startNormalized * phase.clip.length);
+    }
+
+    private IEnumerator CoEaseSpeed(AnimationPhase phase)
+    {
+        float elapsed = 0f;
+        while (elapsed < phase.speedEaseDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / phase.speedEaseDuration);
+            float curveValue = phase.speedCurve.Evaluate(t);
+            animator.speed = Mathf.LerpUnclamped(phase.speedFrom, phase.speedTo, curveValue);
+            yield return null;
+        }
+        animator.speed = phase.speedTo;
     }
 }

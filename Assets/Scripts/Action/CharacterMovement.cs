@@ -27,6 +27,7 @@ public abstract class CharacterMovement : MonoBehaviour
 
     // 현재 물리 정보
     protected Vector3 inputDirection;
+    public Vector3 InputDirection => inputDirection;
     private Vector3 localDirection;
     private Vector3 staticLocalDirection;
     private Vector3 horizontalVelocity;

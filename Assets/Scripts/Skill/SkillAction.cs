@@ -10,10 +10,8 @@ public class SkillAction : ScriptableObject
     public float actionTime;
     public float partialCooldown;
     public bool useGrab;
-    public AnimationClip clip;
-    [Tooltip("모션 진입 시 크로스페이드 보간 시간(초). 0이면 즉시 전환")]
-    public float blendTime;
 
+    public List<AnimationPhase> animationPhases;
     public MovementMethod movementMethod;
     public List<AttackEntry> attack;
     public int grabImmuneLevel;
@@ -42,7 +40,7 @@ public class SkillTransition
 public struct MovementMethod
 {
     public DistanceCalculateType calcType;
-    public DestinationTargettingMethod targetting;  // 이동 거리 계산용
+    public DestinationTargettingMethod targetting;
     public LayerMask targetLayer;
 
     [Header("공통")]
@@ -105,7 +103,7 @@ public struct SpawnRule
     public SpawnTrigger  trigger;
     public SpawnPosition position;
     public float         preDelay;
-    public AttackMethod  method; // SO 참조 → 직렬화 순환 없음
+    public AttackMethod  method;
 }
 
 [Serializable]
@@ -147,7 +145,6 @@ public class AttackInfo
     public int grabLevel;
 
     [Header("카메라")]
-    [Tooltip("적중 시 발생할 카메라 흔들림. 비워두면 흔들림 없음")]
     public CameraShakeSettings cameraShake;
 
     [Header("경직")]
@@ -191,4 +188,19 @@ public class EffectEntry
     public float preDelay;
     public InstantiateMethod method;
     public bool isLeft;
+}
+
+[Serializable]
+public class AnimationPhase
+{
+    public AnimationClip clip;
+    public int startFrame;
+    public float blendTime = 0.1f;
+    public float delay;
+
+    [Header("재생속도 이징")]
+    public float speedFrom = 1f;
+    public float speedTo = 1f;
+    public float speedEaseDuration;
+    public AnimationCurve speedCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 }

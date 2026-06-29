@@ -88,6 +88,14 @@ public class StateManager : MonoBehaviour
         // 에어본 중 수직 속도(raw)를 애니메이터로 전달 → 올라감/정점/내려감 BlendTree 구동
         if (animator != null && movement != null && state == CharacterState.Airborne)
             animator.SetFloat("VerticalVelocity", movement.VerticalVelocity);
+
+        // Idle/Move 상태에서 입력값을 Animator Blend Tree로 전달 (걷기 모션)
+        if (animator != null && movement != null && (state == CharacterState.Idle || state == CharacterState.Move))
+        {
+            Vector3 dir = movement.InputDirection;
+            animator.SetFloat("MoveX", dir.x);
+            animator.SetFloat("MoveZ", dir.z);
+        }
     }
 
     private void CheckTransition()
