@@ -96,6 +96,7 @@ public class SkillAnimationHandler : MonoBehaviour
                 break;
             }
         }
+
         overrideController.ApplyOverrides(overridesList);
 
         float startNormalized = phase.startFrame / (phase.clip.frameRate * phase.clip.length);

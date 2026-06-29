@@ -16,8 +16,38 @@ MonoBehaviour:
   actionTime: 0.3
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: 5184d797bfb0a864b8474112d3f5c802, type: 2}
-  blendTime: 0
+  animationPhases:
+  - clip: {fileID: -885483897695478210, guid: a234ff2b615406449b9ddcdaad203e67, type: 3}
+    startFrame: 0
+    blendTime: 0.016
+    delay: 0
+    speedFrom: 1
+    speedTo: 1
+    speedEaseDuration: 0
+    speedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   movementMethod:
     calcType: 0
     targetting: 0

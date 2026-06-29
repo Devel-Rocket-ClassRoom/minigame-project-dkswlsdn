@@ -26,6 +26,20 @@ public class SkillAction : ScriptableObject
     public float minTransitionTime;
     public float maxTransitionTime;
     public SkillAction autoTransition;
+
+    private void OnValidate()
+    {
+        if (animationPhases == null) return;
+        foreach (var phase in animationPhases)
+        {
+            if (phase == null) continue;
+            if (phase.blendTime == 0f) phase.blendTime = 0.016f;
+            if (phase.speedFrom == 0f) phase.speedFrom = 1f;
+            if (phase.speedTo   == 0f) phase.speedTo   = 1f;
+            if (phase.speedCurve == null || phase.speedCurve.keys.Length == 0)
+                phase.speedCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        }
+    }
 }
 
 [Serializable]
@@ -195,7 +209,7 @@ public class AnimationPhase
 {
     public AnimationClip clip;
     public int startFrame;
-    public float blendTime = 0.1f;
+    public float blendTime = 0.016f;
     public float delay;
 
     [Header("재생속도 이징")]
