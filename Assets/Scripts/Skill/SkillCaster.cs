@@ -251,6 +251,9 @@ public class SkillCaster : MonoBehaviour
                     id.origin = transform;
                     info.useGrab = context.current.useGrab;
                     c.Stat.TakeDamage(character, info, id);
+                    if (attack.method.info.stackOnHit != null)
+                        foreach (var entry in attack.method.info.stackOnHit)
+                            if (entry.stack != null) c.Stack.Request(entry.stack, entry.count, entry.life, character);
                 }
 
                 if (attack.method.info.isReleaseGrab) ReleaseGrab(CharacterState.Airborne);
@@ -258,7 +261,7 @@ public class SkillCaster : MonoBehaviour
             else if (attack.method.type != HitboxType.None)
             {
                 var atk = attack.method;
-                Vector3 targetPoint = aim.GetLookAtVector(atk.targetting, atk.targetLayer, atk.aimDistance, out _, out Transform targetCharacter);
+                Vector3 targetPoint = aim.GetLookAtVector(atk.targetting, atk.aimLayer, atk.aimDistance, out _, out Transform targetCharacter);
                 if (atk.useTargetting && targetCharacter != null)
                     targetPoint = targetCharacter.position;
                 atk.aimDir = (targetPoint - (transform.position + transform.TransformVector(atk.positionOffset))).normalized;
@@ -287,7 +290,15 @@ public class SkillCaster : MonoBehaviour
                 }
                 else
                 {
-                    instance.onHit += (crt) => { if (crt.Id != character.Id) capturedContext.isHit = true; };
+                    instance.onHit += (crt) =>
+                    {
+                        if (crt.Id == character.Id) return;
+                        capturedContext.isHit = true;
+                        if (attack.method.info.stackOnHit != null)
+                            foreach (var entry in attack.method.info.stackOnHit)
+                                if (entry.stack != null)
+                                    crt.Stack.Request(entry.stack, entry.count, entry.life, character);
+                    };
 
                     if (attack.method.isCheckHit) instance.onHit += (crt) =>
                     {
@@ -320,7 +331,7 @@ public class SkillCaster : MonoBehaviour
                 if (!met) continue;
             }
 
-            character.Stack.Request(stack.stack, stack.count, stack.life);
+            character.Stack.Request(stack.stack, stack.count, stack.life, character);
         }
     }
     IEnumerator CoPlayEffect()
@@ -359,7 +370,7 @@ public class SkillCaster : MonoBehaviour
                     break;
             }
 
-            EffectManager.instance.Play(effect.effect, parent);
+            EffectManager.instance.Play(effect.effect, parent, state);
         }
     }
 
@@ -425,7 +436,7 @@ public class SkillCaster : MonoBehaviour
             foreach (var stack in context.current.stack)
             {
                 if (stack.onCanceled)
-                    character.Stack.Request(stack.stack, stack.count, stack.life);
+                    character.Stack.Request(stack.stack, stack.count, stack.life, character);
             }
         }
 

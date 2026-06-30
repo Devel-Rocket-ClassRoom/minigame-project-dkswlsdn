@@ -14,6 +14,7 @@ public class SkillAnimationHandler : MonoBehaviour
     [SerializeField] private string[] placeholderClipNames = { "SkillA", "SkillB" };
 
     private SkillCaster caster;
+    private StateManager state;
     private AnimatorOverrideController overrideController;
     private List<KeyValuePair<AnimationClip, AnimationClip>> overridesList;
 
@@ -23,6 +24,7 @@ public class SkillAnimationHandler : MonoBehaviour
     private void Awake()
     {
         caster = GetComponent<SkillCaster>();
+        state  = GetComponent<StateManager>();
         if (animator == null) animator = GetComponentInChildren<Animator>();
         Rebind(animator);
     }
@@ -49,7 +51,6 @@ public class SkillAnimationHandler : MonoBehaviour
         if (action.animationPhases == null || action.animationPhases.Count == 0) return;
 
         if (phaseCoroutine != null) StopCoroutine(phaseCoroutine);
-        animator.speed = 1f;
         phaseCoroutine = StartCoroutine(CoPlayPhases(action.animationPhases));
     }
 
@@ -60,7 +61,6 @@ public class SkillAnimationHandler : MonoBehaviour
             StopCoroutine(phaseCoroutine);
             phaseCoroutine = null;
         }
-        animator.speed = 1f;
     }
 
     private IEnumerator CoPlayPhases(List<AnimationPhase> phases)
@@ -70,18 +70,19 @@ public class SkillAnimationHandler : MonoBehaviour
             if (phase.clip == null) continue;
 
             if (phase.delay > 0f)
-                yield return new WaitForSeconds(phase.delay);
+                yield return new WaitForSecondsUnfrozen(phase.delay, state);
 
-            PlayPhaseClip(phase);
+            string targetState = PlayPhaseClip(phase);
 
-            if (phase.speedEaseDuration > 0f)
-                yield return StartCoroutine(CoEaseSpeed(phase));
-            else
-                animator.speed = phase.speedFrom;
+            if (phase.blendTime > 0f)
+                yield return new WaitForSecondsUnfrozen(phase.blendTime, state);
+
+            if (phase.duration > 0f)
+                yield return StartCoroutine(CoDriveAnimation(phase, targetState));
         }
     }
 
-    private void PlayPhaseClip(AnimationPhase phase)
+    private string PlayPhaseClip(AnimationPhase phase)
     {
         pingPong ^= 1;
         string targetClipKey = placeholderClipNames[pingPong];
@@ -96,25 +97,34 @@ public class SkillAnimationHandler : MonoBehaviour
                 break;
             }
         }
-
         overrideController.ApplyOverrides(overridesList);
 
-        float startNormalized = phase.startFrame / (phase.clip.frameRate * phase.clip.length);
-        animator.speed = phase.speedFrom;
+        float totalFrames    = phase.clip.frameRate * phase.clip.length;
+        float startNormalized = phase.startFrame / totalFrames;
         animator.CrossFadeInFixedTime(targetState, phase.blendTime, 0, startNormalized * phase.clip.length);
+
+        return targetState;
     }
 
-    private IEnumerator CoEaseSpeed(AnimationPhase phase)
+    private IEnumerator CoDriveAnimation(AnimationPhase phase, string stateName)
     {
+        float totalFrames = phase.clip.frameRate * phase.clip.length;
+        int   endFrame    = phase.endFrame <= 0 ? (int)totalFrames : phase.endFrame;
+
         float elapsed = 0f;
-        while (elapsed < phase.speedEaseDuration)
+        while (elapsed < phase.duration)
         {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / phase.speedEaseDuration);
-            float curveValue = phase.speedCurve.Evaluate(t);
-            animator.speed = Mathf.LerpUnclamped(phase.speedFrom, phase.speedTo, curveValue);
+            if (!state.IsFrozen)
+            {
+                float t             = Mathf.Clamp01(elapsed / phase.duration);
+                float progress      = phase.easingCurve.Evaluate(t);
+                float normalizedTime = Mathf.Lerp(phase.startFrame, endFrame, progress) / totalFrames;
+                animator.Play(stateName, 0, normalizedTime);
+                elapsed += Time.deltaTime;
+            }
             yield return null;
         }
-        animator.speed = phase.speedTo;
+
+        animator.Play(stateName, 0, (float)endFrame / totalFrames);
     }
 }

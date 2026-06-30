@@ -32,7 +32,6 @@ public class Attack : MonoBehaviour
         id.id = character.Id;
         id.team = character.team;
         id.isPlayer = character.isPlayer;
-        id.canSpawn = canSpawn;
         id.origin = character.transform;
 
         if (method.movementType == AttackMovementMethod.Teleport)
@@ -140,9 +139,16 @@ public class Attack : MonoBehaviour
 
 public struct AttackId
 {
+    public AttackId(Character character)
+    {
+        id = character.Id;
+        team = character.team;
+        isPlayer = character.isPlayer;
+        origin = character.transform;
+    }
+
     public int id;
     public int team;
     public bool isPlayer;
-    public bool canSpawn;
     public Transform origin;
 }

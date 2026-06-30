@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5fef7d18129b04eaeb965e502a8c9e, type: 3}
-  m_Name: DG L 3
+  m_Name: DG LR 1 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.3
+  actionTime: 0.5
   partialCooldown: 0
   useGrab: 0
-  animationPhases: []
+  clip: {fileID: 7400000, guid: 6ee5c00cfefb56a4aa8d641bbab77eb3, type: 2}
+  blendTime: 0
   movementMethod:
     calcType: 0
     targetting: 0
@@ -25,7 +26,7 @@ MonoBehaviour:
       m_Bits: 0
     gravity: 0
     friction: 0
-    isKeepSpeed: 0
+    isKeepSpeed: 1
     directionReverse: 0
     rightSide: 0
     canFreeMove: 0
@@ -48,19 +49,17 @@ MonoBehaviour:
     regularTime: 0
     yawLimit: 0
     cameraLocked: 0
-    lookSpeedLimit: 0
-  attack: []
+    lookSpeedLimit: 30
+  attack:
+  - preDelay: 0.1
+    method: {fileID: 11400000, guid: 6288a6de5d17d4a4a8c3d626634b0901, type: 2}
+  - preDelay: 0.1
+    method: {fileID: 11400000, guid: 6288a6de5d17d4a4a8c3d626634b0901, type: 2}
+  - preDelay: 0.1
+    method: {fileID: 11400000, guid: 6288a6de5d17d4a4a8c3d626634b0901, type: 2}
   grabImmuneLevel: 0
   stack: []
-  effects:
-  - effect:
-      effect: {fileID: 1210069404974878, guid: fbab27c98b168764eb295cfff1e9f61f, type: 3}
-      positionOffset: {x: 0, y: 0, z: 0}
-      rotationOffset: {x: 0, y: 0, z: 0}
-      scaleOffset: {x: 0, y: 0, z: 0}
-    preDelay: 0
-    method: 1
-    isLeft: 1
+  effects: []
   cameraShakes: []
   normalizePivotOnCameraAction: 0
   cameraActions: []

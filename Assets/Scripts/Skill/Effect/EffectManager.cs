@@ -17,7 +17,7 @@ public class EffectManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void Play(EffectData data, Transform parent)
+    public void Play(EffectData data, Transform parent, StateManager state = null)
     {
         if (data.effect == null) return;
 
@@ -33,7 +33,7 @@ public class EffectManager : MonoBehaviour
         {
             ps.Play();
             float duration = ps.main.duration + ps.main.startLifetime.constantMax;
-            StartCoroutine(ReturnToPool(go, pool, duration));
+            StartCoroutine(ReturnToPool(go, pool, duration, data.useFreeze ? state : null));
         }
     }
 
@@ -76,11 +76,12 @@ public class EffectManager : MonoBehaviour
         return pools[prefab];
     }
 
-    private IEnumerator ReturnToPool(GameObject go, ObjectPool<GameObject> pool, float delay)
+    private IEnumerator ReturnToPool(GameObject go, ObjectPool<GameObject> pool, float delay, StateManager state = null)
     {
-        yield return new WaitForSeconds(delay);
-        // 재생 중(활성)인 이펙트가 부모와 함께 파괴됐을 수 있다.
-        // 죽은 참조를 Release하면 풀이 오염되므로 가드한다.
+        if (state != null)
+            yield return new WaitForSecondsUnfrozen(delay, state);
+        else
+            yield return new WaitForSeconds(delay);
         if (go != null) pool.Release(go);
     }
 }
@@ -92,5 +93,5 @@ public class EffectData
     public Vector3 positionOffset;
     public Vector3 rotationOffset;
     public Vector3 scaleOffset;
-    //public bool useFreeze;
+    public bool useFreeze;
 }

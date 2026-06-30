@@ -19,19 +19,18 @@ MonoBehaviour:
   animationPhases:
   - clip: {fileID: -4791504522942941401, guid: 0e5fd14312bba3049a390be7ede71889, type: 3}
     startFrame: 0
+    endFrame: 1
+    duration: 0.25
     blendTime: 0.016
     delay: 0
-    speedFrom: 1
-    speedTo: 1
-    speedEaseDuration: 0
-    speedCurve:
+    easingCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 1
+        inSlope: 2
+        outSlope: 2
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -39,7 +38,7 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
+        inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
@@ -62,8 +61,8 @@ MonoBehaviour:
     canFreeMove: 0
     freeMoveSpeed: 0
     useTargetting: 0
-    distance: 5
-    neutralDistance: 2.5
+    distance: 7
+    neutralDistance: 3.5
     backwardDistance: 0
     isFrictionAutoCalc: 1
     followTerrain: 1
@@ -80,7 +79,9 @@ MonoBehaviour:
     yawLimit: 0
     cameraLocked: 0
     lookSpeedLimit: 0
-  attack: []
+  attack:
+  - preDelay: 0.25
+    method: {fileID: 11400000, guid: 447911f7b74ee704f97c9d545603f825, type: 2}
   grabImmuneLevel: 0
   stack: []
   effects: []

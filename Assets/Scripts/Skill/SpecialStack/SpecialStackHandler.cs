@@ -17,11 +17,9 @@ public class SpecialStackHandler : MonoBehaviour
         character = GetComponent<Character>();
     }
 
-    public void Request(SpecialStackData data, int amount, float life)
+    public void Request(SpecialStackData data, int amount, float life, Character grantor = null)
     {
         if (data == null) return;
-
-        // Debug.Log($"{data.name}, {amount}, {life}");
 
         if (!stacks.ContainsKey(data))
         {
@@ -31,18 +29,20 @@ public class SpecialStackHandler : MonoBehaviour
         }
 
         if (stacks[data].life < life) stacks[data].life = life;
+        if (grantor != null) stacks[data].grantor = grantor;
 
         var prev = stacks[data].amount;
         stacks[data].amount = Mathf.Clamp(stacks[data].amount + amount, 0, data.maxStack);
 
         if (stacks[data].amount == 0)
         {
+            var g = stacks[data].grantor;
             stacks.Remove(data);
-            data.OnRemoved(character, prev);
+            data.OnRemoved(character, prev, g);
         }
 
         var gained = stacks.TryGetValue(data, out var cur) ? cur.amount - prev : 0;
-        if (gained > 0) data.OnGained(character, gained);
+        if (gained > 0) data.OnGained(character, gained, cur.grantor);
 
         if (stacks.TryGetValue(data, out StackHandler current) && current.amount != prev)
             onStackChanged?.Invoke(data, current.amount);
@@ -61,7 +61,7 @@ public class SpecialStackHandler : MonoBehaviour
     {
         foreach (var kv in new List<KeyValuePair<SpecialStackData, StackHandler>>(stacks))
         {
-            kv.Key.OnRemoved(character, kv.Value.amount);
+            kv.Key.OnRemoved(character, kv.Value.amount, kv.Value.grantor);
             onStackChanged?.Invoke(kv.Key, 0);
         }
         stacks.Clear();
@@ -77,7 +77,7 @@ public class SpecialStackHandler : MonoBehaviour
     {
         foreach (var pair in stacks)
         {
-            pair.Key.Apply(character, pair.Value.amount);
+            pair.Key.Apply(character, pair.Value.amount, pair.Value.grantor);
             if (!pair.Key.useFreeze || !character.State.IsFrozen)
             {
                 pair.Value.life -= Time.deltaTime;
@@ -91,7 +91,7 @@ public class SpecialStackHandler : MonoBehaviour
 
         for (int i = ToRemove.Count - 1; i >= 0; i--)
         {
-            ToRemove[i].OnRemoved(character, stacks[ToRemove[i]].amount);
+            ToRemove[i].OnRemoved(character, stacks[ToRemove[i]].amount, stacks[ToRemove[i]].grantor);
             stacks.Remove(ToRemove[i]);
             ToRemove.RemoveAt(i);
         }
@@ -102,4 +102,5 @@ public class StackHandler
 {
     public int amount;
     public float life;
+    public Character grantor;
 }

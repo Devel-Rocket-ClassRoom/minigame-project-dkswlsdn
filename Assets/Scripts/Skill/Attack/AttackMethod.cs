@@ -22,6 +22,7 @@ public class AttackMethod : ScriptableObject
     public AttackMovementMethod movementType;
 
     public DestinationTargettingMethod targetting;
+    public LayerMask aimLayer;
     public float aimDistance;
     public bool useTargetting;
 

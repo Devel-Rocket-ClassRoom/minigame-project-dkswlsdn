@@ -31,15 +31,7 @@ public class PlayerAim : CharacterAim
         switch (method)
         {
             case DestinationTargettingMethod.LowAngle:
-                if (GetRayPoint(aimRay, distance + add, groundLayer, out point, out ly, out _))
-                {
-                    dir = (point - CAim).normalized;
-                    GetRayPoint(new Ray(CAim, dir), Mathf.Infinity, targetLayer, out point, out ly, out character);
-                }
-                else
-                {
-                    GetRayPoint(new Ray(CAim, transform.forward), distance, targetLayer, out point, out ly, out character);
-                }
+                GetRayPoint(new Ray(CAim, transform.forward), distance, targetLayer, out point, out ly, out character);
                 y = ly;
                 return point;
             case DestinationTargettingMethod.HighAngle:
@@ -58,10 +50,7 @@ public class PlayerAim : CharacterAim
                 }
                 return point;
             case DestinationTargettingMethod.FromCamera:
-                GetRayPoint(aimRay, distance + add, groundLayer, out point, out ly, out _);
-                dir = point - CAim;
-                dir.Normalize();
-                GetRayPoint(new Ray(CAim, dir), distance, targetLayer, out point, out ly, out character);
+                GetRayPoint(aimRay, distance + add, targetLayer, out point, out ly, out character);
                 y = ly;
                 return point;
             default:

@@ -13,11 +13,40 @@ MonoBehaviour:
   m_Name: DG LR 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillAction
   actionId: 0
-  actionTime: 0.5
+  actionTime: 0.35
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 7400000, guid: 42bc8a51c2a4e4841a637f7e899616f7, type: 2}
-  blendTime: 0
+  animationPhases:
+  - clip: {fileID: 0}
+    startFrame: 0
+    endFrame: 0
+    duration: 0
+    blendTime: 0.1
+    delay: 0
+    easingCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   movementMethod:
     calcType: 0
     targetting: 0
@@ -49,7 +78,7 @@ MonoBehaviour:
     regularTime: 0
     yawLimit: 0
     cameraLocked: 0
-    lookSpeedLimit: 30
+    lookSpeedLimit: 0
   attack: []
   grabImmuneLevel: 0
   stack: []
@@ -57,11 +86,7 @@ MonoBehaviour:
   cameraShakes: []
   normalizePivotOnCameraAction: 0
   cameraActions: []
-  transitions:
-  - conditions:
-    - {fileID: 11400000, guid: cfa1cd763d531b1459cd5cea15fc4588, type: 2}
-    nextAction: {fileID: 11400000, guid: 1a24329bc5752f741900897b1bd28e0c, type: 2}
-    immediateTransition: 1
+  transitions: []
   minTransitionTime: 0
   maxTransitionTime: 0
-  autoTransition: {fileID: 11400000, guid: beb364279ef2a61448e23d9a2264ec4d, type: 2}
+  autoTransition: {fileID: 11400000, guid: b8a9c90bdae8da04e94b828d891bab93, type: 2}

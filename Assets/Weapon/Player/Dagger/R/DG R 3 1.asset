@@ -18,13 +18,12 @@ MonoBehaviour:
   useGrab: 0
   animationPhases:
   - clip: {fileID: -885483897695478210, guid: 37683a9b7c66be943834b4a2c988fafc, type: 3}
-    startFrame: 0
-    blendTime: 0.016
+    startFrame: 1
+    endFrame: 0
+    duration: 0
+    blendTime: 0.01
     delay: 0
-    speedFrom: 1
-    speedTo: 1
-    speedEaseDuration: 0
-    speedCurve:
+    easingCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
@@ -79,7 +78,7 @@ MonoBehaviour:
     regularTime: 0
     yawLimit: 0
     cameraLocked: 0
-    lookSpeedLimit: 0
+    lookSpeedLimit: 30
   attack: []
   grabImmuneLevel: 0
   stack: []

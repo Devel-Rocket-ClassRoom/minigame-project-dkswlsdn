@@ -16,8 +16,7 @@ MonoBehaviour:
   actionTime: 0.1
   partialCooldown: 0
   useGrab: 0
-  clip: {fileID: 0}
-  blendTime: 0
+  animationPhases: []
   movementMethod:
     calcType: 0
     targetting: 0
@@ -32,7 +31,7 @@ MonoBehaviour:
     canFreeMove: 0
     freeMoveSpeed: 0
     useTargetting: 0
-    distance: 7
+    distance: 10
     neutralDistance: 0
     backwardDistance: 0
     isFrictionAutoCalc: 0

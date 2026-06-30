@@ -33,11 +33,9 @@ public class SkillAction : ScriptableObject
         foreach (var phase in animationPhases)
         {
             if (phase == null) continue;
-            if (phase.blendTime == 0f) phase.blendTime = 0.016f;
-            if (phase.speedFrom == 0f) phase.speedFrom = 1f;
-            if (phase.speedTo   == 0f) phase.speedTo   = 1f;
-            if (phase.speedCurve == null || phase.speedCurve.keys.Length == 0)
-                phase.speedCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+            if (phase.blendTime == 0f) phase.blendTime = 0.1f;
+            if (phase.easingCurve == null || phase.easingCurve.keys.Length == 0)
+                phase.easingCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
         }
     }
 }
@@ -147,6 +145,7 @@ public class AttackInfo
         useGrab = hit.useGrab;
         isBreakable = hit.isBreakable;
         useFrozen = hit.useFrozen;
+        stackOnHit = hit.stackOnHit;
     }
 
     [HideInInspector, NonSerialized]
@@ -173,6 +172,9 @@ public class AttackInfo
 
     [Header("이펙트")]
     public List<EffectEntry> effects;
+
+    [Header("피격 스택")]
+    public List<StackMethod> stackOnHit;
 
     [Header("기타")]
     public float activateTime;
@@ -208,13 +210,16 @@ public class EffectEntry
 public class AnimationPhase
 {
     public AnimationClip clip;
+    [Tooltip("재생 시작 프레임")]
     public int startFrame;
-    public float blendTime = 0.016f;
+    [Tooltip("재생 끝 프레임 (0 = 마지막 프레임)")]
+    public int endFrame;
+    [Tooltip("startFrame에서 endFrame까지 걸리는 시간(초). 0이면 자연 속도")]
+    public float duration;
+    [Tooltip("진입 블렌드 시간(초)")]
+    public float blendTime = 0.1f;
+    [Tooltip("이전 페이즈 시작 후 이 페이즈까지 대기 시간(초)")]
     public float delay;
-
-    [Header("재생속도 이징")]
-    public float speedFrom = 1f;
-    public float speedTo = 1f;
-    public float speedEaseDuration;
-    public AnimationCurve speedCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    [Tooltip("x=경과시간 0~1, y=진행도 0~1")]
+    public AnimationCurve easingCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 }

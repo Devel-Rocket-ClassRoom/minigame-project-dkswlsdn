@@ -19,12 +19,11 @@ MonoBehaviour:
   animationPhases:
   - clip: {fileID: -885483897695478210, guid: 368e96a5b7dcc524184d400f2a6de0ca, type: 3}
     startFrame: 0
+    endFrame: 0
+    duration: 0
     blendTime: 0.016
     delay: 0
-    speedFrom: 1
-    speedTo: 1
-    speedEaseDuration: 0
-    speedCurve:
+    easingCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
@@ -85,7 +84,7 @@ MonoBehaviour:
   stack: []
   effects: []
   cameraShakes: []
-  normalizePivotOnCameraAction: 0
+  normalizePivotOnCameraAction: 1
   cameraActions: []
   transitions: []
   minTransitionTime: 0

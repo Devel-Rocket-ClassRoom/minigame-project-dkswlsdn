@@ -55,6 +55,7 @@ MonoBehaviour:
     fixedStun: 0
     reverseStun: 0.1
     effects: []
+    stackOnHit: []
     activateTime: 0.3
     isDestroyOnCanceled: 1
     isReleaseGrab: 0
@@ -70,12 +71,15 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 0
-  aimDir: {x: -0.2529057, y: 0.51449585, z: -0.81934893}
+  aimDir: {x: -0.7513059, y: 0.51449585, z: 0.41332018}
   positionOffset: {x: 0, y: 1, z: 1}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   scale: {x: 2, y: 1, z: 3}
   movementType: 1
   targetting: 0
+  aimLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aimDistance: 0
   useTargetting: 0
   spawnRules: []

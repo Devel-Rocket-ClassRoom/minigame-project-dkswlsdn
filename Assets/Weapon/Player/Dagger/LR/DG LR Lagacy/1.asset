@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::AttackMethod
   info:
-    mult: 0.5
-    add: 100
+    mult: 0.3
+    add: 0
     crit: 0
     grabLevel: 0
     cameraShake:
@@ -48,27 +48,20 @@ MonoBehaviour:
         m_RotationOrder: 4
     reaction: 2
     range: 2
-    stunDuration: 1.3
-    stunForce: 3
-    airborneForce: {x: 6, y: 6}
+    stunDuration: 0.5
+    stunForce: 1
+    airborneForce: {x: 1, y: 2}
     forceDirectionType: 0
     fixedStun: 0
     reverseStun: 0
     effects: []
-    stackOnHit:
-    - stack: {fileID: 11400000, guid: 522e3f99d2348b84abd2459002063b9c, type: 2}
-      conditions: []
-      count: 1
-      life: 1
-      preDelay: 0
-      onCanceled: 0
-    activateTime: 0.16
+    activateTime: 0.3
     isDestroyOnCanceled: 0
     isReleaseGrab: 0
-    projectileSpeed: 100
+    projectileSpeed: 40
     isBreakable: 0
     useFrozen: 0
-  type: 2
+  type: 1
   targetLayer:
     serializedVersion: 2
     m_Bits: 384
@@ -77,15 +70,12 @@ MonoBehaviour:
   toGrab: 0
   isSingleTarget: 0
   useAim: 1
-  aimDir: {x: -0.13836345, y: -0.024736295, z: -0.9900726}
+  aimDir: {x: 0.6035523, y: -0.09302927, z: -0.7918777}
   positionOffset: {x: 0, y: 1, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
-  scale: {x: 2, y: 2, z: 2}
+  scale: {x: 0.7, y: 0.7, z: 1}
   movementType: 3
   targetting: 2
-  aimLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  aimDistance: 16
+  aimDistance: 12
   useTargetting: 0
   spawnRules: []

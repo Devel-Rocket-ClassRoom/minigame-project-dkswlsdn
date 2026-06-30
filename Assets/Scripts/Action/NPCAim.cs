@@ -18,10 +18,7 @@ public class NPCAim : CharacterAim
         switch (method)
         {
             case DestinationTargettingMethod.LowAngle:
-                if (GetRayPoint(characterRay, distance, groundLayer, out point, out ly, out _))
-                {
-                    GetRayPoint(characterRay, distance, targetLayer, out point, out ly, out character);
-                }
+                GetRayPoint(characterRay, distance, targetLayer, out point, out ly, out character);
                 y = ly - 1;
                 return point;
             case DestinationTargettingMethod.HighAngle:
@@ -39,10 +36,7 @@ public class NPCAim : CharacterAim
                 }
                 return point;
             case DestinationTargettingMethod.FromCamera:
-                GetRayPoint(aimRay, distance, groundLayer, out point, out ly, out _);
-                dir = point - CAim;
-                dir.Normalize();
-                GetRayPoint(new Ray(CAim, dir), distance, targetLayer, out point, out ly, out character);
+                GetRayPoint(aimRay, distance, targetLayer, out point, out ly, out character);
                 y = ly;
                 return point;
             default:
